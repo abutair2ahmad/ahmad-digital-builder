@@ -27,6 +27,19 @@
 
   var currentLang = 'ar';
 
+  /* falls back to the arabic artwork if the localised file is missing */
+  function swapSource(img, lang) {
+    var wanted = img.getAttribute(lang === 'ar' ? 'data-src-ar' : 'data-src-en');
+    var fallback = img.getAttribute('data-src-ar');
+    if (!wanted || img.getAttribute('src') === wanted) return;
+
+    img.onerror = function () {
+      img.onerror = null;
+      if (img.getAttribute('src') !== fallback) img.setAttribute('src', fallback);
+    };
+    img.setAttribute('src', wanted);
+  }
+
   function applyLang(lang, persist) {
     currentLang = lang;
     root.setAttribute('lang', lang);
@@ -44,6 +57,9 @@
         node.textContent = value;
       }
     }
+
+    var sources = document.querySelectorAll('[data-src-ar][data-src-en]');
+    for (var s = 0; s < sources.length; s++) swapSource(sources[s], lang);
 
     var langBtn = document.getElementById('lang-toggle');
     langBtn.setAttribute('aria-label', lang === 'ar' ? 'Switch to English' : 'التبديل إلى العربية');
