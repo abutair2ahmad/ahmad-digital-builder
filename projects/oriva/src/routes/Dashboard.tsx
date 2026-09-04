@@ -203,7 +203,7 @@ export default function Dashboard() {
         </aside>
 
         {/* ------------------------------------------------------------ main */}
-        <main className="min-w-0 flex-1 px-5 py-8 sm:px-8 lg:py-10">
+        <main className="min-w-0 flex-1 px-5 pt-8 pb-24 sm:px-8 lg:pt-10">
           <header className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="eyebrow text-copper-600">{formatDateLong(today)}</p>
@@ -242,7 +242,7 @@ export default function Dashboard() {
           </header>
 
           {/* KPIs */}
-          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
             <KpiCard label="Booked today" value={<Counter value={kpis.count} />} detail={`${Math.round(kpis.utilisation)}% of today's capacity`} />
             <KpiCard
               label="Expected revenue"
@@ -270,9 +270,13 @@ export default function Dashboard() {
                 }`}
               >
                 {view === v.id ? (
-                  <motion.span layoutId="dash-tab" className="absolute inset-0 -z-10 rounded-full bg-ink-900" transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }} />
+                  <motion.span
+                    layoutId="dash-tab"
+                    className="absolute inset-0 rounded-full bg-ink-900"
+                    transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  />
                 ) : null}
-                {v.label}
+                <span className="relative">{v.label}</span>
               </button>
             ))}
             {query ? (
@@ -327,7 +331,7 @@ export default function Dashboard() {
           ) : (
           /* table */
           <div className="mt-5 overflow-hidden rounded-[24px] border border-line bg-porcelain">
-            <div className="hidden grid-cols-[1.4fr_1.3fr_1fr_1.1fr_auto] gap-4 border-b border-line bg-shell/70 px-6 py-3.5 text-[11px] tracking-[0.14em] text-muted uppercase lg:grid">
+            <div className="hidden grid-cols-[1.2fr_1.3fr_1.25fr_0.9fr_auto] gap-4 border-b border-line bg-shell/70 px-6 py-3.5 text-[11px] tracking-[0.14em] text-muted uppercase lg:grid">
               <span>Patient</span>
               <span>Treatment</span>
               <span>Practitioner</span>
@@ -445,7 +449,9 @@ function KpiCard({
       className="relative overflow-hidden rounded-2xl border border-line bg-porcelain p-4 sm:p-5"
     >
       <p className="text-[11.5px] text-muted sm:text-[12px]">{label}</p>
-      <p className="mt-2 font-display text-[24px] leading-none text-ink-900 sm:text-[30px]">{value}</p>
+      <p className="mt-2 font-display text-[24px] leading-none whitespace-nowrap text-ink-900 md:text-[21px] lg:text-[26px] xl:text-[30px]">
+        {value}
+      </p>
       <p className={`mt-2 text-[11.5px] sm:mt-2.5 sm:text-[12px] ${tone === 'warn' ? 'text-copper-700' : 'text-muted'}`}>
         {detail}
       </p>
@@ -481,7 +487,7 @@ function BookingRow({
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, height: 0 }}
       transition={{ duration: 0.3 }}
-      className={`grid gap-3 border-b border-line px-5 py-5 transition-colors last:border-b-0 hover:bg-shell/40 sm:px-6 lg:grid-cols-[1.4fr_1.3fr_1fr_1.1fr_auto] lg:items-center lg:gap-4 ${
+      className={`grid gap-3 border-b border-line px-5 py-5 transition-colors last:border-b-0 hover:bg-shell/40 sm:grid-cols-2 sm:gap-x-6 sm:px-6 lg:grid-cols-[1.2fr_1.3fr_1.25fr_0.9fr_auto] lg:items-center lg:gap-4 ${
         booking.status === 'cancelled' ? 'opacity-60' : ''
       }`}
     >
@@ -514,7 +520,7 @@ function BookingRow({
         </p>
       </div>
 
-      <div className="flex flex-wrap items-center gap-2 lg:justify-end">
+      <div className="flex flex-wrap items-center gap-2 sm:col-span-2 lg:col-span-1 lg:justify-end">
         <StatusPill status={booking.status} />
 
         {booking.status === 'pending' ? (
@@ -535,7 +541,7 @@ function BookingRow({
       </div>
 
       {booking.customer.notes ? (
-        <p className="rounded-xl bg-shell px-3.5 py-2.5 text-[12px] leading-relaxed text-muted lg:col-span-5">
+        <p className="rounded-xl bg-shell px-3.5 py-2.5 text-[12px] leading-relaxed text-muted sm:col-span-2 lg:col-span-5">
           <span className="font-medium text-ink-800">Note:</span> {booking.customer.notes}
         </p>
       ) : null}

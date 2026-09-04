@@ -7,10 +7,10 @@ import { services, staff } from '../../data/clinic';
 
 const HeroScene = lazy(() => import('../three/HeroScene'));
 
-const headline = ['Skin,', 'read', 'before', 'it', 'is', 'treated.'];
+const headline = ['Skin,', 'read', 'before', 'it'];
 
 const marks = [
-  { k: '9,400+', v: 'treatments delivered' },
+  { k: '18,600+', v: 'treatments delivered' },
   { k: '4.9/5', v: '612 verified reviews' },
   { k: 'I–VI', v: 'Fitzpatrick protocols' },
   { k: '11 min', v: 'average wait, door to chair' },
@@ -108,7 +108,7 @@ export function Hero({ onBook }: { onBook: () => void }) {
             className="eyebrow flex items-center gap-3 text-jade-300"
           >
             <span aria-hidden="true" className="h-px w-8 bg-jade-300/45" />
-            Jumeirah, Dubai · Doctor-led since 2014
+Skin &amp; laser clinic · Jumeirah, Dubai · Since 2014
           </motion.p>
 
           <h1 className="mt-6 text-[clamp(2.9rem,8.2vw,5.6rem)] text-porcelain">
@@ -124,9 +124,21 @@ export function Hero({ onBook }: { onBook: () => void }) {
                   ease: [0.22, 1, 0.36, 1],
                 }}
               >
-                {i >= 4 ? <em className="text-copper-400 not-italic">{word}</em> : word}
+                {word}
               </motion.span>
             ))}
+            <motion.span
+              className="inline-block whitespace-nowrap text-copper-400"
+              initial={{ opacity: 0, y: reduce ? 0 : '0.5em', filter: 'blur(6px)' }}
+              animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              transition={{
+                duration: reduce ? 0.25 : 0.9,
+                delay: reduce ? 0 : 0.12 + headline.length * 0.075,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+            >
+              is treated.
+            </motion.span>
           </h1>
 
           <motion.p
@@ -135,9 +147,9 @@ export function Hero({ onBook }: { onBook: () => void }) {
             transition={{ duration: 0.8, delay: reduce ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
             className="mt-6 max-w-xl text-[15px] leading-relaxed text-jade-100/80 md:text-[17px]"
           >
-            A skin and laser atelier where a dermatologist photographs and measures your skin before
-            anyone touches it — then treats it conservatively, with the same practitioner from the
-            diagnostic through to your week-twelve review.
+            A doctor-led skin and laser clinic in Jumeirah. We photograph and measure your skin
+            before anyone touches it, then treat it conservatively — the same practitioner from
+            diagnostic to week twelve. Book online in under a minute.
           </motion.p>
 
           <motion.div

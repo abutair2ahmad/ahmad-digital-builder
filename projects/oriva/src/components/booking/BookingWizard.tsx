@@ -343,7 +343,9 @@ function StepService({ selected, onSelect }: { selected: string | null; onSelect
                 <span className="block font-display text-[17px] whitespace-nowrap text-ink-900 sm:text-[19px]">
                   {formatPrice(s.price, CURRENCY)}
                 </span>
-                {s.priceNote ? <span className="block text-[10.5px] text-muted">Credited back</span> : null}
+                {s.priceNoteShort ? (
+                  <span className="block text-[10.5px] text-muted">{s.priceNoteShort}</span>
+                ) : null}
               </span>
             </button>
           </li>

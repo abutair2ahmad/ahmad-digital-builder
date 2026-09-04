@@ -18,6 +18,8 @@ export interface Service {
   /** Compact form used in dense lists, e.g. the booking wizard. */
   downtimeShort: string;
   priceNote?: string;
+  /** Two-word form of the note, for dense lists. */
+  priceNoteShort?: string;
   includes: string[];
   downtime: string;
   popular?: boolean;
@@ -52,6 +54,7 @@ export const services: Service[] = [
     durationMin: 45,
     price: 350,
     priceNote: 'Credited against your first treatment',
+    priceNoteShort: 'Credited back',
     includes: ['VISIA multi-spectral imaging', 'Barrier & hydration reading', 'Written 12-week protocol'],
     downtime: 'None',
     downtimeShort: 'No downtime',
@@ -121,6 +124,7 @@ export const services: Service[] = [
     durationMin: 45,
     price: 1600,
     priceNote: 'From — final plan quoted at consultation',
+    priceNoteShort: 'Starting price',
     includes: ['Proportion mapping', 'Micro-dosed technique', 'Two-week refinement visit'],
     downtime: 'Under 24 hours',
     downtimeShort: 'Under 24 hrs downtime',
@@ -290,7 +294,7 @@ export const faqs: Faq[] = [
 ];
 
 export const stats = [
-  { value: 9400, suffix: '+', label: 'Treatments delivered', detail: 'Since opening in 2014' },
+  { value: 18600, suffix: '+', label: 'Treatments delivered', detail: 'Since opening in 2014' },
   { value: 4.9, decimals: 1, suffix: '/5', label: 'Average patient rating', detail: 'Across 612 verified reviews' },
   { value: 96, suffix: '%', label: 'Would recommend us', detail: '2025 patient survey' },
   { value: 11, suffix: ' min', label: 'Average wait time', detail: 'Measured door to chair' },

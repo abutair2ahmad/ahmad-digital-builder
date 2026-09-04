@@ -54,11 +54,11 @@ export function Services({ onBookService }: { onBookService: (serviceId: string)
                   {filter === f ? (
                     <motion.span
                       layoutId="service-filter"
-                      className="absolute inset-0 -z-10 rounded-full bg-ink-900"
+                      className="absolute inset-0 rounded-full bg-ink-900"
                       transition={{ duration: reduce ? 0 : 0.45, ease: [0.22, 1, 0.36, 1] }}
                     />
                   ) : null}
-                  {f}
+                  <span className="relative">{f}</span>
                 </button>
               ))}
             </div>
