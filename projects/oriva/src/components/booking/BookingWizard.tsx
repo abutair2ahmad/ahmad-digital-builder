@@ -5,6 +5,7 @@ import type { Service, Staff } from '../../data/clinic';
 import {
   buildSlots,
   formatDateLong,
+  formatDateShort as formatDateShortish,
   formatDuration,
   formatPrice,
   minutesToLabel,
@@ -24,9 +25,17 @@ export interface BookingWizardHandle {
   start: (opts?: { serviceId?: string; staffId?: string }) => void;
 }
 
+export interface BookingWizardProps {
+  /** Opens the "manage your appointment" panel, pre-filled with a reference. */
+  onManage?: (reference: string) => void;
+}
+
 const emptyForm: ContactForm = { name: '', phone: '', email: '', notes: '' };
 
-export const BookingWizard = forwardRef<BookingWizardHandle>(function BookingWizard(_props, ref) {
+export const BookingWizard = forwardRef<BookingWizardHandle, BookingWizardProps>(function BookingWizard(
+  { onManage },
+  ref,
+) {
   const { create, occupiedFor } = useBookings();
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
@@ -196,6 +205,10 @@ export const BookingWizard = forwardRef<BookingWizardHandle>(function BookingWiz
       <div className="p-6 sm:p-9">
         {step < 6 ? <Stepper current={step} furthest={furthest} onJump={goTo} /> : null}
 
+        {step > 1 && step < 6 && service ? (
+          <MobileSummary service={service} member={member} date={date} time={time} />
+        ) : null}
+
         <div className="mt-8" aria-live="polite">
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
@@ -246,7 +259,9 @@ export const BookingWizard = forwardRef<BookingWizardHandle>(function BookingWiz
                 />
               ) : null}
 
-              {step === 6 && confirmed ? <StepConfirmed booking={confirmed} onReset={reset} /> : null}
+              {step === 6 && confirmed ? (
+                <StepConfirmed booking={confirmed} onReset={reset} onManage={onManage} />
+              ) : null}
             </motion.div>
           </AnimatePresence>
         </div>
@@ -289,7 +304,7 @@ function StepService({ selected, onSelect }: { selected: string | null; onSelect
               type="button"
               aria-pressed={selected === s.id}
               onClick={() => onSelect(s.id)}
-              className={`group flex w-full items-center gap-4 rounded-2xl border p-4 text-left transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+              className={`group flex w-full items-center gap-3 rounded-2xl border p-4 text-left transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] sm:gap-4 ${
                 selected === s.id
                   ? 'border-ink-900 bg-ink-900/[0.03]'
                   : 'border-line hover:-translate-y-0.5 hover:border-ink-900/30 hover:bg-shell/60'
@@ -297,20 +312,22 @@ function StepService({ selected, onSelect }: { selected: string | null; onSelect
             >
               <span
                 aria-hidden="true"
-                className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border text-[11px] font-medium transition-colors ${
+                className={`hidden h-10 w-10 shrink-0 items-center justify-center rounded-full border text-[11px] font-medium transition-colors sm:flex ${
                   selected === s.id ? 'border-ink-900 bg-ink-900 text-porcelain' : 'border-line text-muted'
                 }`}
               >
                 {s.category.slice(0, 2).toUpperCase()}
               </span>
               <span className="min-w-0 flex-1">
-                <span className="block text-[15px] font-medium text-ink-900">{s.name}</span>
-                <span className="mt-0.5 block truncate text-[12.5px] text-muted">
+                <span className="block text-[14.5px] leading-snug font-medium text-ink-900 sm:text-[15px]">
+                  {s.name}
+                </span>
+                <span className="mt-1 block truncate text-[12px] text-muted sm:text-[12.5px]">
                   {formatDuration(s.durationMin)} · {s.downtimeShort}
                 </span>
               </span>
               <span className="shrink-0 text-right">
-                <span className="block font-display text-[19px] text-ink-900">
+                <span className="block font-display text-[17px] whitespace-nowrap text-ink-900 sm:text-[19px]">
                   {formatPrice(s.price, CURRENCY)}
                 </span>
                 {s.priceNote ? <span className="block text-[10.5px] text-muted">Credited back</span> : null}
@@ -621,7 +638,15 @@ function StepDetails({
 
 /* ------------------------------------------------------------------ step 6 */
 
-function StepConfirmed({ booking, onReset }: { booking: Booking; onReset: () => void }) {
+function StepConfirmed({
+  booking,
+  onReset,
+  onManage,
+}: {
+  booking: Booking;
+  onReset: () => void;
+  onManage?: (reference: string) => void;
+}) {
   const service = services.find((s) => s.id === booking.serviceId)!;
   const member = staff.find((s) => s.id === booking.staffId)!;
   const reduce = useReducedMotion();
@@ -684,10 +709,19 @@ function StepConfirmed({ booking, onReset }: { booking: Booking; onReset: () => 
           </svg>
           Add to calendar
         </button>
+        {onManage ? (
+          <button
+            type="button"
+            onClick={() => onManage(booking.id)}
+            className="inline-flex h-12 items-center gap-2 rounded-full border border-ink-900/15 px-6 text-[13.5px] font-medium text-ink-900 transition-colors duration-300 hover:border-ink-900/40"
+          >
+            Move or cancel it
+          </button>
+        ) : null}
         <button
           type="button"
           onClick={onReset}
-          className="inline-flex h-12 items-center gap-2 rounded-full border border-ink-900/15 px-6 text-[13.5px] font-medium text-ink-900 transition-colors duration-300 hover:border-ink-900/40"
+          className="inline-flex h-12 items-center gap-2 rounded-full px-2 text-[13.5px] font-medium text-muted transition-colors duration-300 hover:text-ink-900"
         >
           Book another appointment
         </button>
@@ -701,6 +735,41 @@ function StepConfirmed({ booking, onReset }: { booking: Booking; onReset: () => 
         and you will find this appointment waiting in today's list, ready to confirm, reschedule or
         cancel.
       </p>
+    </div>
+  );
+}
+
+/* ---------------------------------------------------- summary (mobile strip) */
+
+function MobileSummary({
+  service,
+  member,
+  date,
+  time,
+}: {
+  service: Service;
+  member: Staff | null;
+  date: string | null;
+  time: string | null;
+}) {
+  const parts = [
+    service.name,
+    member?.name.replace('Dr. ', '') ?? null,
+    date ? formatDateShortish(date) : null,
+    time ? minutesToLabel(timeToMinutes(time)) : null,
+  ].filter(Boolean) as string[];
+
+  return (
+    <div className="mt-5 flex flex-wrap items-center gap-x-2 gap-y-1.5 rounded-2xl bg-ink-900 px-4 py-3 lg:hidden">
+      {parts.map((p, i) => (
+        <span key={p + i} className="flex items-center gap-2 text-[12px] text-porcelain">
+          {i > 0 ? <span aria-hidden="true" className="h-1 w-1 rounded-full bg-copper-500" /> : null}
+          {p}
+        </span>
+      ))}
+      <span className="ml-auto font-display text-[15px] text-porcelain">
+        {formatPrice(service.price, CURRENCY)}
+      </span>
     </div>
   );
 }
@@ -728,7 +797,7 @@ function Summary({
   ];
 
   return (
-    <aside className="grain relative flex flex-col justify-between border-t border-porcelain/10 bg-ink-900 p-6 sm:p-9 lg:border-t-0 lg:border-l">
+    <aside className="grain relative hidden flex-col justify-between bg-ink-900 p-9 lg:flex lg:border-l lg:border-porcelain/10">
       <div>
         <p className="eyebrow text-jade-300">Your appointment</p>
 

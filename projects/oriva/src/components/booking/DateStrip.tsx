@@ -88,7 +88,7 @@ export function DateStrip({ service, member, value, onChange, days = 21, exclude
         })}
       </div>
       <p className="mt-1 text-[12px] text-muted">
-        Showing the next three weeks for {member.name}. Scroll for later dates.
+        Showing the next {Math.round(days / 7)} weeks for {member.name}. Scroll for later dates.
       </p>
     </div>
   );

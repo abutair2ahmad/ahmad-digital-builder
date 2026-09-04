@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
-import { clinic, services } from '../../data/clinic';
+import { clinic, services, staff } from '../../data/clinic';
+import { useBookings } from '../../store/useBookings';
+import { buildSlots, formatDateShort, minutesToLabel, nextDays, timeToMinutes } from '../../lib/time';
 
 const columns = [
   {
@@ -19,7 +21,26 @@ const columns = [
   },
 ];
 
-export function Footer({ onBook }: { onBook: () => void }) {
+function useNextOpening() {
+  const { occupiedFor } = useBookings();
+  const service = services.find((s) => s.id === 'consult')!;
+
+  for (const date of nextDays(10)) {
+    for (const member of staff) {
+      const free = buildSlots(service, member, date, occupiedFor(member.id, date)).find(
+        (s) => s.available,
+      );
+      if (free) {
+        return `${formatDateShort(date)}, ${minutesToLabel(timeToMinutes(free.time))} with ${member.name.replace('Dr. ', '')}`;
+      }
+    }
+  }
+  return null;
+}
+
+export function Footer({ onBook, onManage }: { onBook: () => void; onManage: () => void }) {
+  const nextOpening = useNextOpening();
+
   return (
     <footer className="grain relative overflow-hidden bg-ink-950 pt-20 pb-10 text-porcelain">
       <div
@@ -40,6 +61,15 @@ export function Footer({ onBook }: { onBook: () => void }) {
               Diagnostics open two to three weeks out. The calendar on this page is live — take the
               slot while it is there.
             </p>
+            {nextOpening ? (
+              <p className="mt-5 inline-flex items-center gap-2.5 rounded-full border border-porcelain/15 py-2 pr-5 pl-3 text-[13px] text-jade-100/75">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-jade-300" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-jade-300" />
+                </span>
+                Next diagnostic <strong className="font-medium text-porcelain">{nextOpening}</strong>
+              </p>
+            ) : null}
           </div>
           <button
             onClick={onBook}
@@ -99,9 +129,19 @@ export function Footer({ onBook }: { onBook: () => void }) {
                 </li>
               ))}
             </ul>
+            <button
+              onClick={onManage}
+              className="mt-6 inline-flex items-center gap-2 rounded-full border border-porcelain/20 px-4 py-2 text-[12.5px] text-porcelain transition-colors duration-300 hover:border-porcelain/60"
+            >
+              Manage a booking
+              <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M4 10h12M11 5l5 5-5 5" />
+              </svg>
+            </button>
+
             <Link
               to="/dashboard"
-              className="mt-6 inline-flex items-center gap-2 rounded-full border border-porcelain/20 px-4 py-2 text-[12.5px] text-porcelain transition-colors duration-300 hover:border-porcelain/60"
+              className="mt-2.5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[12.5px] text-jade-100/55 transition-colors duration-300 hover:text-porcelain"
             >
               Clinic dashboard
               <svg viewBox="0 0 20 20" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">

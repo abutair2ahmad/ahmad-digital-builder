@@ -6,6 +6,8 @@ import { Counter } from '../components/ui/Counter';
 import { StatusPill } from '../components/dashboard/StatusPill';
 import { Toasts, type ToastMessage } from '../components/dashboard/Toast';
 import { RescheduleModal } from '../components/dashboard/RescheduleModal';
+import { DaySchedule } from '../components/dashboard/DaySchedule';
+import { NewBookingModal } from '../components/dashboard/NewBookingModal';
 import { useBookings } from '../store/useBookings';
 import type { Booking } from '../store/bookings';
 import { endTimeOf } from '../store/bookings';
@@ -22,20 +24,23 @@ import {
   todayISO,
 } from '../lib/time';
 
-type View = 'today' | 'upcoming' | 'all';
+type View = 'schedule' | 'today' | 'upcoming' | 'all';
 
 const views: { id: View; label: string }[] = [
-  { id: 'today', label: "Today's bookings" },
+  { id: 'schedule', label: "Today's schedule" },
+  { id: 'today', label: "Today's list" },
   { id: 'upcoming', label: 'Upcoming' },
   { id: 'all', label: 'All appointments' },
 ];
 
 export default function Dashboard() {
-  const { bookings, setStatus, reschedule } = useBookings();
-  const [view, setView] = useState<View>('today');
+  const { bookings, create, setStatus, reschedule } = useBookings();
+  const [view, setView] = useState<View>('schedule');
   const [query, setQuery] = useState('');
+  const [staffFilter, setStaffFilter] = useState<string | null>(null);
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [rescheduling, setRescheduling] = useState<Booking | null>(null);
+  const [creating, setCreating] = useState(false);
 
   const today = todayISO();
 
@@ -64,6 +69,7 @@ export default function Dashboard() {
         if (view === 'upcoming') return b.date > today;
         return true;
       })
+      .filter((b) => !staffFilter || b.staffId === staffFilter)
       .filter((b) => {
         if (!q) return true;
         const service = services.find((s) => s.id === b.serviceId)?.name ?? '';
@@ -75,7 +81,7 @@ export default function Dashboard() {
           service.toLowerCase().includes(q)
         );
       });
-  }, [sorted, view, query, today]);
+  }, [sorted, view, query, today, staffFilter]);
 
   const todays = useMemo(() => bookings.filter((b) => b.date === today), [bookings, today]);
 
@@ -156,7 +162,7 @@ export default function Dashboard() {
                   >
                     {v.label}
                     <span className="tnum text-[11.5px] text-jade-100/45">
-                      {v.id === 'today'
+                      {v.id === 'schedule' || v.id === 'today'
                         ? todays.length
                         : v.id === 'upcoming'
                           ? bookings.filter((b) => b.date > today).length
@@ -203,7 +209,8 @@ export default function Dashboard() {
               </p>
             </div>
 
-            <label className="relative block w-full sm:w-72">
+            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:items-center">
+            <label className="relative block w-full sm:w-64">
               <span className="sr-only">Search bookings</span>
               <svg viewBox="0 0 20 20" className="pointer-events-none absolute top-1/2 left-4 h-4 w-4 -translate-y-1/2 text-muted" fill="none" stroke="currentColor" strokeWidth="1.6">
                 <circle cx="9" cy="9" r="5.5" />
@@ -216,10 +223,21 @@ export default function Dashboard() {
                 className="h-12 w-full rounded-full border border-line bg-porcelain pr-4 pl-11 text-[13.5px] text-ink-900 transition-colors placeholder:text-muted/50 focus:border-ink-900/40 focus:bg-white"
               />
             </label>
+
+            <button
+              onClick={() => setCreating(true)}
+              className="inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-ink-900 px-5 text-[13.5px] font-medium text-porcelain transition-all duration-300 hover:-translate-y-0.5 hover:bg-jade-900"
+            >
+              <svg viewBox="0 0 20 20" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round">
+                <path d="M10 4v12M4 10h12" />
+              </svg>
+              New appointment
+            </button>
+            </div>
           </header>
 
           {/* KPIs */}
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">
             <KpiCard label="Booked today" value={<Counter value={kpis.count} />} detail={`${Math.round(kpis.utilisation)}% of today's capacity`} />
             <KpiCard
               label="Expected revenue"
@@ -259,7 +277,50 @@ export default function Dashboard() {
             ) : null}
           </div>
 
-          {/* table */}
+          {view !== 'schedule' ? (
+            <div className="mt-3 flex flex-wrap items-center gap-2">
+              <span className="text-[12px] text-muted">Practitioner</span>
+              <button
+                onClick={() => setStaffFilter(null)}
+                aria-pressed={staffFilter === null}
+                className={`rounded-full border px-3 py-1 text-[12px] transition-colors ${
+                  staffFilter === null
+                    ? 'border-ink-900/45 bg-ink-900/[0.06] text-ink-900'
+                    : 'border-line text-muted hover:border-ink-900/30 hover:text-ink-900'
+                }`}
+              >
+                Everyone
+              </button>
+              {staff.map((m) => (
+                <button
+                  key={m.id}
+                  onClick={() => setStaffFilter(staffFilter === m.id ? null : m.id)}
+                  aria-pressed={staffFilter === m.id}
+                  className={`rounded-full border px-3 py-1 text-[12px] transition-colors ${
+                    staffFilter === m.id
+                      ? 'border-ink-900/45 bg-ink-900/[0.06] text-ink-900'
+                      : 'border-line text-muted hover:border-ink-900/30 hover:text-ink-900'
+                  }`}
+                >
+                  {m.name.replace('Dr. ', '')}
+                </button>
+              ))}
+            </div>
+          ) : null}
+
+          {view === 'schedule' ? (
+            <div className="mt-5">
+              <DaySchedule
+                date={today}
+                bookings={bookings}
+                onSelect={(b) => {
+                  setView('today');
+                  setQuery(b.id);
+                }}
+              />
+            </div>
+          ) : (
+          /* table */
           <div className="mt-5 overflow-hidden rounded-[24px] border border-line bg-porcelain">
             <div className="hidden grid-cols-[1.4fr_1.3fr_1fr_1.1fr_auto] gap-4 border-b border-line bg-shell/70 px-6 py-3.5 text-[11px] tracking-[0.14em] text-muted uppercase lg:grid">
               <span>Patient</span>
@@ -323,6 +384,7 @@ export default function Dashboard() {
               )}
             </AnimatePresence>
           </div>
+          )}
 
           <p className="mt-6 text-[12px] leading-relaxed text-muted">
             Demonstration dashboard. Data lives in this browser only — reset it any time from the
@@ -330,6 +392,18 @@ export default function Dashboard() {
           </p>
         </main>
       </div>
+
+      <NewBookingModal
+        open={creating}
+        onClose={() => setCreating(false)}
+        onCreate={(input) => {
+          const booking = create(input);
+          setCreating(false);
+          setView('today');
+          setQuery(booking.id);
+          toast(`${booking.customer.name} booked — reference ${booking.id}.`);
+        }}
+      />
 
       <RescheduleModal
         booking={rescheduling}
@@ -363,11 +437,13 @@ function KpiCard({
       initial={{ opacity: 0, y: 14 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-      className="relative overflow-hidden rounded-2xl border border-line bg-porcelain p-5"
+      className="relative overflow-hidden rounded-2xl border border-line bg-porcelain p-4 sm:p-5"
     >
-      <p className="text-[12px] text-muted">{label}</p>
-      <p className="mt-2 font-display text-[30px] leading-none text-ink-900">{value}</p>
-      <p className={`mt-2.5 text-[12px] ${tone === 'warn' ? 'text-copper-700' : 'text-muted'}`}>{detail}</p>
+      <p className="text-[11.5px] text-muted sm:text-[12px]">{label}</p>
+      <p className="mt-2 font-display text-[24px] leading-none text-ink-900 sm:text-[30px]">{value}</p>
+      <p className={`mt-2 text-[11.5px] sm:mt-2.5 sm:text-[12px] ${tone === 'warn' ? 'text-copper-700' : 'text-muted'}`}>
+        {detail}
+      </p>
       <span
         aria-hidden="true"
         className={`absolute inset-x-0 bottom-0 h-0.5 ${tone === 'warn' ? 'bg-copper-500' : 'bg-jade-500/60'}`}

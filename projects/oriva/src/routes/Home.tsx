@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import { Header } from '../components/layout/Header';
 import { Footer } from '../components/layout/Footer';
 import { Hero } from '../components/sections/Hero';
@@ -14,9 +14,11 @@ import { Stats } from '../components/sections/Stats';
 import { Faq } from '../components/sections/Faq';
 import { Contact } from '../components/sections/Contact';
 import type { BookingWizardHandle } from '../components/booking/BookingWizard';
+import { ManageBooking } from '../components/booking/ManageBooking';
 
 export default function Home() {
   const wizard = useRef<BookingWizardHandle>(null);
+  const [manageRef, setManageRef] = useState<string | null>(null);
 
   const book = () => wizard.current?.start();
   const bookService = (serviceId: string) => wizard.current?.start({ serviceId });
@@ -31,7 +33,7 @@ export default function Home() {
         Skip to content
       </a>
 
-      <Header onBook={book} />
+      <Header onBook={book} onManage={() => setManageRef('')} />
 
       <main id="main">
         <Hero onBook={book} />
@@ -40,7 +42,7 @@ export default function Home() {
         <Services onBookService={bookService} />
         <Team onBookStaff={bookStaff} />
         <Process onBook={book} />
-        <BookingSection ref={wizard} />
+        <BookingSection ref={wizard} onManage={(reference) => setManageRef(reference)} />
         <Results />
         <Testimonials />
         <Stats />
@@ -48,7 +50,9 @@ export default function Home() {
         <Contact />
       </main>
 
-      <Footer onBook={book} />
+      <Footer onBook={book} onManage={() => setManageRef('')} />
+
+      <ManageBooking reference={manageRef} onClose={() => setManageRef(null)} />
     </>
   );
 }

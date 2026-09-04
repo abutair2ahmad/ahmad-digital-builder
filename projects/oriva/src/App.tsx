@@ -5,18 +5,26 @@ import { DemoBadge } from './components/layout/DemoBadge';
 
 const Dashboard = lazy(() => import('./routes/Dashboard'));
 
-function ScrollToTop() {
+const titles: Record<string, string> = {
+  '/': 'ORIVA — Skin & Laser Atelier, Jumeirah Dubai',
+  '/dashboard': 'Front desk — ORIVA',
+};
+
+function RouteEffects() {
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' as ScrollBehavior });
+    document.title = titles[pathname] ?? 'Page not found — ORIVA';
   }, [pathname]);
+
   return null;
 }
 
 export default function App() {
   return (
     <>
-      <ScrollToTop />
+      <RouteEffects />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route

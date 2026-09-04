@@ -1,9 +1,14 @@
 import { forwardRef } from 'react';
 import { SectionHeading } from '../ui/SectionHeading';
 import { Reveal } from '../ui/Reveal';
-import { BookingWizard, type BookingWizardHandle } from '../booking/BookingWizard';
+import {
+  BookingWizard,
+  type BookingWizardHandle,
+  type BookingWizardProps,
+} from '../booking/BookingWizard';
 
-export const BookingSection = forwardRef<BookingWizardHandle>(function BookingSection(_props, ref) {
+export const BookingSection = forwardRef<BookingWizardHandle, BookingWizardProps>(
+  function BookingSection({ onManage }, ref) {
   return (
     <section id="booking" className="relative overflow-hidden bg-shell py-24 md:py-32">
       <div
@@ -20,7 +25,7 @@ export const BookingSection = forwardRef<BookingWizardHandle>(function BookingSe
         />
 
         <Reveal delay={0.12} className="mt-14">
-          <BookingWizard ref={ref} />
+          <BookingWizard ref={ref} onManage={onManage} />
         </Reveal>
       </div>
     </section>

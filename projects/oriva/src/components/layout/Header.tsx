@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion, useScroll, useSpring } from 'motion/react';
 import { Logo } from './Logo';
 import { ArrowRight } from '../ui/Button';
 
@@ -13,12 +13,14 @@ const links = [
   { href: '#faq', label: 'FAQ' },
 ];
 
-export function Header({ onBook }: { onBook: () => void }) {
+export function Header({ onBook, onManage }: { onBook: () => void; onManage: () => void }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<string>('');
   const reduce = useReducedMotion();
   const location = useLocation();
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.3 });
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -65,6 +67,12 @@ export function Header({ onBook }: { onBook: () => void }) {
 
   return (
     <>
+      <motion.div
+        aria-hidden="true"
+        className="fixed inset-x-0 top-0 z-60 h-0.5 origin-left bg-gradient-to-r from-jade-500 to-copper-500"
+        style={{ scaleX: progress, opacity: scrolled ? 1 : 0 }}
+      />
+
       <header
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           scrolled ? 'py-2' : 'py-4'
@@ -203,6 +211,16 @@ export function Header({ onBook }: { onBook: () => void }) {
                     <ArrowRight className="text-copper-500" />
                   </motion.a>
                 ))}
+                <button
+                  onClick={() => {
+                    setOpen(false);
+                    onManage();
+                  }}
+                  className="flex items-center justify-between border-b border-line py-4 text-left font-display text-2xl text-ink-900"
+                >
+                  Manage a booking
+                  <ArrowRight className="text-copper-500" />
+                </button>
                 <Link
                   to="/dashboard"
                   onClick={() => setOpen(false)}

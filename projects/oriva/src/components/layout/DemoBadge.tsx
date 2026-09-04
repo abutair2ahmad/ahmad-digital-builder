@@ -56,13 +56,14 @@ export function DemoBadge() {
       <button
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
-        className="inline-flex h-10 items-center gap-2 rounded-full border border-porcelain/12 bg-ink-900/90 pr-4 pl-3 text-[12px] font-medium text-porcelain shadow-lg backdrop-blur-lg transition-transform duration-300 hover:-translate-y-0.5"
+        className="inline-flex h-9 items-center gap-2 rounded-full border border-porcelain/12 bg-ink-900/90 pr-3.5 pl-3 text-[11.5px] font-medium text-porcelain shadow-lg backdrop-blur-lg transition-transform duration-300 hover:-translate-y-0.5 sm:h-10 sm:pr-4 sm:text-[12px]"
       >
         <span className="relative flex h-2 w-2">
           <span className="animate-pulse-ring absolute inline-flex h-full w-full rounded-full bg-copper-400" />
           <span className="relative inline-flex h-2 w-2 rounded-full bg-copper-400" />
         </span>
-        Portfolio demo
+        <span className="sm:hidden">Demo</span>
+        <span className="hidden sm:inline">Portfolio demo</span>
       </button>
     </div>
   );
