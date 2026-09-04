@@ -1,0 +1,252 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   NACRE — design tokens
+   A porcelain ground, an ink text colour, one brass accent, one deep
+   jade. No third accent, no gradients used as decoration.
+------------------------------------------------------------------ */
+@theme {
+  --color-porcelain: #fbf9f5;
+  --color-bone: #f2ece2;
+  --color-pearl: #ded3c4;
+  --color-shell: #c9bcaa;
+  --color-clay: #6d6558;
+  --color-ink: #0d1211;
+  --color-ink-soft: #1b2320;
+  --color-graphite: #38423e;
+  --color-aurum: #a9834f;
+  --color-aurum-soft: #c9a473;
+  --color-jade: #1f4238;
+
+  --font-display: var(--font-fraunces), 'Iowan Old Style', Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quint: cubic-bezier(0.83, 0, 0.17, 1);
+
+  --spacing-section: clamp(5rem, 11vw, 10.5rem);
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-porcelain);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-feature-settings: 'ss01', 'cv05';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--color-ink);
+    color: var(--color-porcelain);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-aurum);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.022em;
+    line-height: 1.02;
+  }
+
+  /* Numerals stay aligned in tables and time grids. */
+  time,
+  .tabular {
+    font-variant-numeric: tabular-nums;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Editorial primitives
+------------------------------------------------------------------ */
+@utility shell {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  max-width: 88rem;
+
+  @media (width >= 48rem) {
+    padding-inline: 2.5rem;
+  }
+  @media (width >= 80rem) {
+    padding-inline: 4rem;
+  }
+}
+
+@utility eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-clay);
+}
+
+@utility rule {
+  height: 1px;
+  width: 100%;
+  background-color: color-mix(in oklab, var(--color-shell) 60%, transparent);
+}
+
+@utility display-xl {
+  font-family: var(--font-display);
+  font-size: clamp(2.75rem, 7vw, 6.6rem);
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  font-weight: 300;
+}
+
+@utility display-lg {
+  font-family: var(--font-display);
+  font-size: clamp(2.25rem, 5.4vw, 4.6rem);
+  line-height: 1;
+  letter-spacing: -0.028em;
+  font-weight: 300;
+}
+
+@utility display-md {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+
+@utility lede {
+  font-size: clamp(1.0625rem, 1.35vw, 1.3125rem);
+  line-height: 1.62;
+  color: var(--color-clay);
+  letter-spacing: -0.005em;
+}
+
+/* A link that draws its underline on hover rather than removing it. */
+@utility link-sweep {
+  position: relative;
+  display: inline-block;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    height: 1px;
+    width: 100%;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.5s var(--ease-out-expo);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+}
+
+@utility hairline-top {
+  border-top: 1px solid color-mix(in oklab, var(--color-shell) 55%, transparent);
+}
+
+@utility hairline-bottom {
+  border-bottom: 1px solid color-mix(in oklab, var(--color-shell) 55%, transparent);
+}
+
+/* Ink-on-porcelain grain, used sparingly on dark sections to stop large
+   flat fields from banding on wide gamut displays. */
+@utility grain {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/* ------------------------------------------------------------------
+   Motion
+------------------------------------------------------------------ */
+@keyframes nacre-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 18px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes nacre-shimmer {
+  from {
+    background-position: -160% 0;
+  }
+  to {
+    background-position: 260% 0;
+  }
+}
+
+@utility skeleton {
+  background-image: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--color-bone) 92%, transparent) 20%,
+    color-mix(in oklab, var(--color-porcelain) 92%, transparent) 42%,
+    color-mix(in oklab, var(--color-bone) 92%, transparent) 62%
+  );
+  background-size: 220% 100%;
+  animation: nacre-shimmer 1.6s var(--ease-in-out-quint) infinite;
+  border-radius: 2px;
+}
+
+/* Progressive enhancement: sections rise into view where the browser
+   supports scroll-driven animations, and are simply visible where it
+   does not. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .scroll-rise {
+      animation: nacre-rise linear both;
+      animation-timeline: view();
+      animation-range: entry 4% cover 24%;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------
+   Scrollbar — quiet, not invisible
+------------------------------------------------------------------ */
+@media (pointer: fine) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-pearl) transparent;
+  }
+}
