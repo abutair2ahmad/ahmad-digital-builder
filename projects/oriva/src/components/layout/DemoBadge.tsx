@@ -14,7 +14,11 @@ export function DemoBadge() {
   const mine = bookings.filter((b) => !b.demo).length;
 
   return (
-    <div className="fixed bottom-4 left-4 z-50 print:hidden">
+    <div
+      className={`fixed left-4 z-50 print:hidden ${
+        pathname === '/dashboard' ? 'bottom-4' : 'bottom-24 sm:bottom-4'
+      }`}
+    >
       <AnimatePresence>
         {open ? (
           <motion.div

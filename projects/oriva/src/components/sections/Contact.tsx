@@ -31,9 +31,22 @@ function LocationPlate() {
       <path d="M0 190 L520 150" stroke="#faf8f4" strokeOpacity="0.35" strokeWidth="14" />
       <path d="M0 190 L520 150" stroke="#0f2a23" strokeOpacity="0.5" strokeWidth="1.5" strokeDasharray="10 12" />
       <path d="M300 0 L340 320" stroke="#faf8f4" strokeOpacity="0.16" strokeWidth="8" />
+      <path d="M0 62 L520 34" stroke="#faf8f4" strokeOpacity="0.10" strokeWidth="6" />
+      <path d="M120 0 L150 320" stroke="#faf8f4" strokeOpacity="0.08" strokeWidth="5" />
       <text x="24" y="180" fill="#faf8f4" fillOpacity="0.55" fontFamily="Inter, sans-serif" fontSize="11" letterSpacing="3">
         AL WASL ROAD
       </text>
+      <text x="24" y="52" fill="#faf8f4" fillOpacity="0.28" fontFamily="Inter, sans-serif" fontSize="10" letterSpacing="2.5">
+        JUMEIRAH BEACH ROAD
+      </text>
+      <text x="352" y="286" fill="#faf8f4" fillOpacity="0.28" fontFamily="Inter, sans-serif" fontSize="10" letterSpacing="2.5">
+        2ND DECEMBER ST
+      </text>
+      <g fill="#faf8f4" fillOpacity="0.05">
+        <rect x="60" y="212" width="52" height="40" rx="4" />
+        <rect x="168" y="222" width="72" height="52" rx="4" />
+        <rect x="404" y="176" width="64" height="44" rx="4" />
+      </g>
       <g transform="translate(330 118)">
         <circle r="30" fill="#c0764a" fillOpacity="0.14" />
         <circle r="17" fill="#c0764a" fillOpacity="0.24" />
@@ -50,6 +63,7 @@ function LocationPlate() {
 }
 
 export function Contact() {
+  const [copied, setCopied] = useState(false);
   const [fields, setFields] = useState<Fields>({ name: '', email: '', topic: topics[0], message: '' });
   const [errors, setErrors] = useState<Partial<Record<keyof Fields, string>>>({});
   const [status, setStatus] = useState<Status>('idle');
@@ -91,6 +105,40 @@ export function Contact() {
             <div className="mt-10 overflow-hidden rounded-[24px] border border-line">
               <div className="aspect-16/10">
                 <LocationPlate />
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-3 border-t border-line bg-porcelain px-5 py-3.5">
+                <p className="text-[12.5px] text-muted">
+                  Complimentary valet at the gate · four patient bays behind the villa
+                </p>
+                <button
+                  onClick={async () => {
+                    try {
+                      await navigator.clipboard.writeText(`${clinic.address}, ${clinic.city}`);
+                      setCopied(true);
+                      window.setTimeout(() => setCopied(false), 2200);
+                    } catch {
+                      /* clipboard blocked — the address is written out just above */
+                    }
+                  }}
+                  className="inline-flex h-9 shrink-0 items-center gap-2 rounded-full border border-ink-900/15 px-4 text-[12.5px] font-medium text-ink-900 transition-colors hover:border-ink-900/40"
+                >
+                  {copied ? (
+                    <>
+                      <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 text-jade-700" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M3 8.5 6.2 12 13 4.5" />
+                      </svg>
+                      Address copied
+                    </>
+                  ) : (
+                    <>
+                      <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.4">
+                        <rect x="5" y="5" width="8.4" height="8.4" rx="2" />
+                        <path d="M11 3.2A2 2 0 0 0 9.2 2H4.6A2.6 2.6 0 0 0 2 4.6v4.6c0 .8.5 1.5 1.2 1.8" strokeLinecap="round" />
+                      </svg>
+                      Copy the address
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </Reveal>

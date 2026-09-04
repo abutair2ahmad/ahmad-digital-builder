@@ -4,21 +4,12 @@ import { clinic, services, staff } from '../../data/clinic';
 import { useBookings } from '../../store/useBookings';
 import { buildSlots, formatDateShort, minutesToLabel, nextDays, timeToMinutes } from '../../lib/time';
 
-const columns = [
-  {
-    title: 'Treatments',
-    links: services.map((s) => ({ label: s.name, href: '#treatments' })),
-  },
-  {
-    title: 'The atelier',
-    links: [
-      { label: 'Our approach', href: '#atelier' },
-      { label: 'Practitioners', href: '#practitioners' },
-      { label: 'Results', href: '#results' },
-      { label: 'How booking works', href: '#process' },
-      { label: 'Questions', href: '#faq' },
-    ],
-  },
+const atelierColumn = [
+  { label: 'Our approach', href: '#atelier' },
+  { label: 'Practitioners', href: '#practitioners' },
+  { label: 'Results', href: '#results' },
+  { label: 'How booking works', href: '#process' },
+  { label: 'Questions', href: '#faq' },
 ];
 
 function useNextOpening() {
@@ -38,11 +29,19 @@ function useNextOpening() {
   return null;
 }
 
-export function Footer({ onBook, onManage }: { onBook: () => void; onManage: () => void }) {
+export function Footer({
+  onBook,
+  onManage,
+  onBookService,
+}: {
+  onBook: () => void;
+  onManage: () => void;
+  onBookService: (serviceId: string) => void;
+}) {
   const nextOpening = useNextOpening();
 
   return (
-    <footer className="grain relative overflow-hidden bg-ink-950 pt-20 pb-10 text-porcelain">
+    <footer className="grain relative overflow-hidden bg-ink-950 pt-20 pb-24 text-porcelain">
       <div
         aria-hidden="true"
         className="absolute -top-40 left-1/2 h-[30rem] w-[52rem] -translate-x-1/2 opacity-20 blur-[140px]"
@@ -50,7 +49,17 @@ export function Footer({ onBook, onManage }: { onBook: () => void; onManage: () 
       />
 
       <div className="wrap relative">
-        <div className="flex flex-col gap-10 border-b border-porcelain/10 pb-14 lg:flex-row lg:items-end lg:justify-between">
+        <div className="relative flex flex-col gap-10 border-b border-porcelain/10 pb-14 lg:flex-row lg:items-end lg:justify-between">
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 200 200"
+            className="pointer-events-none absolute -top-6 right-[26%] hidden h-64 w-64 text-jade-300/10 lg:block"
+          >
+            {[96, 76, 56, 36].map((r) => (
+              <circle key={r} cx="100" cy="100" r={r} fill="none" stroke="currentColor" strokeWidth="1" />
+            ))}
+            <circle cx="100" cy="100" r="14" fill="currentColor" opacity="0.5" />
+          </svg>
           <div className="max-w-lg">
             <h2 className="text-[clamp(2rem,4vw,3rem)] text-porcelain">
               Your skin has a history.
@@ -101,23 +110,37 @@ export function Footer({ onBook, onManage }: { onBook: () => void; onManage: () 
             </p>
           </div>
 
-          {columns.map((col) => (
-            <nav key={col.title} aria-label={col.title}>
-              <p className="eyebrow text-jade-300">{col.title}</p>
-              <ul className="mt-5 space-y-2.5">
-                {col.links.map((l) => (
-                  <li key={l.label}>
-                    <a
-                      href={l.href}
-                      className="text-[13px] text-jade-100/55 transition-colors duration-300 hover:text-porcelain"
-                    >
-                      {l.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </nav>
-          ))}
+          <nav aria-label="Treatments">
+            <p className="eyebrow text-jade-300">Treatments</p>
+            <ul className="mt-5 space-y-2.5">
+              {services.map((s) => (
+                <li key={s.id}>
+                  <button
+                    onClick={() => onBookService(s.id)}
+                    className="text-left text-[13px] text-jade-100/55 transition-colors duration-300 hover:text-porcelain"
+                  >
+                    {s.name}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <nav aria-label="The atelier">
+            <p className="eyebrow text-jade-300">The atelier</p>
+            <ul className="mt-5 space-y-2.5">
+              {atelierColumn.map((l) => (
+                <li key={l.label}>
+                  <a
+                    href={l.href}
+                    className="text-[13px] text-jade-100/55 transition-colors duration-300 hover:text-porcelain"
+                  >
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
 
           <div>
             <p className="eyebrow text-jade-300">Opening hours</p>

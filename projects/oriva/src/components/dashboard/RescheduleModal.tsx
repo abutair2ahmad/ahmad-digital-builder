@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { Booking } from '../../store/bookings';
 import { services, staff } from '../../data/clinic';
+import type { Service, Staff } from '../../data/clinic';
 import { DateStrip } from '../booking/DateStrip';
 import { SlotGrid } from '../booking/SlotGrid';
 import { formatDateLong, minutesToLabel, timeToMinutes } from '../../lib/time';
@@ -14,13 +15,6 @@ interface Props {
 
 export function RescheduleModal({ booking, onClose, onConfirm }: Props) {
   const reduce = useReducedMotion();
-  const [date, setDate] = useState<string | null>(null);
-  const [time, setTime] = useState<string | null>(null);
-
-  useEffect(() => {
-    setDate(booking?.date ?? null);
-    setTime(null);
-  }, [booking]);
 
   useEffect(() => {
     if (!booking) return;
@@ -81,57 +75,87 @@ export function RescheduleModal({ booking, onClose, onConfirm }: Props) {
               </button>
             </div>
 
-            <div className="scroll-slim flex-1 overflow-y-auto px-6 py-6 sm:px-8">
-              <DateStrip
-                service={service}
-                member={member}
-                value={date}
-                onChange={(iso) => {
-                  setDate(iso);
-                  setTime(null);
-                }}
-                excludeBookingId={booking.id}
-              />
-
-              {date ? (
-                <div className="mt-8">
-                  <SlotGrid
-                    service={service}
-                    member={member}
-                    date={date}
-                    value={time}
-                    onChange={setTime}
-                    excludeBookingId={booking.id}
-                  />
-                </div>
-              ) : null}
-            </div>
-
-            <div className="flex items-center justify-between gap-4 border-t border-line bg-shell/60 px-6 py-4 sm:px-8">
-              <p className="text-[12.5px] text-muted">
-                {date && time
-                  ? `Moving to ${formatDateLong(date)}, ${minutesToLabel(timeToMinutes(time))}`
-                  : 'Pick a new date and time'}
-              </p>
-              <div className="flex gap-2">
-                <button
-                  onClick={onClose}
-                  className="inline-flex h-11 items-center rounded-full border border-ink-900/15 px-5 text-[13px] font-medium text-ink-900 transition-colors hover:border-ink-900/40"
-                >
-                  Cancel
-                </button>
-                <button
-                  disabled={!date || !time}
-                  onClick={() => date && time && onConfirm(date, time)}
-                  className="inline-flex h-11 items-center rounded-full bg-ink-900 px-5 text-[13px] font-medium text-porcelain transition-colors hover:bg-jade-900 disabled:opacity-40"
-                >
-                  Confirm new time
-                </button>
-              </div>
-            </div>
+            <Picker
+              key={booking.id}
+              booking={booking}
+              service={service}
+              member={member}
+              onClose={onClose}
+              onConfirm={onConfirm}
+            />
           </motion.div>
         </motion.div>
       ) : null}
     </AnimatePresence>
+  );
+}
+
+function Picker({
+  booking,
+  service,
+  member,
+  onClose,
+  onConfirm,
+}: {
+  booking: Booking;
+  service: Service;
+  member: Staff;
+  onClose: () => void;
+  onConfirm: (date: string, time: string) => void;
+}) {
+  const [date, setDate] = useState<string | null>(booking.date);
+  const [time, setTime] = useState<string | null>(null);
+
+  return (
+    <>
+      <div className="scroll-slim flex-1 overflow-y-auto px-6 py-6 sm:px-8">
+        <DateStrip
+          service={service}
+          member={member}
+          value={date}
+          onChange={(iso) => {
+            setDate(iso);
+            setTime(null);
+          }}
+          excludeBookingId={booking.id}
+        />
+
+        {date ? (
+          <div className="mt-8">
+            <SlotGrid
+              service={service}
+              member={member}
+              date={date}
+              value={time}
+              onChange={setTime}
+              excludeBookingId={booking.id}
+            />
+          </div>
+        ) : null}
+      </div>
+
+      <div className="flex items-center justify-between gap-4 border-t border-line bg-shell/60 px-6 py-4 sm:px-8">
+        <p className="text-[12.5px] text-muted">
+          {date && time
+            ? `Moving to ${formatDateLong(date)}, ${minutesToLabel(timeToMinutes(time))}`
+            : 'Pick a new date and time'}
+        </p>
+        <div className="flex gap-2">
+          <button
+            onClick={onClose}
+            className="inline-flex h-11 items-center rounded-full border border-ink-900/15 px-5 text-[13px] font-medium text-ink-900 transition-colors hover:border-ink-900/40"
+          >
+            Cancel
+          </button>
+          <button
+            disabled={!date || !time}
+            onClick={() => date && time && onConfirm(date, time)}
+            className="inline-flex h-11 items-center rounded-full bg-ink-900 px-5 text-[13px] font-medium text-porcelain transition-colors hover:bg-jade-900 disabled:opacity-40"
+          >
+            Confirm new time
+          </button>
+        </div>
+      </div>
+    </>
   );
 }

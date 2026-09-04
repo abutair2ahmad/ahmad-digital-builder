@@ -30,6 +30,7 @@ export function Testimonials() {
   }, [paused, reduce, go]);
 
   const active = testimonials[index];
+  const autoplaying = !paused && !reduce;
 
   return (
     <section
@@ -105,10 +106,20 @@ export function Testimonials() {
                   aria-selected={i === index}
                   aria-label={`Review ${i + 1} of ${count}`}
                   onClick={() => setIndex(i)}
-                  className={`h-1.5 rounded-full transition-all duration-500 ${
-                    i === index ? 'w-8 bg-copper-400' : 'w-1.5 bg-porcelain/25 hover:bg-porcelain/50'
+                  className={`relative h-1.5 overflow-hidden rounded-full transition-all duration-500 ${
+                    i === index ? 'w-8 bg-porcelain/25' : 'w-1.5 bg-porcelain/25 hover:bg-porcelain/50'
                   }`}
-                />
+                >
+                  {i === index ? (
+                    <motion.span
+                      key={`${index}-${autoplaying}`}
+                      className="absolute inset-y-0 left-0 rounded-full bg-copper-400"
+                      initial={{ width: autoplaying ? '0%' : '100%' }}
+                      animate={{ width: '100%' }}
+                      transition={{ duration: autoplaying ? 7 : 0, ease: 'linear' }}
+                    />
+                  ) : null}
+                </button>
               ))}
             </div>
 

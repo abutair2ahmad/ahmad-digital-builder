@@ -13,7 +13,7 @@ import {
   timeToMinutes,
 } from '../../lib/time';
 import { useBookings } from '../../store/useBookings';
-import type { Booking } from '../../store/bookings';
+import { occupiedRanges, type Booking } from '../../store/bookings';
 import { validateField, validateForm, type ContactForm, type FormErrors } from '../../lib/validate';
 import { bookingToICS, downloadICS } from '../../lib/ics';
 import { Stepper } from './Stepper';
@@ -32,11 +32,29 @@ export interface BookingWizardProps {
 
 const emptyForm: ContactForm = { name: '', phone: '', email: '', notes: '' };
 
+/** The earliest free slot across every practitioner licensed for a treatment. */
+function findFirstAvailable(
+  service: Service,
+  qualified: Staff[],
+  bookings: Booking[],
+  days: string[],
+) {
+  for (const iso of days) {
+    for (const member of qualified) {
+      const free = buildSlots(service, member, iso, occupiedRanges(bookings, member.id, iso)).find(
+        (slot) => slot.available,
+      );
+      if (free) return { member, date: iso, time: free.time };
+    }
+  }
+  return null;
+}
+
 export const BookingWizard = forwardRef<BookingWizardHandle, BookingWizardProps>(function BookingWizard(
   { onManage },
   ref,
 ) {
-  const { create, occupiedFor } = useBookings();
+  const { bookings, create, occupiedFor } = useBookings();
   const reduce = useReducedMotion();
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -50,6 +68,9 @@ export const BookingWizard = forwardRef<BookingWizardHandle, BookingWizardProps>
   const [errors, setErrors] = useState<FormErrors>({});
   const [submitting, setSubmitting] = useState(false);
   const [confirmed, setConfirmed] = useState<Booking | null>(null);
+  // The bookable window is fixed when the wizard mounts, so availability scans
+  // stay stable across renders.
+  const [window21] = useState(() => nextDays(21));
 
   const service = useMemo(() => services.find((s) => s.id === serviceId) ?? null, [serviceId]);
   const member = useMemo(() => staff.find((s) => s.id === staffId) ?? null, [staffId]);
@@ -95,17 +116,9 @@ export const BookingWizard = forwardRef<BookingWizardHandle, BookingWizardProps>
     },
   }));
 
-  /** "First available" — scans every qualified practitioner for the earliest free slot. */
-  const firstAvailable = useMemo(() => {
-    if (!service) return null;
-    for (const iso of nextDays(21)) {
-      for (const s of qualified) {
-        const free = buildSlots(service, s, iso, occupiedFor(s.id, iso)).find((x) => x.available);
-        if (free) return { member: s, date: iso, time: free.time };
-      }
-    }
-    return null;
-  }, [service, qualified, occupiedFor]);
+  // Only step 2 offers "first available", so the scan runs only there.
+  const firstAvailable =
+    step === 2 && service ? findFirstAvailable(service, qualified, bookings, window21) : null;
 
   function selectService(id: string) {
     setServiceId(id);

@@ -1,4 +1,4 @@
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { ReactNode } from 'react';
 import {
   buildSeedBookings,
@@ -9,19 +9,8 @@ import {
   type BookingStatus,
   type PersistedState,
 } from './bookings';
+import { BookingContext, type BookingContextValue } from './BookingContext';
 import { todayISO } from '../lib/time';
-
-export interface BookingContextValue {
-  bookings: Booking[];
-  create: (input: Omit<Booking, 'id' | 'createdAt' | 'demo' | 'status'>) => Booking;
-  setStatus: (id: string, status: BookingStatus) => void;
-  reschedule: (id: string, date: string, time: string) => void;
-  remove: (id: string) => void;
-  occupiedFor: (staffId: string, date: string) => { start: number; end: number }[];
-  resetDemo: () => void;
-}
-
-export const BookingContext = createContext<BookingContextValue | null>(null);
 
 function read(): Booking[] {
   const today = todayISO();

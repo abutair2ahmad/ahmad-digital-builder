@@ -18,26 +18,6 @@ const sources: Booking['source'][] = ['Phone', 'Walk-in', 'Online'];
 /** Front-desk booking — the same availability rules as the public site. */
 export function NewBookingModal({ open, onClose, onCreate }: Props) {
   const reduce = useReducedMotion();
-  const [serviceId, setServiceId] = useState(services[0].id);
-  const [staffId, setStaffId] = useState<string | null>(null);
-  const [date, setDate] = useState<string | null>(null);
-  const [time, setTime] = useState<string | null>(null);
-  const [source, setSource] = useState<Booking['source']>('Phone');
-  const [form, setForm] = useState({ name: '', phone: '', email: '', notes: '' });
-  const [errors, setErrors] = useState<{ name?: string; phone?: string; slot?: string }>({});
-
-  const service = services.find((s) => s.id === serviceId)!;
-  const qualified = useMemo(() => staff.filter((s) => s.serviceIds.includes(serviceId)), [serviceId]);
-  const member = qualified.find((s) => s.id === staffId) ?? null;
-
-  // Keep the practitioner valid whenever the treatment changes.
-  useEffect(() => {
-    if (!qualified.some((s) => s.id === staffId)) {
-      setStaffId(qualified[0]?.id ?? null);
-      setDate(null);
-      setTime(null);
-    }
-  }, [qualified, staffId]);
 
   useEffect(() => {
     if (!open) return;
@@ -51,17 +31,56 @@ export function NewBookingModal({ open, onClose, onCreate }: Props) {
     };
   }, [open, onClose]);
 
-  useEffect(() => {
-    if (open) {
-      setServiceId(services[0].id);
-      setStaffId(null);
-      setDate(null);
-      setTime(null);
-      setSource('Phone');
-      setForm({ name: '', phone: '', email: '', notes: '' });
-      setErrors({});
-    }
-  }, [open]);
+  return (
+    <AnimatePresence>
+      {open ? (
+        <motion.div
+          className="fixed inset-0 z-70 flex items-end justify-center sm:items-center sm:p-6"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+        >
+          <button aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink-950/55 backdrop-blur-sm" />
+
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="New appointment"
+            initial={{ y: reduce ? 0 : 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: reduce ? 0 : 30, opacity: 0 }}
+            transition={{ duration: reduce ? 0.15 : 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[28px] bg-porcelain shadow-2xl sm:rounded-[28px]"
+          >
+            <NewBookingForm onClose={onClose} onCreate={onCreate} />
+          </motion.div>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
+function NewBookingForm({
+  onClose,
+  onCreate,
+}: {
+  onClose: () => void;
+  onCreate: Props['onCreate'];
+}) {
+  const [serviceId, setServiceId] = useState(services[0].id);
+  const [staffId, setStaffId] = useState<string | null>(null);
+  const [date, setDate] = useState<string | null>(null);
+  const [time, setTime] = useState<string | null>(null);
+  const [source, setSource] = useState<Booking['source']>('Phone');
+  const [form, setForm] = useState({ name: '', phone: '', email: '', notes: '' });
+  const [errors, setErrors] = useState<{ name?: string; phone?: string; slot?: string }>({});
+
+  const service = services.find((s) => s.id === serviceId)!;
+  const qualified = useMemo(() => staff.filter((s) => s.serviceIds.includes(serviceId)), [serviceId]);
+  // Derived rather than synced: changing the treatment falls back to the first
+  // practitioner licensed for it, with no effect round-trip.
+  const member = qualified.find((s) => s.id === staffId) ?? qualified[0] ?? null;
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
@@ -94,27 +113,7 @@ export function NewBookingModal({ open, onClose, onCreate }: Props) {
     'mt-1.5 h-11 w-full rounded-xl border bg-porcelain px-3.5 text-[13.5px] text-ink-900 transition-colors placeholder:text-muted/45 focus:bg-white';
 
   return (
-    <AnimatePresence>
-      {open ? (
-        <motion.div
-          className="fixed inset-0 z-70 flex items-end justify-center sm:items-center sm:p-6"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.25 }}
-        >
-          <button aria-label="Close" onClick={onClose} className="absolute inset-0 bg-ink-950/55 backdrop-blur-sm" />
-
-          <motion.div
-            role="dialog"
-            aria-modal="true"
-            aria-label="New appointment"
-            initial={{ y: reduce ? 0 : 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: reduce ? 0 : 30, opacity: 0 }}
-            transition={{ duration: reduce ? 0.15 : 0.45, ease: [0.22, 1, 0.36, 1] }}
-            className="relative flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-t-[28px] bg-porcelain shadow-2xl sm:rounded-[28px]"
-          >
+    <>
             <div className="flex items-start justify-between gap-4 border-b border-line px-6 py-5 sm:px-8">
               <div>
                 <p className="eyebrow text-copper-600">Front desk</p>
@@ -161,7 +160,7 @@ export function NewBookingModal({ open, onClose, onCreate }: Props) {
                   </label>
                   <select
                     id="nb-staff"
-                    value={staffId ?? ''}
+                    value={member?.id ?? ''}
                     onChange={(e) => {
                       setStaffId(e.target.value);
                       setDate(null);
@@ -326,9 +325,6 @@ export function NewBookingModal({ open, onClose, onCreate }: Props) {
                 </button>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
+    </>
   );
 }

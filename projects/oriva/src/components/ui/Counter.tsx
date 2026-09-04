@@ -25,13 +25,10 @@ export function Counter({
   const ref = useRef<HTMLSpanElement>(null);
   const inView = useInView(ref, { once: true, amount: 0.6 });
   const reduce = useReducedMotion();
-  const [display, setDisplay] = useState(reduce ? value : 0);
+  const [display, setDisplay] = useState(0);
 
   useEffect(() => {
-    if (!inView || reduce) {
-      if (reduce) setDisplay(value);
-      return;
-    }
+    if (!inView || reduce) return;
     let frame = 0;
     const start = performance.now();
     const tick = (now: number) => {
@@ -45,7 +42,10 @@ export function Counter({
     return () => cancelAnimationFrame(frame);
   }, [inView, reduce, value, duration]);
 
-  const formatted = display.toLocaleString('en-US', {
+  // Reduced motion gets the final figure straight away, with no animation.
+  const shown = reduce ? value : display;
+
+  const formatted = shown.toLocaleString('en-US', {
     minimumFractionDigits: decimals,
     maximumFractionDigits: decimals,
   });

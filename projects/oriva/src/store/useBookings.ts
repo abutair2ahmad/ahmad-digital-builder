@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { BookingContext } from './BookingProvider';
+import { BookingContext } from './BookingContext';
 
 export function useBookings() {
   const ctx = useContext(BookingContext);

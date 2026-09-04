@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useMemo, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'motion/react';
 import { Logo } from '../components/layout/Logo';
@@ -41,11 +41,12 @@ export default function Dashboard() {
   const [toasts, setToasts] = useState<ToastMessage[]>([]);
   const [rescheduling, setRescheduling] = useState<Booking | null>(null);
   const [creating, setCreating] = useState(false);
+  const toastId = useRef(0);
 
   const today = todayISO();
 
   function toast(text: string, tone: ToastMessage['tone'] = 'default', action?: ToastMessage['action']) {
-    const id = Date.now() + Math.random();
+    const id = (toastId.current += 1);
     setToasts((t) => [...t, { id, text, tone, action }]);
     window.setTimeout(() => setToasts((t) => t.filter((x) => x.id !== id)), 5200);
   }
@@ -84,6 +85,10 @@ export default function Dashboard() {
   }, [sorted, view, query, today, staffFilter]);
 
   const todays = useMemo(() => bookings.filter((b) => b.date === today), [bookings, today]);
+
+  // Searching always shows the list — a query would otherwise vanish behind the
+  // schedule grid, which has nowhere to put results.
+  const showSchedule = view === 'schedule' && !query;
 
   const kpis = useMemo(() => {
     const live = todays.filter((b) => b.status !== 'cancelled');
@@ -277,7 +282,7 @@ export default function Dashboard() {
             ) : null}
           </div>
 
-          {view !== 'schedule' ? (
+          {!showSchedule ? (
             <div className="mt-3 flex flex-wrap items-center gap-2">
               <span className="text-[12px] text-muted">Practitioner</span>
               <button
@@ -308,7 +313,7 @@ export default function Dashboard() {
             </div>
           ) : null}
 
-          {view === 'schedule' ? (
+          {showSchedule ? (
             <div className="mt-5">
               <DaySchedule
                 date={today}

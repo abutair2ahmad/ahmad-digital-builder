@@ -15,6 +15,7 @@ import { Faq } from '../components/sections/Faq';
 import { Contact } from '../components/sections/Contact';
 import type { BookingWizardHandle } from '../components/booking/BookingWizard';
 import { ManageBooking } from '../components/booking/ManageBooking';
+import { MobileBookBar } from '../components/layout/MobileBookBar';
 
 export default function Home() {
   const wizard = useRef<BookingWizardHandle>(null);
@@ -50,9 +51,14 @@ export default function Home() {
         <Contact />
       </main>
 
-      <Footer onBook={book} onManage={() => setManageRef('')} />
+      <Footer
+        onBook={book}
+        onManage={() => setManageRef('')}
+        onBookService={bookService}
+      />
 
       <ManageBooking reference={manageRef} onClose={() => setManageRef(null)} />
+      <MobileBookBar onBook={book} />
     </>
   );
 }
