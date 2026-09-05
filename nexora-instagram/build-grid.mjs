@@ -1,0 +1,11 @@
+import pw from '/opt/node22/lib/node_modules/playwright/index.js';
+const { chromium } = pw;
+const DIR = '/home/user/ahmad-digital-builder/nexora-instagram';
+const b = await chromium.launch();
+const ctx = await b.newContext({ viewport: { width: 1128, height: 1200 }, deviceScaleFactor: 1 });
+const p = await ctx.newPage();
+await p.goto(`file://${DIR}/grid.html`, { waitUntil: 'load' });
+await p.waitForTimeout(1200);
+await p.locator('.wrap').screenshot({ path: `${DIR}/out/grid-preview.png` });
+console.log('✓ grid');
+await b.close();

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>NEXORA — 05</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .grid { display: flex; gap: 40px; flex: 1; align-items: center; }
+  .col-l { flex: 1; padding-top: 4px; }
+  .headline--sm { margin-top: 28px; max-width: 13ch; font-size: 60px; }
+  .lede { margin-top: 26px; max-width: 22ch; font-size: 24px; }
+  .tags { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 32px; max-width: 470px; }
+  .tags .chip { font-size: 16px; padding: 9px 18px; }
+
+  /* a store UI drawn in NEXORA's own tokens — a sample interface, not a client store */
+  .ui { width: 402px; flex: none; display: flex; flex-direction: column; gap: 16px; margin-top: 4px; }
+  .card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius-tile);
+    background: linear-gradient(180deg, #171D1B 0%, #121716 100%);
+    padding: 22px;
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,0.9);
+  }
+  .card__label { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: #6a746f; }
+  .prod { display: flex; gap: 18px; align-items: center; margin-top: 16px; }
+  .thumb {
+    width: 86px; height: 86px; border-radius: 10px; flex: none;
+    background: radial-gradient(circle at 34% 30%, rgba(127,203,172,0.42), rgba(31,92,74,0.30) 55%, #101514 78%);
+    border: 1px solid var(--line);
+  }
+  .prod__name { font-size: 21px; font-weight: 500; letter-spacing: -0.01em; }
+  .prod__meta { font-size: 15px; color: var(--muted); margin-top: 4px; }
+  .prod__price { margin-left: auto; font-size: 22px; font-weight: 500; }
+
+  .row { display: flex; justify-content: space-between; font-size: 16px; color: var(--muted); padding: 9px 0; }
+  .row--total { color: var(--text); font-size: 20px; font-weight: 500; border-top: 1px solid var(--line); margin-top: 8px; padding-top: 16px; }
+  .pay {
+    margin-top: 18px; height: 52px; border-radius: 999px;
+    background: linear-gradient(100deg, #7FCBAC 0%, #58AC8F 100%);
+    color: #0E1211; font-size: 18px; font-weight: 600; letter-spacing: 0.02em;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 0 40px -8px rgba(127,203,172,0.45);
+  }
+  .stat { display: flex; gap: 26px; margin-top: 4px; }
+  .stat__v { font-size: 26px; font-weight: 500; }
+  .stat__k { font-size: 14px; color: var(--muted); letter-spacing: 0.06em; }
+  .bar { height: 4px; border-radius: 999px; background: #1d2523; margin-top: 14px; overflow: hidden; }
+  .bar > i { display: block; height: 100%; width: 68%; background: linear-gradient(90deg, #1F5C4A, #7FCBAC); }
+</style></head>
+<body>
+<div class="post">
+  <div class="glow glow--a"></div>
+  <div class="glow glow--b"></div>
+  <div class="mesh"></div>
+
+  <div class="layer">
+    <div class="grid">
+      <div class="col-l">
+        <span class="eyebrow"><span class="num">05</span> E-commerce &amp; Shopify</span>
+        <h1 class="headline--sm">Stores built<br>to <span class="grad">sell.</span></h1>
+        <p class="lede">Product pages, cart and checkout — designed around the buying decision, not the theme.</p>
+        <div class="tags">
+          <span class="chip">Shopify</span>
+          <span class="chip">Custom storefronts</span>
+          <span class="chip">Checkout flow</span>
+          <span class="chip">Product pages</span>
+          <span class="chip">Speed</span>
+        </div>
+        <hr class="rule" style="margin:40px 0 26px; max-width:420px;">
+        <p style="font-size:27px; font-weight:500; letter-spacing:-0.02em; line-height:1.3; max-width:15ch;">
+          Shopify is a tool.<br><span class="muted">Not the studio.</span>
+        </p>
+      </div>
+
+      <div class="ui">
+        <div class="card">
+          <span class="card__label">Product</span>
+          <div class="prod">
+            <div class="thumb"></div>
+            <div>
+              <div class="prod__name">Signature Set</div>
+              <div class="prod__meta">In stock · 2 variants</div>
+            </div>
+            <div class="prod__price">AED 420</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <span class="card__label">Checkout</span>
+          <div style="margin-top:12px">
+            <div class="row"><span>Subtotal</span><span>AED 420</span></div>
+            <div class="row"><span>Shipping</span><span>Free</span></div>
+            <div class="row row--total"><span>Total</span><span>AED 420</span></div>
+          </div>
+          <div class="pay">Complete order</div>
+        </div>
+
+        <div class="card">
+          <span class="card__label">Conversion</span>
+          <div class="stat" style="margin-top:14px">
+            <div><div class="stat__v">3 steps</div><div class="stat__k">cart to paid</div></div>
+            <div><div class="stat__v">&lt; 1s</div><div class="stat__k">page load target</div></div>
+          </div>
+          <div class="bar"><i></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span class="caption">Sample interface — built in NEXORA's design system</span>
+      <span class="wordmark wordmark--muted">NEXORA</span>
+    </div>
+  </div>
+</div>
+</body></html>

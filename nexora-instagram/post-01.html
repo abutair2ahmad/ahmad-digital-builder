@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>NEXORA — 01</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .post { justify-content: center; }
+  .orb {
+    position: absolute;
+    width: 620px; height: 620px;
+    top: 118px; left: 50%; transform: translateX(-50%);
+    border-radius: 50%;
+    background:
+      radial-gradient(circle at 38% 32%, rgba(166,220,197,0.30) 0%, rgba(127,203,172,0.16) 26%, rgba(31,92,74,0.16) 52%, transparent 70%);
+    z-index: 1;
+  }
+  .ring {
+    position: absolute;
+    top: 118px; left: 50%; transform: translateX(-50%);
+    width: 620px; height: 620px;
+    border-radius: 50%;
+    border: 1px solid rgba(127,203,172,0.16);
+    z-index: 1;
+  }
+  .ring--2 { width: 830px; height: 830px; top: 13px; border-color: rgba(127,203,172,0.09); }
+  .stack { align-items: center; text-align: center; justify-content: center; }
+  .mark {
+    font-size: 118px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    line-height: 1;
+    direction: ltr;
+    padding-left: 0.16em;
+  }
+  .sub {
+    margin-top: 26px;
+    font-size: 25px;
+    letter-spacing: 0.34em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 400;
+    direction: ltr;
+  }
+  .line-rule { width: 96px; height: 1px; background: rgba(127,203,172,0.45); margin: 46px auto 44px; }
+  .claim { font-size: 58px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.14; }
+  .services {
+    position: absolute;
+    left: 72px; right: 72px; bottom: 128px;
+    display: flex; flex-wrap: wrap; gap: 12px; justify-content: center;
+    z-index: 2;
+  }
+  .services .chip { font-size: 16px; padding: 9px 18px; letter-spacing: 0.06em; }
+</style></head>
+<body>
+<div class="post">
+  <div class="glow glow--a"></div>
+  <div class="glow glow--b"></div>
+  <div class="mesh"></div>
+  <div class="orb"></div>
+  <div class="ring"></div>
+  <div class="ring ring--2"></div>
+
+  <div class="layer stack">
+    <div class="mark grad">NEXORA</div>
+    <div class="sub">Digital Studio</div>
+    <div class="line-rule"></div>
+    <div class="claim">Websites, apps<br>&amp; systems.</div>
+  </div>
+
+  <div class="services">
+    <span class="chip">Custom Websites</span>
+    <span class="chip">Web Applications</span>
+    <span class="chip">Booking Systems</span>
+    <span class="chip">SaaS Products</span>
+    <span class="chip">Admin Dashboards</span>
+    <span class="chip">E-commerce</span>
+    <span class="chip">Shopify</span>
+    <span class="chip">Business Systems</span>
+    <span class="chip">Landing Pages</span>
+    <span class="chip">Automation</span>
+  </div>
+
+  <div class="foot" style="position:absolute; left:72px; right:72px; bottom:56px; z-index:2;">
+    <span class="wordmark wordmark--muted">NEXORA</span>
+    <span class="foot__handle">bynexora.co</span>
+  </div>
+</div>
+</body></html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>NEXORA — 08</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .top { display: flex; align-items: center; justify-content: space-between; }
+  .meta { margin-top: 30px; }
+  .name { font-size: 62px; font-weight: 600; letter-spacing: 0.10em; direction: ltr; }
+  .type { margin-top: 8px; font-size: 21px; letter-spacing: 0.06em; color: var(--accent); }
+  .desc { margin-top: 14px; font-size: 22px; color: var(--muted); max-width: 34ch; font-weight: 300; line-height: 1.5; }
+
+  .stage { position: relative; flex: 1; }
+
+  .browser { position: absolute; right: -78px; bottom: 6px; width: 700px; }
+  .browser__view { position: relative; height: 360px;
+    background-image: url('shots/nacre-hero-desktop.png');
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  .browser__view::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(14,18,17,0) 80%, rgba(14,18,17,0.30) 100%);
+  }
+  .phone { position: absolute; left: 0; bottom: -12px; width: 250px; z-index: 3; }
+  .phone__screen { height: 476px; }
+  .phone__screen .shot {
+    width: 100%; height: 100%;
+    background-image: url('shots/nacre-booking-mobile.png');
+    background-size: 106% auto;
+    background-position: center -40px;
+    background-repeat: no-repeat;
+  }
+  .phone__notch { width: 80px; height: 20px; top: 10px; }
+  .stack { display: flex; gap: 10px; margin-top: 22px; }
+  .stack .chip { font-size: 16px; padding: 9px 17px; }
+</style></head>
+<body>
+<div class="post">
+  <div class="glow glow--a"></div>
+  <div class="glow glow--b"></div>
+  <div class="mesh"></div>
+
+  <div class="layer">
+    <div class="top">
+      <span class="eyebrow"><span class="num">08</span> Featured Project</span>
+      <span class="chip chip--accent"><span class="dot"></span>Web App · Booking Engine</span>
+    </div>
+
+    <div class="meta">
+      <div class="name">NACRE</div>
+      <div class="type">Cosmetic Dentistry — Dubai</div>
+      <p class="desc">Seven-step booking, patient self-service and the clinic diary, on one source of truth.</p>
+      <div class="stack">
+        <span class="chip">No double booking</span>
+        <span class="chip">Clinic dashboard</span>
+        <span class="chip">Reschedule by link</span>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser__bar">
+          <span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span>
+          <span class="browser__url">nacre.clinic</span>
+        </div>
+        <div class="browser__view"></div>
+      </div>
+
+      <div class="phone">
+        <div class="phone__screen">
+          <div class="phone__notch"></div>
+          <div class="shot"></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="foot">
+      <span class="caption">Portfolio build</span>
+      <span class="wordmark wordmark--muted">NEXORA</span>
+    </div>
+  </div>
+</div>
+</body></html>

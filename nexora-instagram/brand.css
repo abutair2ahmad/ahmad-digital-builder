@@ -1,0 +1,286 @@
+/* NEXORA — Instagram post system (1080×1080)
+   Identity is inherited, not invented:
+   colours, type, radii and motion language come straight from the
+   bynexora.co / Ahmad Digital Builder token set (styles.css, fonts.css).
+
+   --ink      #0E1211  dark theme background
+   --surface  #161B19  dark theme surface
+   --line     #262D2A  dark theme hairline
+   --text     #ECEAE3  dark theme text
+   --muted    #A0A9A4  dark theme muted
+   --accent   #7FCBAC  dark theme accent
+   --deep     #1F5C4A  light theme accent (used as the gradient's deep end)
+*/
+
+@import url('../fonts.css');
+
+:root {
+  --ink:      #0E1211;
+  --surface:  #161B19;
+  --line:     #262D2A;
+  --text:     #ECEAE3;
+  --muted:    #A0A9A4;
+  --accent:   #7FCBAC;
+  --deep:     #1F5C4A;
+  --accent-soft: #182521;
+  --radius-tile: 14px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 1080px; height: 1080px; }
+
+body {
+  background: var(--ink);
+  color: var(--text);
+  font-family: 'IBM Plex Sans Arabic', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+
+/* ---------- canvas ---------- */
+
+.post {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  overflow: hidden;
+  background: var(--ink);
+  padding: 72px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* the glow: the same accent, radial, low alpha — never a second hue */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(0.5px);
+}
+.glow--a {
+  width: 900px; height: 900px;
+  top: -300px; right: -260px;
+  background: radial-gradient(circle at center,
+    rgba(127,203,172,0.20) 0%,
+    rgba(127,203,172,0.09) 34%,
+    rgba(31,92,74,0.05) 56%,
+    transparent 72%);
+}
+.glow--b {
+  width: 760px; height: 760px;
+  bottom: -320px; left: -240px;
+  background: radial-gradient(circle at center,
+    rgba(31,92,74,0.28) 0%,
+    rgba(31,92,74,0.12) 42%,
+    transparent 70%);
+}
+
+/* a hairline grid, barely there — the "technical" register */
+.mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(236,234,227,0.030) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236,234,227,0.030) 1px, transparent 1px);
+  background-size: 90px 90px;
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 20%, transparent 78%);
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 20%, transparent 78%);
+}
+
+.layer { position: relative; z-index: 2; display: flex; flex-direction: column; height: 100%; }
+
+/* ---------- brand furniture ---------- */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.eyebrow .num { color: var(--accent); }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 11px 22px;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.chip--accent {
+  border-color: rgba(127,203,172,0.42);
+  color: var(--accent);
+  background: rgba(127,203,172,0.07);
+}
+.dot { width: 9px; height: 9px; border-radius: 50%; background: var(--accent); flex: none; }
+
+.wordmark {
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.30em;
+  color: var(--text);
+  direction: ltr;
+}
+.wordmark--muted { color: var(--muted); font-weight: 500; }
+
+.foot {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding-top: 34px;
+}
+.foot__handle {
+  font-size: 21px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  direction: ltr;
+}
+.rule { height: 1px; background: var(--line); border: 0; }
+
+/* ---------- type ---------- */
+
+h1, h2, h3 { font-weight: 600; letter-spacing: -0.025em; line-height: 1.08; }
+
+.display   { font-size: 92px; }
+.headline  { font-size: 76px; }
+.headline--sm { font-size: 62px; }
+.title     { font-size: 46px; letter-spacing: -0.02em; }
+
+.grad {
+  background: linear-gradient(105deg, #E6F7EF 0%, #A9E0C9 32%, #7FCBAC 68%, #58AC8F 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.accent { color: var(--accent); }
+.muted  { color: var(--muted); }
+
+.lede {
+  font-size: 26px;
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 26ch;
+  font-weight: 300;
+}
+
+/* ---------- device mockups (built from the same radii + hairlines) ---------- */
+
+.shot { background-size: cover; background-position: top center; background-repeat: no-repeat; }
+
+/* laptop */
+.laptop { position: relative; display: flex; flex-direction: column; align-items: center; }
+.laptop__lid {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 18px;
+  padding: 12px;
+  box-shadow: 0 60px 120px -40px rgba(0,0,0,0.85), 0 0 0 1px rgba(127,203,172,0.06);
+}
+.laptop__screen {
+  border-radius: 9px;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  outline: 1px solid rgba(236,234,227,0.06);
+  outline-offset: -1px;
+}
+.laptop__base {
+  height: 15px;
+  border-radius: 0 0 16px 16px;
+  background: linear-gradient(180deg, #1d2422 0%, #111615 100%);
+  border: 1px solid var(--line);
+  border-top: 0;
+}
+.laptop__notch {
+  width: 108px; height: 6px; margin: 0 auto;
+  border-radius: 0 0 8px 8px;
+  background: #0b100f;
+}
+
+/* phone */
+.phone {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 46px;
+  padding: 10px;
+  box-shadow: 0 50px 110px -35px rgba(0,0,0,0.9), 0 0 0 1px rgba(127,203,172,0.07);
+}
+.phone__screen {
+  position: relative;
+  border-radius: 38px;
+  overflow: hidden;
+  background: #fff;
+}
+.phone__notch {
+  position: absolute;
+  top: 12px; left: 50%; transform: translateX(-50%);
+  width: 104px; height: 26px;
+  border-radius: 999px;
+  background: #0E1211;
+  z-index: 3;
+}
+
+/* browser window */
+.browser {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 60px 120px -45px rgba(0,0,0,0.9), 0 0 0 1px rgba(127,203,172,0.06);
+}
+.browser__bar {
+  height: 46px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 0 18px;
+  border-bottom: 1px solid var(--line);
+  background: #121817;
+}
+.browser__dot { width: 11px; height: 11px; border-radius: 50%; background: #2b3431; }
+.browser__url {
+  margin-left: 14px;
+  height: 24px;
+  flex: 1;
+  border-radius: 999px;
+  background: #0f1413;
+  border: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  font-size: 13px;
+  letter-spacing: 0.06em;
+  color: #5f6a66;
+  direction: ltr;
+}
+
+/* a cropped UI detail, floated over a mockup */
+.detail {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  overflow: hidden;
+  background: var(--surface);
+  box-shadow: 0 40px 80px -30px rgba(0,0,0,0.9);
+}
+
+.caption {
+  font-size: 19px;
+  letter-spacing: 0.03em;
+  color: var(--muted);
+  font-weight: 300;
+}

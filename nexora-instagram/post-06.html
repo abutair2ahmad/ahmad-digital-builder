@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>NEXORA — 06</title>
+<link rel="stylesheet" href="brand.css">
+<style>
+  .headline--sm { margin-top: 30px; max-width: 14ch; font-size: 60px; }
+  .lede { margin-top: 24px; max-width: 24ch; font-size: 23px; }
+
+  .kpi {
+    position: absolute; left: 28px; bottom: 84px; z-index: 4;
+    width: 480px; height: 111px;
+    background-image: url('shots/oriva-dashboard-desktop.png');
+    background-size: 1252px auto;
+    background-position: -250px -145px;
+    background-repeat: no-repeat;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-tile);
+    box-shadow: 0 30px 70px -30px rgba(0,0,0,0.9);
+  }
+  .kpi__tag { position: absolute; left: 32px; bottom: 214px; z-index: 4; font-size: 15px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+
+  .win {
+    position: absolute;
+    left: 132px; right: -96px; bottom: -74px;
+    border: 1px solid var(--line);
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+    background: var(--surface);
+    box-shadow: 0 -20px 120px -50px rgba(127,203,172,0.35), 0 40px 120px -40px rgba(0,0,0,0.95);
+  }
+  .win__bar {
+    height: 44px; display: flex; align-items: center; gap: 9px; padding: 0 18px;
+    border-bottom: 1px solid var(--line); background: #121817;
+  }
+  .win__view {
+    position: relative;
+    height: 500px;
+    background-image: url('shots/oriva-dashboard-desktop.png');
+    background-size: 100% auto;
+    background-position: center top;
+    background-repeat: no-repeat;
+  }
+  .win__view::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(14,18,17,0) 62%, rgba(14,18,17,0.38) 100%);
+  }
+</style></head>
+<body>
+<div class="post">
+  <div class="glow glow--a"></div>
+  <div class="glow glow--b"></div>
+  <div class="mesh"></div>
+
+  <div class="layer">
+    <div style="display:flex; align-items:center; justify-content:space-between;">
+      <span class="eyebrow"><span class="num">06</span> Admin Dashboards</span>
+      <span class="wordmark wordmark--muted">NEXORA</span>
+    </div>
+    <h1 class="headline--sm">Custom systems.<br>Built for <span class="grad">your business.</span></h1>
+    <p class="lede">The screen your team actually works in — today's schedule, revenue, and one click to confirm.</p>
+    <p class="caption" style="margin-top:22px;">ORIVA — front desk</p>
+
+    <span class="kpi__tag">Live KPIs</span>
+    <div class="kpi"></div>
+
+    <div class="win">
+      <div class="win__bar">
+        <span class="browser__dot"></span><span class="browser__dot"></span><span class="browser__dot"></span>
+        <span class="browser__url">oriva.clinic / dashboard</span>
+      </div>
+      <div class="win__view"></div>
+    </div>
+  </div>
+</div>
+</body></html>
