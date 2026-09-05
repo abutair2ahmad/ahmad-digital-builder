@@ -1,0 +1,7 @@
+# secrets — never commit a filled-in env file
+.env
+.env.*
+!.env.example
+
+# publisher run state (local audit log of what went out)
+nexora-instagram/publish/state.json
