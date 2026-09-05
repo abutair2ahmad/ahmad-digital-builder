@@ -1,0 +1,13 @@
+{
+  "name": "movewell-instagram-publish",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Local Instagram publisher for @movewell.il. Dry-run by default, no dependencies.",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "check": "node src/index.mjs --check",
+    "next": "node src/index.mjs --next",
+    "post": "node src/index.mjs --post"
+  }
+}

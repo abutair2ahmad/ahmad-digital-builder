@@ -1,0 +1,10 @@
+# Never commit credentials
+.env
+.env.*
+!.env.example
+
+# Local publish state (contains account id and media ids)
+state/*.json
+state/*.tmp
+
+node_modules/
