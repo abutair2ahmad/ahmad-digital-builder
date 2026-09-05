@@ -488,6 +488,126 @@ html[lang="en"] .hero__title {
   .work__body { padding: 22px 22px 26px; gap: 12px; }
 }
 
+/* ---------- my store: one featured commercial project ---------- */
+
+.section--store {
+  background: var(--accent-soft);
+  border-block: 1px solid var(--line);
+  transition: background-color .35s var(--ease);
+}
+
+.store {
+  display: grid;
+  grid-template-columns: 1fr;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  overflow: hidden;
+  transition: border-color .35s var(--ease), background-color .35s var(--ease);
+}
+.store:hover { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+
+.store__media {
+  margin: 0;
+  display: flex;
+  overflow: hidden;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.store__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  object-position: top center;
+  transition: transform .55s var(--ease);
+}
+.store:hover .store__media img { transform: scale(1.03); }
+
+.store__body {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 30px;
+}
+
+.store__type {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+}
+
+/* the one featured project: larger than a work card title */
+.store__name {
+  font-size: clamp(1.6rem, 3.4vw, 2.4rem);
+  letter-spacing: -0.025em;
+}
+
+.store__desc {
+  color: var(--muted);
+  font-size: 1.02rem;
+  max-width: 52ch;
+}
+
+.store__features {
+  display: grid;
+  gap: 9px;
+  margin: 3px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95rem;
+}
+.store__features li {
+  position: relative;
+  padding-inline-start: 22px;
+}
+/* accent tick, drawn in CSS so it flips with the writing direction */
+.store__features li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0.62em;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+}
+
+.store__cta {
+  margin-top: 9px;
+  align-self: start;
+}
+
+@media (min-width: 900px) {
+  .store { grid-template-columns: 1.15fr 1fr; }
+  .store__media {
+    border-bottom: 0;
+    border-inline-end: 1px solid var(--line);
+  }
+  /* the storefront shot is much wider than this column: mat it on the surface
+     tone and show it whole, so the logo and the hero both stay readable */
+  .store__media {
+    align-items: center;
+    justify-content: center;
+    padding: 26px;
+  }
+  .store__media img {
+    aspect-ratio: auto;
+    height: auto;
+    max-height: 100%;
+    object-fit: contain;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+  }
+  .store__body { justify-content: center; padding: 44px 46px; gap: 17px; }
+}
+
+@media (max-width: 480px) {
+  .store__body { padding: 24px 22px 28px; }
+}
+
 /* ---------- about ---------- */
 
 .section--about {
