@@ -42,7 +42,8 @@
 <main id="main">
 
   <section class="hero" id="top">
-    <div class="wrap">
+    <div class="wrap hero__inner">
+      <div class="hero__copy">
       <h1 class="hero__title">
         <span class="line" data-ar="مواقع ومتاجر تشتغل،" data-en="Websites and stores that work.">مواقع ومتاجر تشتغل،</span>
         <span class="line accent" data-ar="لا مجرد تصميم جميل." data-en="Not just look good.">لا مجرد تصميم جميل.</span>
@@ -52,6 +53,13 @@
         <a class="btn btn--solid" href="#contact" data-ar="راسلني" data-en="Get in touch">راسلني</a>
         <a class="btn btn--ghost" href="#services" data-ar="الخدمات" data-en="Services">الخدمات</a>
       </div>
+      </div>
+
+      <!-- decorative render: carries nothing the copy does not already say, so it stays out of the a11y tree -->
+      <figure class="hero__art" aria-hidden="true">
+        <img src="img/hero-3d.webp" width="1040" height="1300" alt=""
+             decoding="async" fetchpriority="high">
+      </figure>
     </div>
   </section>
 

@@ -267,6 +267,41 @@ html[lang="en"] .hero__title {
   .hero { min-height: auto; padding-block: 44px 40px; }
 }
 
+/* hero layout: the copy leads, the render sits beside it as its own element.
+   No overlay, so the headline needs no scrim to stay legible. */
+.hero__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.62fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: center;
+}
+
+.hero__art {
+  margin: 0;
+  max-width: 420px;
+  justify-self: end;          /* inline-end: away from the copy in both directions */
+  border: 1px solid var(--line);
+  border-radius: var(--radius-tile);
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color .35s var(--ease), background-color .35s var(--ease);
+}
+
+.hero__art img { display: block; width: 100%; height: auto; }
+
+/* the render is lit for the ivory ground: ease it back so it does not glare on dark */
+[data-theme="dark"] .hero__art img { filter: brightness(.82) contrast(1.04); }
+
+/* joins the existing entry choreography, after the headline and before the sub */
+@media (prefers-reduced-motion: no-preference) {
+  .hero__art { animation: rise .9s var(--ease) both; animation-delay: .24s; }
+}
+
+@media (max-width: 860px) {
+  .hero__inner { grid-template-columns: 1fr; gap: 34px; }
+  .hero__art { justify-self: center; max-width: min(320px, 78%); }
+}
+
 /* ---------- feature image ---------- */
 
 .feature { padding-block: 4px 60px; }
