@@ -41,14 +41,22 @@
     var v = document.querySelector('[data-hero-video]');
     if (!v) return;
 
+    // Narrow viewports get the 854x480 cut (about a third of the bytes).
+    var narrow = window.matchMedia('(max-width: 900px)');
+    function pick(kind) {
+      var m = narrow.matches;
+      return (m && v.dataset[kind + 'Mobile']) ? v.dataset[kind + 'Mobile'] : v.dataset[kind];
+    }
+
     function attach() {
       if (reduced.matches || v.dataset.loaded === '1') return;
-      var src = v.dataset.src;
+      var src = pick('src');
       if (!src) return;
       v.dataset.loaded = '1';
       v.src = src;
       v.addEventListener('error', function () {
-        if (v.dataset.fallback && v.src !== v.dataset.fallback) v.src = v.dataset.fallback;
+        var fb = pick('fallback');
+        if (fb && v.src !== fb) v.src = fb;
       });
       var p = v.play();
       if (p && p.catch) p.catch(function () { /* autoplay refused — poster stands in */ });
@@ -202,6 +210,51 @@
     });
   }
 
+  /* ---------- Campaign film (click to play) ----------
+     preload="none" until the viewer asks for it, so the film costs
+     nothing on first paint. Reduced motion keeps it click-only.
+  --------------------------------------------------------- */
+  function initFilm() {
+    var wrap = document.querySelector('[data-film]');
+    if (!wrap) return;
+    var v = wrap.querySelector('[data-film-video]');
+    var btn = wrap.querySelector('[data-film-btn]');
+    if (!v || !btn) return;
+
+    var loaded = false;
+    function load() {
+      if (loaded) return;
+      loaded = true;
+      v.src = v.dataset.src;
+      v.addEventListener('error', function () {
+        if (v.dataset.fallback && v.src !== v.dataset.fallback) v.src = v.dataset.fallback;
+      });
+    }
+    btn.addEventListener('click', function () {
+      load();
+      var p = v.play();
+      if (p && p.catch) p.catch(function () {});
+      wrap.classList.add('is-playing');
+    });
+    v.addEventListener('click', function () {
+      if (!wrap.classList.contains('is-playing')) return;
+      v.pause();
+      wrap.classList.remove('is-playing');
+      btn.focus();
+    });
+    // Pause when it scrolls away; never auto-start.
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting && loaded && !v.paused) {
+            v.pause();
+            wrap.classList.remove('is-playing');
+          }
+        });
+      }, { threshold: 0.15 }).observe(wrap);
+    }
+  }
+
   /* ---------- Concept forms (no backend) ---------- */
   function initForms() {
     document.querySelectorAll('[data-concept-form]').forEach(function (form) {
@@ -233,6 +286,7 @@
     initDrawer();
     initReveal();
     initAccordion();
+    initFilm();
     initForms();
     initYear();
   }

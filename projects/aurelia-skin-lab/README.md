@@ -91,45 +91,77 @@ Wide-tracked uppercase micro-labels carry the editorial hierarchy.
 
 ## Generated visuals
 
-All imagery and the hero video were generated with Higgsfield. Full provenance
-— model, job id, aspect ratio and source URL — is in `assets/manifest.json`.
+All imagery and the hero film were generated with Higgsfield. Full provenance —
+model, job id, aspect ratio and source URL — is in `assets/manifest.json`.
 
-| Asset | Model | Notes |
+### Stills (Seedream 4.5)
+
+| Asset | Ratio | Used on |
 |---|---|---|
-| `01-hero-serum.png` | Seedream 4.5 | 16:9 · 2560×1440 · **anchor image** |
-| `02-radiance-serum.png` | Seedream 4.5 | 3:4 · floating bottle, liquid ribbon |
-| `03-velvet-cream.png` | Seedream 4.5 | 3:4 · jar on stone |
-| `04-midnight-elixir.png` | Seedream 4.5 | 3:4 · dark emerald composition |
-| `05-lineup.png` | Seedream 4.5 | 16:9 · full three-product lineup |
-| `hero-loop.mp4` | Seedance 1.5 Pro | 16:9 · 8s · 1080p · silent |
+| `01-hero-serum.png` | 16:9 | **anchor image** — defines the brand world |
+| `02-radiance-serum.png` | 3:4 | home, shop, product |
+| `03-velvet-cream.png` | 3:4 | home, shop, about |
+| `04-midnight-elixir.png` | 3:4 | home, shop, science |
+| `05-lineup.png` | 16:9 | home, shop |
+| `06-macro-cap.png` | 3:2 | home science block, science |
+| `07-botanical.png` | 16:9 | home editorial band, about |
+| `08-droplet.png` | 1:1 | home, product, science |
+| `09-reflection.png` | 3:4 | home philosophy, contact |
+| `10-shelf.png` | 3:2 | home story, shop, about |
+| `hero-poster.jpg` | 16:9 | frame 0 of the graded film |
 
-**How consistency was enforced.** Image 1 was generated first and defines the
-brand world — glass thickness, bottle proportions, the brushed muted-gold cap
-with vertical knurling, the hairline sage ring, and the lighting setup. It was
-then passed as an image reference into all four remaining images, and as **both
-the start frame and the end frame** of the hero video. That frame-locks the
-video to the stills and closes the loop on the exact frame it opens on.
+### The film (Seedance 1.5 Pro + ffmpeg edit)
 
----
+Seven scenes, each 4s at 1280×720/24fps, generated separately and cut together:
 
-## Hero video behaviour
+1. Wide hero establishing — slow push
+2. Macro brushed-gold cap — rack focus along the knurling
+3. Floating bottle — serum ribbon and orbiting droplets
+4. Full lineup — lateral parallax dolly
+5. Mirror reflection in still water — a single ripple
+6. Botanical light and shadow drifting across ivory
+7. Final hero — settles onto the opening frame
 
-The `<video>` ships with `muted loop playsinline autoplay`, `preload="none"`,
-a poster, and **no `src`**. `js/main.js` attaches the source only when motion is
-welcome:
+Joined with **0.75s cross-dissolves** (no wipes, no template transitions), then
+graded: per-scene brightness offsets to close a measured 0.058 luminance spread
+across the seven shots, plus a unified contrast/saturation pass.
 
-- **`prefers-reduced-motion: reduce`** → the source is never attached. The
-  static poster stands in and the video is never downloaded. Verified: zero
-  network requests for the mp4.
-- **Motion allowed** → source attaches, autoplay begins, `object-fit: cover`.
-- **Scrolled out of view** → paused via IntersectionObserver.
-- **Autoplay refused by the browser** → the poster stands in, silently.
-- **JavaScript disabled** → the poster stands in.
+| Output | Size | Notes |
+|---|---|---|
+| `hero-film.mp4` | 1.4 MB · 19.3s · 720p | hero background, no baked text |
+| `hero-film-mobile.mp4` | 509 KB · 19.3s · 480p | picked at runtime below 900px |
+| `campaign-film.mp4` | 2.4 MB · 21.1s · 720p | + AURELIA wordmark end card; click-to-play |
 
-Readability over the video comes from a two-layer scrim weighted to the left,
-where the headline sits; the composition reserves that half as negative space.
+**Loop.** Scene 7 ends on the exact frame scene 1 opens on, so the HTML loop
+point is seamless.
 
----
+**Why the hero film carries no baked-in wordmark.** The homepage headline sits
+over the hero, and a second set of type burned into the video would collide
+with it and degrade on small screens. The wordmark instead appears as a proper
+end card on `campaign-film.mp4` in the "Seven shots. One house." section, drawn
+at render time in real Cormorant Garamond.
+
+## Consistency & QC
+
+Visual inspection was **not possible** in the build environment — the asset CDN
+is blocked by its egress policy. Consistency was therefore enforced two ways:
+
+**Structurally.** The anchor still defines glass thickness, bottle proportions,
+the knurled muted-gold cap, the hairline sage ring and the lighting setup. It is
+passed as an image reference into every other still, and each film scene is
+anchored to one of those stills as its start frame.
+
+**Objectively.** Every asset was measured in a sandbox (Pillow + ffprobe) for
+palette conformance, hue histogram, pink contamination, luminance distribution,
+uniform-border detection and subject centroid.
+
+Results: pink contamination ≤ 0.14% everywhere; luminance spread across the
+seven film scenes only 0.058; zero unintended hard cuts in any clip.
+
+One asset was **rejected and regenerated**: `04-midnight-elixir` v1 came back
+with 112px white pillarbox bars down both edges, which would have rendered as
+broken white slivers beside the dark product card. v2 passes with full-bleed
+near-black corners and the lit subject correctly centred.
 
 ## Interaction & accessibility
 

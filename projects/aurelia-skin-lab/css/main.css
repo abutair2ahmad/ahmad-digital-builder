@@ -433,7 +433,78 @@ em, .italic { font-style: italic; }
 .fig--tall  { aspect-ratio: 3 / 4; }
 .fig--wide  { aspect-ratio: 16 / 9; }
 .fig--band  { aspect-ratio: 21 / 9; }
+.fig--32    { aspect-ratio: 3 / 2; }
+.fig--sq    { aspect-ratio: 1 / 1; }
 @media (max-width: 700px) { .fig--band { aspect-ratio: 4 / 3; } }
+
+/* ---------- 9b. Campaign film ---------- */
+.film {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: 2px;
+  background: var(--beige);
+  isolation: isolate;
+}
+.film__v { width: 100%; height: 100%; object-fit: cover; display: block; }
+.film::after {
+  content: "";
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to top, rgba(27,39,32,.34), rgba(27,39,32,.05) 45%);
+  opacity: 1;
+  transition: opacity .7s var(--ease);
+  pointer-events: none;
+}
+.film.is-playing::after { opacity: 0; }
+
+.film__btn {
+  position: absolute;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  color: var(--ivory);
+  transition: opacity .5s var(--ease), transform .5s var(--ease);
+}
+.film.is-playing .film__btn { opacity: 0; pointer-events: none; transform: translate(-50%,-50%) scale(.94); }
+.film__ico {
+  width: 76px; height: 76px;
+  border: 1px solid rgba(252,250,246,.55);
+  border-radius: 50%;
+  position: relative;
+  transition: background .5s var(--ease), border-color .5s var(--ease), transform .5s var(--ease);
+}
+.film__ico::after {
+  content: "";
+  position: absolute; top: 50%; left: 52%;
+  transform: translate(-50%,-50%);
+  border-left: 13px solid var(--ivory);
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  transition: border-left-color .5s var(--ease);
+}
+.film__btn:hover .film__ico, .film__btn:focus-visible .film__ico {
+  background: var(--ivory); border-color: var(--ivory); transform: scale(1.06);
+}
+.film__btn:hover .film__ico::after, .film__btn:focus-visible .film__ico::after {
+  border-left-color: var(--emerald-deep);
+}
+.film__lbl {
+  font-size: .688rem; font-weight: 500;
+  letter-spacing: .22em; text-transform: uppercase;
+}
+.film__meta {
+  position: absolute; right: 1.4rem; bottom: 1.2rem; z-index: 2;
+  font-size: .625rem; font-weight: 500;
+  letter-spacing: .2em; text-transform: uppercase;
+  color: rgba(252,250,246,.72);
+  transition: opacity .5s var(--ease);
+}
+.film.is-playing .film__meta { opacity: 0; }
+@media (max-width: 560px) {
+  .film__ico { width: 60px; height: 60px; }
+  .film__meta { display: none; }
+}
 
 /* Slow ambient drift on large editorial images */
 .fig--drift img { transition: transform 1.4s var(--ease-out); }

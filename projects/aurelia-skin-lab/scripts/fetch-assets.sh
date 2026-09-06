@@ -23,8 +23,8 @@ import json, sys
 m = json.load(open(sys.argv[1]))
 for v in m["images"].values():
     print(f'{v["file"]}\t{v["url"]}')
-v = m["video"]["hero"]
-print(f'{v["file"]}\t{v["url"]}')
+for v in m["video"].values():
+    print(f'{v["file"]}\t{v["url"]}')
 PY
 
 while IFS=$'\t' read -r file url; do
@@ -40,25 +40,16 @@ done < /tmp/aurelia-assets.tsv
 rm -f /tmp/aurelia-assets.tsv
 
 # ---- optional web optimisation --------------------------------
-if command -v ffmpeg >/dev/null 2>&1; then
-  echo "==> optimising hero video"
-  SRC=assets/video/hero-loop.mp4
-  if [ -s "$SRC" ]; then
-    # 1080p H.264, silent, faststart, tuned for a quiet background loop
-    ffmpeg -y -loglevel error -i "$SRC" -an \
-      -c:v libx264 -profile:v high -pix_fmt yuv420p \
-      -crf 26 -preset slow -movflags +faststart \
-      assets/video/hero-loop.web.mp4 && \
-      echo "  -> assets/video/hero-loop.web.mp4"
-    # 720p companion for narrow viewports
-    ffmpeg -y -loglevel error -i "$SRC" -an -vf "scale=1280:-2" \
-      -c:v libx264 -profile:v high -pix_fmt yuv420p \
-      -crf 28 -preset slow -movflags +faststart \
-      assets/video/hero-loop.720.mp4 && \
-      echo "  -> assets/video/hero-loop.720.mp4"
-  fi
-else
-  echo "==> ffmpeg not found — skipping video optimisation"
+# The films arrive already web-encoded (H.264, faststart, silent) straight from
+# the edit, so there is nothing useful left to re-compress. Just report them.
+if command -v ffprobe >/dev/null 2>&1; then
+  echo "==> video check"
+  for f in assets/video/*.mp4; do
+    [ -s "$f" ] || continue
+    D=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$f")
+    R=$(ffprobe -v error -select_streams v -show_entries stream=width,height -of csv=p=0:s=x "$f")
+    printf "  %-40s %-10s %6.1fs  %s\n" "$f" "$R" "$D" "$(du -h "$f" | cut -f1)"
+  done
 fi
 
 if command -v magick >/dev/null 2>&1 || command -v convert >/dev/null 2>&1; then

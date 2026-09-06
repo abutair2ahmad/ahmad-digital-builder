@@ -13,7 +13,9 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 MAN = json.loads((ROOT / "assets" / "manifest.json").read_text())
 
 IMG = MAN["images"]
-VID = MAN["video"]["hero"]
+VID  = MAN["video"]["hero"]
+VIDM = MAN["video"]["hero_mobile"]
+VIDC = MAN["video"]["campaign"]
 
 BRAND = "AURELIA SKIN LAB"
 
@@ -32,6 +34,29 @@ def img(key, alt, cls="", ratio_attrs="", loading="lazy", sizes=None):
     if ratio_attrs:
         s += " " + ratio_attrs
     return s + ">"
+
+
+def fig(key, alt, shape="wide", drift=True, eager=False, delay=None):
+    """An editorial figure: paper ground, image wipes down over it on reveal."""
+    cls = f"fig fig--{shape}" + (" fig--drift" if drift else "")
+    style = f' style="--d:{delay}"' if delay else ""
+    return (f'<figure class="{cls}" data-reveal="clip"{style}>'
+            + img(key, alt, loading=("eager" if eager else "lazy")) + "</figure>")
+
+
+def film_block():
+    """Click-to-play campaign film. preload=none so it costs nothing until wanted."""
+    return f"""<div class="film" data-film>
+  <video class="film__v" data-film-video
+         data-src="{VIDC['file']}" data-fallback="{VIDC['url']}"
+         poster="{IMG['poster']['file']}" data-poster-fallback="{IMG['poster']['url']}"
+         muted loop playsinline preload="none"></video>
+  <button class="film__btn" type="button" data-film-btn aria-label="Play the AURELIA campaign film">
+    <span class="film__ico" aria-hidden="true"></span>
+    <span class="film__lbl">Play the film</span>
+  </button>
+  <span class="film__meta" aria-hidden="true">AURELIA &mdash; 2026 &middot; 0:21</span>
+</div>"""
 
 
 PRODUCTS = [
@@ -299,9 +324,11 @@ def build_home():
   <div class="hero__media">
     <video data-hero-video
            data-src="{VID['file']}"
+           data-src-mobile="{VIDM['file']}"
            data-fallback="{VID['url']}"
-           poster="{IMG['hero']['file']}"
-           data-poster-fallback="{IMG['hero']['url']}"
+           data-fallback-mobile="{VIDM['url']}"
+           poster="{IMG['poster']['file']}"
+           data-poster-fallback="{IMG['poster']['url']}"
            muted loop playsinline autoplay preload="none"
            aria-hidden="true" tabindex="-1"></video>
   </div>
@@ -344,44 +371,64 @@ def build_home():
 <section class="section on-paper" aria-labelledby="phil-h">
   <div class="wrap">
     <div class="split">
-      <div data-reveal>
+      <div class="stack-md" data-reveal>
         <span class="eyebrow">Philosophy</span>
         <h2 class="d2" id="phil-h">Restraint is<br>the <em>active</em><br>ingredient.</h2>
-      </div>
-      <div class="stack-md" data-reveal style="--d:120ms">
         <p class="lede">Most skincare fails not because it does too little, but because it
           asks too much of the barrier at once. We formulate in the other direction.</p>
         <p>Every AURELIA formula starts from the lipid matrix outward. Actives are added
           only once the base can carry them without cost, dosed to the studied
           concentration, and then stopped. No fragrance is added to make a formula feel
-          like it is working. Nothing is included at a percentage too small to matter.</p>
-        <p>The result is a routine of three products that behaves as one system — and a
-          shelf that stays quiet.</p>
+          like it is working.</p>
         <a class="link" href="about.html">Read our story</a>
       </div>
+      {fig('reflect', 'The Radiance Renewal Serum mirrored in still water over ivory stone', 'tall', delay='120ms')}
     </div>
   </div>
 </section>
 
-<!-- 4 · Ingredients / science -->
+<!-- 4 · The film -->
+<section class="section--tight" aria-labelledby="film-h">
+  <div class="wrap">
+    <div class="split" style="align-items:end;margin-bottom:clamp(2rem,4vw,3rem)">
+      <div data-reveal>
+        <span class="eyebrow">The campaign</span>
+        <h2 class="d2" id="film-h">Seven shots.<br>One <em>house</em>.</h2>
+      </div>
+      <p class="lede" data-reveal style="--d:120ms">A twenty-one second film shot entirely in
+        the AURELIA studio — the glass, the gold, the water and the light that the whole
+        collection is built from.</p>
+    </div>
+  </div>
+  <div class="wrap" data-reveal>{film_block()}</div>
+</section>
+
+<!-- 5 · Ingredients / science -->
 <section class="section on-emerald" aria-labelledby="sci-h">
   <div class="wrap">
-    <div class="split" style="align-items:start;margin-bottom:clamp(2rem,4vw,3rem)">
-      <div data-reveal>
+    <div class="split" style="align-items:center;margin-bottom:clamp(2.5rem,5vw,4rem)">
+      {fig('cap', 'Macro detail of the brushed muted-gold cap and hairline sage ring', '32')}
+      <div class="stack-md" data-reveal style="--d:120ms">
         <span class="eyebrow eyebrow--light">Ingredients &amp; science</span>
         <h2 class="d2" id="sci-h">Printed on<br>the <em>carton</em>.</h2>
+        <p class="lede">Concentrations, not claims. Here is what goes in, at what
+          strength, and why it earns the space.</p>
       </div>
-      <p class="lede" data-reveal style="--d:120ms">Concentrations, not claims. Here is what
-        goes in, at what strength, and why it earns the space.</p>
     </div>
     <div class="spec" data-reveal-group>{specs}</div>
-    <div class="mt-lg" data-reveal>
-      <a class="btn btn--light" href="science.html">The full formulation<span class="arw" aria-hidden="true">&rarr;</span></a>
+    <div class="split mt-lg" style="align-items:center">
+      <div class="stack-md" data-reveal>
+        <h3 class="d4">Every active is dosed to<br>the concentration the<br><em>research</em> supports.</h3>
+        <p class="small">Below its studied percentage an ingredient is decoration. We would
+          rather ship a shorter list than a longer label.</p>
+        <a class="btn btn--light" href="science.html">The full formulation<span class="arw" aria-hidden="true">&rarr;</span></a>
+      </div>
+      {fig('droplet', 'Macro of a champagne-gold serum droplet on optical glass', 'sq', delay='120ms')}
     </div>
   </div>
 </section>
 
-<!-- 5 · Product benefits -->
+<!-- 6 · Product benefits -->
 <section class="section" aria-labelledby="ben-h">
   <div class="wrap">
     <div class="maxw-md" data-reveal style="margin-bottom:clamp(2.5rem,5vw,4rem)">
@@ -393,28 +440,36 @@ def build_home():
   </div>
 </section>
 
-<!-- 6 · Editorial brand story -->
+<!-- 6b · Editorial band -->
+<section class="section--tight">
+  <div class="wrap">
+    {fig('botanical', 'Botanical light and shadow drifting across an ivory wall behind the serum bottle', 'band')}
+  </div>
+</section>
+
+<!-- 6c · Editorial brand story -->
 <section class="section--tight" aria-labelledby="ed-h">
   <div class="wrap">
-    <figure class="fig fig--band fig--drift" data-reveal="clip">
-      {img('lineup', 'The complete AURELIA SKIN LAB collection — serum, cream and elixir', loading='lazy')}
-    </figure>
-  </div>
-  <div class="wrap section--tight">
     <div class="split">
-      <div data-reveal>
+      <div class="stack-md" data-reveal>
         <span class="eyebrow">The house</span>
         <h2 class="d2" id="ed-h">Built in a<br>laboratory.<br><em>Finished</em> in a<br>studio.</h2>
-      </div>
-      <div class="stack-md" data-reveal style="--d:120ms">
         <p class="lede">AURELIA began as a formulation practice, not a brand. The packaging
           came last, and only once the formulas were finished.</p>
         <p>Each piece is pharmaceutical-grade glass with a brushed alloy collar and a single
           sage line at the seam — the only decoration we allowed ourselves. It is heavy in
-          the hand on purpose. It is refillable for the same reason.</p>
+          the hand on purpose, and refillable for the same reason.</p>
         <a class="link" href="about.html">Inside the lab</a>
       </div>
+      {fig('shelf', 'All three AURELIA products on a floating ivory stone shelf', 'wide', delay='120ms')}
     </div>
+  </div>
+</section>
+
+<!-- 6d · Lineup band -->
+<section class="section--tight">
+  <div class="wrap">
+    {fig('lineup', 'The complete AURELIA SKIN LAB collection photographed together', 'band')}
   </div>
 </section>
 
@@ -494,9 +549,7 @@ def build_shop():
 <section class="section on-paper">
   <div class="wrap">
     <div class="split">
-      <figure class="fig fig--wide fig--drift" data-reveal="clip">
-        {img('lineup', 'The three AURELIA formulas photographed together')}
-      </figure>
+      {fig('shelf', 'The three AURELIA formulas on a floating ivory stone shelf', 'wide')}
       <div class="stack-md" data-reveal style="--d:120ms">
         <span class="eyebrow">The complete routine</span>
         <h2 class="d3">Take all three,<br>and the system<br><em>closes</em>.</h2>
@@ -508,6 +561,12 @@ def build_shop():
         <div><a class="btn" href="contact.html">Enquire about the set<span class="arw" aria-hidden="true">&rarr;</span></a></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="wrap">
+    {fig('lineup', 'The complete AURELIA collection photographed together', 'band')}
   </div>
 </section>
 
@@ -636,6 +695,21 @@ def build_product():
   </div>
 </section>
 
+<section class="section--tight">
+  <div class="wrap">
+    <div class="split">
+      {fig('droplet', 'Macro of a champagne-gold serum droplet on optical glass', 'sq')}
+      <div class="stack-md" data-reveal style="--d:120ms">
+        <span class="eyebrow">The texture</span>
+        <h2 class="d3">Weightless,<br>and <em>anhydrous</em>.</h2>
+        <p>No water means no preservative system fighting the active, and no dilution of
+          the ascorbate as the bottle empties. It absorbs in seconds and leaves no film
+          under sunscreen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap">
     <div class="maxw-md" data-reveal style="margin-bottom:clamp(2rem,4vw,3rem)">
@@ -709,9 +783,28 @@ def build_about():
           bottle stays clean enough to keep and refill for years.</p>
         <a class="link" href="science.html">See what goes in</a>
       </div>
-      <figure class="fig fig--tall fig--drift" data-reveal="clip">
-        {img('cream', 'Velvet Barrier Cream jar on a stone surface')}
-      </figure>
+      {fig('cream', 'Velvet Barrier Cream jar on a stone surface', 'tall', delay='120ms')}
+    </div>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="wrap">
+    {fig('botanical', 'Afternoon botanical shadows moving across the AURELIA studio wall', 'band')}
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="wrap">
+    <div class="split">
+      {fig('shelf', 'The AURELIA collection on a floating ivory stone shelf', 'wide')}
+      <div class="stack-md" data-reveal style="--d:120ms">
+        <span class="eyebrow">The shelf</span>
+        <h2 class="d3">Three products.<br>That is the <em>whole</em><br>house.</h2>
+        <p>We have been asked, more than once, when the fourth is coming. There is no
+          fourth. A cleanser we would be proud of does not yet exist in our lab, and we
+          would rather sell you nothing than sell you a placeholder.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -776,12 +869,16 @@ def build_science():
   </div>
 </section>
 
+<section class="section--tight">
+  <div class="wrap">
+    {fig('cap', 'Macro detail of the brushed muted-gold cap, knurling and hairline sage ring', 'band')}
+  </div>
+</section>
+
 <section class="section on-emerald">
   <div class="wrap">
     <div class="split">
-      <figure class="fig fig--tall fig--drift" data-reveal="clip">
-        {img('elixir', 'Midnight Repair Elixir in a dark studio composition')}
-      </figure>
+      {fig('elixir', 'Midnight Repair Elixir in a dark studio composition', 'tall')}
       <div class="stack-md" data-reveal style="--d:120ms">
         <span class="eyebrow eyebrow--light">Formulation ethos</span>
         <h2 class="d2">The barrier<br>comes <em>first</em>.</h2>
@@ -794,6 +891,21 @@ def build_science():
         <p>It is also why we can dose the Serum at 12%. A compromised barrier could not take
           it. An intact one barely notices.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="wrap">
+    <div class="split">
+      <div class="stack-md" data-reveal>
+        <span class="eyebrow">The texture</span>
+        <h2 class="d3">You can see the<br>dose in the <em>pour</em>.</h2>
+        <p>A 12% ascorbate serum is heavier than a 3% one, and it should look it. Ours is
+          honey-thick going on and gone in seconds — the viscosity is the concentration
+          made visible, not a thickener added for feel.</p>
+      </div>
+      {fig('droplet', 'Macro of a champagne-gold serum droplet on optical glass', 'sq', delay='120ms')}
     </div>
   </div>
 </section>
@@ -924,6 +1036,12 @@ def build_contact():
           presentation. The address and contact details above are fictional.</p>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="section--tight">
+  <div class="wrap">
+    {fig('reflect', 'The Radiance Renewal Serum mirrored in still water over ivory stone', 'band')}
   </div>
 </section>
 

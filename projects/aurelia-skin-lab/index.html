@@ -35,10 +35,12 @@
 <section class="hero">
   <div class="hero__media">
     <video data-hero-video
-           data-src="assets/video/hero-loop.mp4"
-           data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203106_e50a3285-2e28-4d2f-b7c1-6fa69ec5a73f.mp4"
-           poster="assets/img/01-hero-serum.png"
-           data-poster-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_202633_08a76635-92f7-4dca-9c9a-1b0d79a65b87.png"
+           data-src="assets/video/hero-film.mp4"
+           data-src-mobile="assets/video/hero-film-mobile.mp4"
+           data-fallback="https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/2d2fd445-abd8-4695-9c9e-abfd14b4c3f1.mp4"
+           data-fallback-mobile="https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/b3d44e25-1d35-44c5-8369-b9ab43cc1758.mp4"
+           poster="assets/img/hero-poster.jpg"
+           data-poster-fallback="https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/d6e6a2f6-0d1b-4f80-b6ce-d7f23c9ef4ee.jpg"
            muted loop playsinline autoplay preload="none"
            aria-hidden="true" tabindex="-1"></video>
   </div>
@@ -98,7 +100,7 @@
   </div>
 </a><a class="card" href="product.html" data-reveal>
   <div class="card__media">
-    <img src="assets/img/04-midnight-elixir.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203038_200a879a-7029-47ce-b46a-58ac222d1497.png" alt="Midnight Repair Elixir — Repair, overnight." loading="lazy" decoding="async">
+    <img src="assets/img/04-midnight-elixir.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_210134_5d70bdd3-2aa9-4389-925d-adb3a96f474e.png" alt="Midnight Repair Elixir — Repair, overnight." loading="lazy" decoding="async">
     <span class="btn btn--light card__peek">View<span class="arw" aria-hidden="true">&rarr;</span></span>
   </div>
   <div class="card__body">
@@ -120,35 +122,59 @@
 <section class="section on-paper" aria-labelledby="phil-h">
   <div class="wrap">
     <div class="split">
-      <div data-reveal>
+      <div class="stack-md" data-reveal>
         <span class="eyebrow">Philosophy</span>
         <h2 class="d2" id="phil-h">Restraint is<br>the <em>active</em><br>ingredient.</h2>
-      </div>
-      <div class="stack-md" data-reveal style="--d:120ms">
         <p class="lede">Most skincare fails not because it does too little, but because it
           asks too much of the barrier at once. We formulate in the other direction.</p>
         <p>Every AURELIA formula starts from the lipid matrix outward. Actives are added
           only once the base can carry them without cost, dosed to the studied
           concentration, and then stopped. No fragrance is added to make a formula feel
-          like it is working. Nothing is included at a percentage too small to matter.</p>
-        <p>The result is a routine of three products that behaves as one system — and a
-          shelf that stays quiet.</p>
+          like it is working.</p>
         <a class="link" href="about.html">Read our story</a>
       </div>
+      <figure class="fig fig--tall fig--drift" data-reveal="clip" style="--d:120ms"><img src="assets/img/09-reflection.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_5a3d694c-7b17-411c-8e8c-1e6d72448f35.png" alt="The Radiance Renewal Serum mirrored in still water over ivory stone" loading="lazy" decoding="async"></figure>
     </div>
   </div>
 </section>
 
-<!-- 4 · Ingredients / science -->
+<!-- 4 · The film -->
+<section class="section--tight" aria-labelledby="film-h">
+  <div class="wrap">
+    <div class="split" style="align-items:end;margin-bottom:clamp(2rem,4vw,3rem)">
+      <div data-reveal>
+        <span class="eyebrow">The campaign</span>
+        <h2 class="d2" id="film-h">Seven shots.<br>One <em>house</em>.</h2>
+      </div>
+      <p class="lede" data-reveal style="--d:120ms">A twenty-one second film shot entirely in
+        the AURELIA studio — the glass, the gold, the water and the light that the whole
+        collection is built from.</p>
+    </div>
+  </div>
+  <div class="wrap" data-reveal><div class="film" data-film>
+  <video class="film__v" data-film-video
+         data-src="assets/video/campaign-film.mp4" data-fallback="https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/06ce5e05-63d0-4734-885b-ac8d26dbf9b6.mp4"
+         poster="assets/img/hero-poster.jpg" data-poster-fallback="https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/d6e6a2f6-0d1b-4f80-b6ce-d7f23c9ef4ee.jpg"
+         muted loop playsinline preload="none"></video>
+  <button class="film__btn" type="button" data-film-btn aria-label="Play the AURELIA campaign film">
+    <span class="film__ico" aria-hidden="true"></span>
+    <span class="film__lbl">Play the film</span>
+  </button>
+  <span class="film__meta" aria-hidden="true">AURELIA &mdash; 2026 &middot; 0:21</span>
+</div></div>
+</section>
+
+<!-- 5 · Ingredients / science -->
 <section class="section on-emerald" aria-labelledby="sci-h">
   <div class="wrap">
-    <div class="split" style="align-items:start;margin-bottom:clamp(2rem,4vw,3rem)">
-      <div data-reveal>
+    <div class="split" style="align-items:center;margin-bottom:clamp(2.5rem,5vw,4rem)">
+      <figure class="fig fig--32 fig--drift" data-reveal="clip"><img src="assets/img/06-macro-cap.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_f8522fe0-2edd-48e6-9ac9-8547c5daf672.png" alt="Macro detail of the brushed muted-gold cap and hairline sage ring" loading="lazy" decoding="async"></figure>
+      <div class="stack-md" data-reveal style="--d:120ms">
         <span class="eyebrow eyebrow--light">Ingredients &amp; science</span>
         <h2 class="d2" id="sci-h">Printed on<br>the <em>carton</em>.</h2>
+        <p class="lede">Concentrations, not claims. Here is what goes in, at what
+          strength, and why it earns the space.</p>
       </div>
-      <p class="lede" data-reveal style="--d:120ms">Concentrations, not claims. Here is what
-        goes in, at what strength, and why it earns the space.</p>
     </div>
     <div class="spec" data-reveal-group><div class="spec__row" data-reveal>
   <span class="spec__idx">01</span>
@@ -167,13 +193,19 @@
   <span class="spec__name">Encapsulated Retinal</span>
   <span class="spec__desc">One step closer to retinoic acid than retinol, released on a curve across the night so tolerance builds instead of breaking.</span>
 </div></div>
-    <div class="mt-lg" data-reveal>
-      <a class="btn btn--light" href="science.html">The full formulation<span class="arw" aria-hidden="true">&rarr;</span></a>
+    <div class="split mt-lg" style="align-items:center">
+      <div class="stack-md" data-reveal>
+        <h3 class="d4">Every active is dosed to<br>the concentration the<br><em>research</em> supports.</h3>
+        <p class="small">Below its studied percentage an ingredient is decoration. We would
+          rather ship a shorter list than a longer label.</p>
+        <a class="btn btn--light" href="science.html">The full formulation<span class="arw" aria-hidden="true">&rarr;</span></a>
+      </div>
+      <figure class="fig fig--sq fig--drift" data-reveal="clip" style="--d:120ms"><img src="assets/img/08-droplet.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_87cf1894-deb1-4624-8c8a-2e0ed3738774.png" alt="Macro of a champagne-gold serum droplet on optical glass" loading="lazy" decoding="async"></figure>
     </div>
   </div>
 </section>
 
-<!-- 5 · Product benefits -->
+<!-- 6 · Product benefits -->
 <section class="section" aria-labelledby="ben-h">
   <div class="wrap">
     <div class="maxw-md" data-reveal style="margin-bottom:clamp(2.5rem,5vw,4rem)">
@@ -201,28 +233,36 @@
   </div>
 </section>
 
-<!-- 6 · Editorial brand story -->
+<!-- 6b · Editorial band -->
+<section class="section--tight">
+  <div class="wrap">
+    <figure class="fig fig--band fig--drift" data-reveal="clip"><img src="assets/img/07-botanical.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_c09b8fb7-275f-4c32-a670-eee3aa6970b2.png" alt="Botanical light and shadow drifting across an ivory wall behind the serum bottle" loading="lazy" decoding="async"></figure>
+  </div>
+</section>
+
+<!-- 6c · Editorial brand story -->
 <section class="section--tight" aria-labelledby="ed-h">
   <div class="wrap">
-    <figure class="fig fig--band fig--drift" data-reveal="clip">
-      <img src="assets/img/05-lineup.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_8af36fc6-560a-4070-80dd-94e188002ccd.png" alt="The complete AURELIA SKIN LAB collection — serum, cream and elixir" loading="lazy" decoding="async">
-    </figure>
-  </div>
-  <div class="wrap section--tight">
     <div class="split">
-      <div data-reveal>
+      <div class="stack-md" data-reveal>
         <span class="eyebrow">The house</span>
         <h2 class="d2" id="ed-h">Built in a<br>laboratory.<br><em>Finished</em> in a<br>studio.</h2>
-      </div>
-      <div class="stack-md" data-reveal style="--d:120ms">
         <p class="lede">AURELIA began as a formulation practice, not a brand. The packaging
           came last, and only once the formulas were finished.</p>
         <p>Each piece is pharmaceutical-grade glass with a brushed alloy collar and a single
           sage line at the seam — the only decoration we allowed ourselves. It is heavy in
-          the hand on purpose. It is refillable for the same reason.</p>
+          the hand on purpose, and refillable for the same reason.</p>
         <a class="link" href="about.html">Inside the lab</a>
       </div>
+      <figure class="fig fig--wide fig--drift" data-reveal="clip" style="--d:120ms"><img src="assets/img/10-shelf.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_120c8459-c958-42af-90b1-801597a6c657.png" alt="All three AURELIA products on a floating ivory stone shelf" loading="lazy" decoding="async"></figure>
     </div>
+  </div>
+</section>
+
+<!-- 6d · Lineup band -->
+<section class="section--tight">
+  <div class="wrap">
+    <figure class="fig fig--band fig--drift" data-reveal="clip"><img src="assets/img/05-lineup.png" data-fallback="https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_8af36fc6-560a-4070-80dd-94e188002ccd.png" alt="The complete AURELIA SKIN LAB collection photographed together" loading="lazy" decoding="async"></figure>
   </div>
 </section>
 

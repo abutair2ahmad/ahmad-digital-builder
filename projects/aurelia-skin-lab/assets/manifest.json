@@ -2,7 +2,7 @@
   "brand": "AURELIA SKIN LAB",
   "note": "Source URLs for every Higgsfield-generated asset. Run scripts/fetch-assets.sh to download these into assets/ for a fully self-contained, offline site.",
   "generated": "2026-09-06",
-  "video_model": "seedance1_5 (Seedance 1.5 Pro, Bytedance) - 16:9, 8s, 1080p, silent, start+end frame locked to img.hero for a seamless loop",
+  "video_model": "seedance1_5 (Seedance 1.5 Pro, Bytedance) - 7 scenes x 4s, 16:9, 720p, silent; edited into one film with ffmpeg",
   "image_model": "seedream_v4_5 (Seedream 4.5, Bytedance) - basic quality",
   "images": {
     "hero": {
@@ -29,10 +29,10 @@
     },
     "elixir": {
       "file": "assets/img/04-midnight-elixir.png",
-      "job_id": "200a879a-7029-47ce-b46a-58ac222d1497",
+      "job_id": "5d70bdd3-2aa9-4389-925d-adb3a96f474e",
       "ratio": "3:4",
-      "role": "Midnight Repair Elixir - dark emerald composition.",
-      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203038_200a879a-7029-47ce-b46a-58ac222d1497.png"
+      "role": "Midnight Repair Elixir - dark emerald composition. v2: v1 rejected in QC for a 112px white pillarbox border.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_210134_5d70bdd3-2aa9-4389-925d-adb3a96f474e.png"
     },
     "lineup": {
       "file": "assets/img/05-lineup.png",
@@ -40,17 +40,113 @@
       "ratio": "16:9",
       "role": "Full three-product lineup - editorial campaign band.",
       "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_8af36fc6-560a-4070-80dd-94e188002ccd.png"
+    },
+    "cap": {
+      "file": "assets/img/06-macro-cap.png",
+      "job_id": "f8522fe0-2edd-48e6-9ac9-8547c5daf672",
+      "ratio": "3:2",
+      "role": "Macro of the brushed muted-gold cap, knurling and sage ring.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_f8522fe0-2edd-48e6-9ac9-8547c5daf672.png"
+    },
+    "botanical": {
+      "file": "assets/img/07-botanical.png",
+      "job_id": "c09b8fb7-275f-4c32-a670-eee3aa6970b2",
+      "ratio": "16:9",
+      "role": "Botanical light and shadow across ivory.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_c09b8fb7-275f-4c32-a670-eee3aa6970b2.png"
+    },
+    "droplet": {
+      "file": "assets/img/08-droplet.png",
+      "job_id": "87cf1894-deb1-4624-8c8a-2e0ed3738774",
+      "ratio": "1:1",
+      "role": "Macro serum droplet on optical glass.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_87cf1894-deb1-4624-8c8a-2e0ed3738774.png"
+    },
+    "reflect": {
+      "file": "assets/img/09-reflection.png",
+      "job_id": "5a3d694c-7b17-411c-8e8c-1e6d72448f35",
+      "ratio": "3:4",
+      "role": "Bottle mirrored in still water over ivory stone.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_5a3d694c-7b17-411c-8e8c-1e6d72448f35.png"
+    },
+    "shelf": {
+      "file": "assets/img/10-shelf.png",
+      "job_id": "120c8459-c958-42af-90b1-801597a6c657",
+      "ratio": "3:2",
+      "role": "All three products on a floating ivory stone shelf.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_205853_120c8459-c958-42af-90b1-801597a6c657.png"
+    },
+    "poster": {
+      "file": "assets/img/hero-poster.jpg",
+      "ratio": "16:9",
+      "role": "Frame 0 of the graded hero film. Video poster and reduced-motion still.",
+      "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/d6e6a2f6-0d1b-4f80-b6ce-d7f23c9ef4ee.jpg"
     }
   },
   "video": {
     "hero": {
-      "file": "assets/video/hero-loop.mp4",
-      "job_id": "e50a3285-2e28-4d2f-b7c1-6fa69ec5a73f",
+      "file": "assets/video/hero-film.mp4",
+      "media_id": "2d2fd445-abd8-4695-9c9e-abfd14b4c3f1",
       "ratio": "16:9",
-      "duration_s": 8,
-      "resolution": "1080p",
+      "duration_s": 19.33,
+      "resolution": "1280x720",
+      "bytes": 1407516,
       "audio": false,
-      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203106_e50a3285-2e28-4d2f-b7c1-6fa69ec5a73f.mp4"
+      "role": "Multi-scene hero film, 7 cinematic scenes joined with 0.75s dissolves. No baked text.",
+      "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/2d2fd445-abd8-4695-9c9e-abfd14b4c3f1.mp4"
+    },
+    "hero_mobile": {
+      "file": "assets/video/hero-film-mobile.mp4",
+      "media_id": "b3d44e25-1d35-44c5-8369-b9ab43cc1758",
+      "ratio": "16:9",
+      "duration_s": 19.33,
+      "resolution": "854x480",
+      "bytes": 508622,
+      "audio": false,
+      "role": "Narrow-viewport hero variant, selected at runtime below 900px.",
+      "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/b3d44e25-1d35-44c5-8369-b9ab43cc1758.mp4"
+    },
+    "campaign": {
+      "file": "assets/video/campaign-film.mp4",
+      "media_id": "06ce5e05-63d0-4734-885b-ac8d26dbf9b6",
+      "ratio": "16:9",
+      "duration_s": 21.08,
+      "resolution": "1280x720",
+      "bytes": 2429102,
+      "audio": false,
+      "role": "Same film plus a 2.6s AURELIA SKIN LAB wordmark end card (Cormorant Garamond). Click-to-play.",
+      "url": "https://d2ol7oe51mr4n9.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/06ce5e05-63d0-4734-885b-ac8d26dbf9b6.mp4"
     }
+  },
+  "qc": {
+    "method": "Objective sandbox analysis (Pillow): palette conformance, hue histogram, pink contamination, luminance distribution, uniform-border detection, subject centroid. Visual inspection was not possible - the CDN is blocked by this environment's egress policy.",
+    "rejected": [
+      {
+        "asset": "04-midnight-elixir (v1)",
+        "job_id": "200a879a-7029-47ce-b46a-58ac222d1497",
+        "reason": "112px / 110px white pillarbox bars on left and right edges",
+        "action": "regenerated with explicit full-bleed constraint"
+      }
+    ],
+    "gates": {
+      "pink_pct": "< 0.5 (all pass, max 0.09)",
+      "uniform_border_px": "<= 3 (all pass after regen)",
+      "subject_centroid": "within frame centre band"
+    }
+  },
+  "film_edit": {
+    "scenes": [
+      "1 - wide hero establishing, slow push",
+      "2 - macro brushed-gold cap, rack focus along the knurling",
+      "3 - floating bottle, serum ribbon and orbiting droplets",
+      "4 - full lineup, lateral parallax dolly",
+      "5 - mirror reflection in still water, single ripple",
+      "6 - botanical light and shadow drifting across ivory",
+      "7 - final hero, settles onto the opening frame"
+    ],
+    "transitions": "0.75s cross-dissolves between every scene (6 total). No wipes, no template transitions.",
+    "grade": "Per-scene brightness offsets closing a 0.058 luminance spread, plus unified contrast 1.04 / saturation 0.99.",
+    "loop": "Scene 7 ends on the same anchor frame scene 1 opens on, so the HTML loop point is seamless.",
+    "qc": "All 7 clips: 1280x720, 24fps, 4.04s, zero unintended hard cuts. Cross-scene pink <= 0.14%."
   }
 }
