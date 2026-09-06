@@ -36,8 +36,10 @@ jobs:
         # Chrome ships with the runner; the Hebrew and Latin faces do not.
         run: |
           sudo apt-get update -qq
-          sudo apt-get install -y -qq fonts-noto-core fonts-noto-hebrew fonts-inter || \
-          sudo apt-get install -y -qq fonts-noto-core fonts-noto-hebrew
+
+sudo apt-get install -y -qq fonts-noto-core fonts-inter || \
+sudo apt-get install -y -qq fonts-noto-core
+          
 
       - name: Write .env from secrets
         run: |
