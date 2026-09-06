@@ -1,0 +1,56 @@
+{
+  "brand": "AURELIA SKIN LAB",
+  "note": "Source URLs for every Higgsfield-generated asset. Run scripts/fetch-assets.sh to download these into assets/ for a fully self-contained, offline site.",
+  "generated": "2026-09-06",
+  "video_model": "seedance1_5 (Seedance 1.5 Pro, Bytedance) - 16:9, 8s, 1080p, silent, start+end frame locked to img.hero for a seamless loop",
+  "image_model": "seedream_v4_5 (Seedream 4.5, Bytedance) - basic quality",
+  "images": {
+    "hero": {
+      "file": "assets/img/01-hero-serum.png",
+      "job_id": "08a76635-92f7-4dca-9c9a-1b0d79a65b87",
+      "ratio": "16:9",
+      "px": "2560x1440",
+      "role": "Anchor image. Defines the brand world; used as hero poster and as the video's start+end frame.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_202633_08a76635-92f7-4dca-9c9a-1b0d79a65b87.png"
+    },
+    "serum": {
+      "file": "assets/img/02-radiance-serum.png",
+      "job_id": "13c5350a-96fc-4753-9947-0c6ed7bc2b85",
+      "ratio": "3:4",
+      "role": "Radiance Renewal Serum - floating bottle with liquid ribbon.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_13c5350a-96fc-4753-9947-0c6ed7bc2b85.png"
+    },
+    "cream": {
+      "file": "assets/img/03-velvet-cream.png",
+      "job_id": "7fcb3736-dea4-4e14-b549-0c6b77a9eebd",
+      "ratio": "3:4",
+      "role": "Velvet Barrier Cream - jar on stone.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_7fcb3736-dea4-4e14-b549-0c6b77a9eebd.png"
+    },
+    "elixir": {
+      "file": "assets/img/04-midnight-elixir.png",
+      "job_id": "200a879a-7029-47ce-b46a-58ac222d1497",
+      "ratio": "3:4",
+      "role": "Midnight Repair Elixir - dark emerald composition.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203038_200a879a-7029-47ce-b46a-58ac222d1497.png"
+    },
+    "lineup": {
+      "file": "assets/img/05-lineup.png",
+      "job_id": "8af36fc6-560a-4070-80dd-94e188002ccd",
+      "ratio": "16:9",
+      "role": "Full three-product lineup - editorial campaign band.",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203036_8af36fc6-560a-4070-80dd-94e188002ccd.png"
+    }
+  },
+  "video": {
+    "hero": {
+      "file": "assets/video/hero-loop.mp4",
+      "job_id": "e50a3285-2e28-4d2f-b7c1-6fa69ec5a73f",
+      "ratio": "16:9",
+      "duration_s": 8,
+      "resolution": "1080p",
+      "audio": false,
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260906_203106_e50a3285-2e28-4d2f-b7c1-6fa69ec5a73f.mp4"
+    }
+  }
+}
