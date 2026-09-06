@@ -1,0 +1,23 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+
+# Instagram auto-publisher runtime data.
+# state/ is deliberately NOT ignored: the publishing ledger is what makes the
+# system idempotent, it must survive across hosts, and it holds no secrets —
+# only idea ids, statuses and Instagram media ids. Locks are per-process.
+instagram-autopost/out/
+instagram-autopost/logs/
+instagram-autopost/state/*/locks/
+
+# Python
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
+.env
+.env*
+!.env.example
+*.save

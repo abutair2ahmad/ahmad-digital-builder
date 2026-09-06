@@ -1,0 +1,14 @@
+# Fires every 15 minutes. The runner itself decides whether a slot is actually due
+# in Asia/Jerusalem, which is what keeps the schedule correct across daylight
+# saving. Frequent firing plus the catch-up window means a reboot or a network
+# outage does not lose a slot — the next tick picks it up.
+[Unit]
+Description=Instagram auto-publisher timer
+
+[Timer]
+OnCalendar=*:0/15
+Persistent=true
+RandomizedDelaySec=60
+
+[Install]
+WantedBy=timers.target

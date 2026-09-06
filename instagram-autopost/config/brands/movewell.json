@@ -1,0 +1,79 @@
+{
+  "brand": "movewell",
+  "display_name": "MoveWell",
+  "handle": "@movewell.il",
+  "language": "he",
+  "direction": "rtl",
+  "site": "movewell.il",
+  "voice": "Calm, practical, plain-spoken. Talks about comfort and daily support, never about curing anything.",
+  "palette": {
+    "bg": "#F4F6F4",
+    "surface": "#FFFFFF",
+    "ink": "#132B24",
+    "muted": "#5A6B64",
+    "accent": "#0E5F52",
+    "accent_ink": "#F4F6F4",
+    "accent_soft": "#DCEAE4",
+    "sand": "#E9E2D5",
+    "line": "#D6DED9"
+  },
+  "type": {
+    "family": "\"SF Hebrew\", \"Arial Hebrew\", \"Noto Sans Hebrew\", -apple-system, system-ui, Arial, sans-serif",
+    "display_weight": 700,
+    "body_weight": 400,
+    "tracking": "-0.015em"
+  },
+  "shape": {
+    "radius": 30,
+    "radius_pill": 999,
+    "stroke": 2
+  },
+  "logo_text": "MoveWell",
+  "footer_text": "movewell.il",
+  "cta_pool": [
+    "לינק בביו ← הזמנה תוך דקה",
+    "לפרטים נוספים — לינק בביו",
+    "שמרו את הפוסט לפעם הבאה",
+    "יש שאלה? כתבו לנו בהודעה"
+  ],
+  "hashtag_pools": {
+    "core": [
+      "#movewell",
+      "#כאבי_גב",
+      "#אורח_חיים_בריא"
+    ],
+    "topic": [
+      "#יציבה",
+      "#כאבי_צוואר",
+      "#עבודה_מהבית",
+      "#ארגונומיה",
+      "#כאבי_ברכיים",
+      "#שינה_טובה",
+      "#הקלה_בכאב",
+      "#מתיחות"
+    ],
+    "market": [
+      "#ישראל",
+      "#קנייה_אונליין",
+      "#משלוח_חינם"
+    ]
+  },
+  "claim_guard": {
+    "forbidden": [
+      "מרפא",
+      "ריפוי",
+      "תרופה",
+      "מבטיח",
+      "הבטחה",
+      "מרפאה",
+      "תוצאות מובטחות",
+      "cure",
+      "heal",
+      "guaranteed",
+      "treats",
+      "diagnose"
+    ],
+    "note": "Comfort and support language only. No diagnosis, no cure, no guaranteed outcome."
+  },
+  "mark": "rings"
+}

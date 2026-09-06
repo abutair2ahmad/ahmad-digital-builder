@@ -1,0 +1,476 @@
+{
+  "brand": "bynexora",
+  "language": "en",
+  "disclaimer": "Concept work is labelled as concept. No client names, results or testimonials are used unless supplied and verified.",
+  "ideas": [
+    {
+      "id": "nx-edu-01",
+      "category": "educational",
+      "layout": "tips",
+      "image": {
+        "kicker": "BOOKING",
+        "headline": "3 things that kill a booking page",
+        "items": [
+          "Asking for too many fields",
+          "No prices anywhere",
+          "No confirmation email"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "Most booking pages lose people before the calendar even loads.",
+        "body": "Three fixes, in order of impact:\n\n① Cut the form. Name, phone, service. That's it. Every extra field costs you bookings.\n② Show a price or a range. \"Contact for pricing\" makes people leave and compare elsewhere.\n③ Send an instant confirmation. Silence after booking feels like it failed.\n\nNone of these need a redesign — they need a decision."
+      },
+      "tags": [
+        "#bookingsystem",
+        "#conversionrate",
+        "#smallbusinesswebsite"
+      ],
+      "topic": "booking"
+    },
+    {
+      "id": "nx-edu-02",
+      "category": "educational",
+      "layout": "tips",
+      "image": {
+        "kicker": "SPEED",
+        "headline": "Why your site feels slow",
+        "items": [
+          "Uncompressed hero images",
+          "Five font weights",
+          "Chat widget loading first"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "A slow site is usually three files, not bad hosting.",
+        "body": "The usual suspects:\n\n• A hero image exported straight from Canva at 4MB. Compress it — you will not see the difference, your visitors will.\n• Loading five weights of a font when the design uses two.\n• A chat widget that loads before your actual content does.\n\nFix those three and most sites feel instantly faster. No migration required."
+      },
+      "tags": [
+        "#webdesign",
+        "#conversionrate"
+      ],
+      "topic": "speed"
+    },
+    {
+      "id": "nx-edu-03",
+      "category": "educational",
+      "layout": "statement",
+      "image": {
+        "kicker": "ECOMMERCE",
+        "headline": "Your product page is your salesperson",
+        "sub": "It has to answer the objection before it is asked",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "People do not abandon carts because of price. They abandon because of unanswered questions.",
+        "body": "The questions a product page has to answer without being asked:\n\n• How long is shipping, and what does it cost?\n• What happens if it does not fit?\n• How big is this actually?\n• Is this the right one for me, or the other one?\n\nEvery one you leave unanswered is a reason to close the tab.\n\nGo look at your own product page and count how many it answers."
+      },
+      "tags": [
+        "#ecommercedesign",
+        "#shopify",
+        "#conversionrate"
+      ],
+      "topic": "ecommerce"
+    },
+    {
+      "id": "nx-edu-04",
+      "category": "educational",
+      "layout": "tips",
+      "image": {
+        "kicker": "HOMEPAGE",
+        "headline": "What the top of your site must say",
+        "items": [
+          "What you do",
+          "Who it is for",
+          "One clear next step"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "A visitor decides in a few seconds whether you are relevant to them.",
+        "body": "Before any scrolling, your homepage has to answer three things:\n\n① What do you actually do — in plain words, not \"we craft experiences\".\n② Who is it for — the more specific, the more it pulls the right people in.\n③ What is the one next step — book, browse, or call. One, not five.\n\nIf a stranger cannot answer all three from the top of your page, that is the first thing to fix."
+      },
+      "tags": [
+        "#webdesign",
+        "#landingpage",
+        "#smallbusinessowner"
+      ],
+      "topic": "homepage"
+    },
+    {
+      "id": "nx-edu-05",
+      "category": "educational",
+      "layout": "compare",
+      "image": {
+        "kicker": "FORMS",
+        "headline": "Contact form vs booking",
+        "left_title": "CONTACT FORM",
+        "left_items": [
+          "You reply later",
+          "They wait",
+          "Half go elsewhere"
+        ],
+        "right_title": "BOOKING",
+        "right_items": [
+          "Slot is taken now",
+          "Confirmed instantly",
+          "Shows in your calendar"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "A contact form asks people to wait. A booking page lets them finish.",
+        "body": "With a contact form, the sequence is: they write, you reply, they reply, maybe you agree a time.\n\nFour steps, and every one of them is a chance to lose the person.\n\nWith booking: they pick a slot, it lands in your calendar, both sides get a confirmation. One step.\n\nIf you sell time — treatments, consultations, sessions, repairs — this is usually the single highest-impact change on your whole site."
+      },
+      "tags": [
+        "#bookingsystem",
+        "#businessautomation",
+        "#smallbusinessowner"
+      ],
+      "topic": "booking"
+    },
+    {
+      "id": "nx-edu-06",
+      "category": "educational",
+      "layout": "tips",
+      "image": {
+        "kicker": "AUTOMATION",
+        "headline": "Three jobs to stop doing by hand",
+        "items": [
+          "Appointment reminders",
+          "Review requests",
+          "Invoice follow-ups"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "Most small businesses automate the wrong thing first.",
+        "body": "Start with the tasks you already do every week, badly, because you are busy:\n\n• Appointment reminders — the cheapest way to cut no-shows.\n• Review requests, sent automatically a few days after the job.\n• Invoice follow-ups, so you stop chasing payment manually.\n\nNone of these need AI. They need to be set up once.\n\nWhich of the three costs you the most right now?"
+      },
+      "tags": [
+        "#businessautomation",
+        "#smallbusinessowner"
+      ],
+      "topic": "automation"
+    },
+    {
+      "id": "nx-ps-01",
+      "category": "problem_solution",
+      "layout": "problem_solution",
+      "image": {
+        "kicker": "PROBLEM → FIX",
+        "problem": "Every DM asks \"how much?\"",
+        "solution": "A pricing page that answers before they ask",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "If most of your DMs are \"how much?\", your site is making people do the work.",
+        "body": "Hiding prices does not create conversations. It creates comparison shopping somewhere easier.\n\nYou do not have to publish an exact number. A range works: \"Projects typically start at X.\"\n\nThat one line does two things — it filters out people who were never going to buy, and it makes the ones who do message you far more serious.\n\nYou will get fewer DMs. You will get better ones."
+      },
+      "tags": [
+        "#smallbusinesswebsite",
+        "#conversionrate"
+      ],
+      "topic": "pricing"
+    },
+    {
+      "id": "nx-ps-02",
+      "category": "problem_solution",
+      "layout": "problem_solution",
+      "image": {
+        "kicker": "PROBLEM → FIX",
+        "problem": "Traffic is fine. Nobody buys.",
+        "solution": "Fix the checkout, not the homepage",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "When sales are flat, everyone redesigns the homepage. The money is usually leaking further down.",
+        "body": "Check the boring end of the funnel first:\n\n• Is there a guest checkout, or are you forcing account creation?\n• Is shipping cost visible before the final step?\n• How many taps from cart to paid?\n• Does it actually work on a phone, on mobile data?\n\nA homepage redesign is visible. A checkout fix is profitable.\n\nDo the second one first."
+      },
+      "tags": [
+        "#ecommercedesign",
+        "#shopify",
+        "#conversionrate"
+      ],
+      "topic": "ecommerce"
+    },
+    {
+      "id": "nx-ps-03",
+      "category": "problem_solution",
+      "layout": "problem_solution",
+      "image": {
+        "kicker": "PROBLEM → FIX",
+        "problem": "Your site looks fine on your laptop",
+        "solution": "Build it phone-first — that is where they are",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "You design on a 27-inch screen. Your customers are on a phone, one-handed, outdoors.",
+        "body": "What breaks in that gap:\n\n• Text sized for a desktop viewing distance.\n• Buttons too small or too close to reach with a thumb.\n• A menu that needs two hands.\n• Hero images that push everything important below the fold.\n\nOpen your own site on your phone right now, in daylight, and try to book or buy something.\n\nWhatever annoys you in the next 30 seconds is your list."
+      },
+      "tags": [
+        "#webdesign",
+        "#uxdesign",
+        "#smallbusinessowner"
+      ],
+      "topic": "mobile"
+    },
+    {
+      "id": "nx-sh-01",
+      "category": "showcase",
+      "layout": "showcase",
+      "image": {
+        "kicker": "SERVICE",
+        "headline": "Shopify stores that convert",
+        "features": [
+          "Product pages that answer objections",
+          "Checkout tuned for mobile",
+          "Set up so you can run it"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "A store is not finished when it looks good. It is finished when you can run it without me.",
+        "body": "What a build includes:\n\n• Product pages structured around the questions that stop people buying.\n• A checkout tested on real phones, not just a desktop preview.\n• Collections and navigation that still make sense at 200 products.\n• A handover walkthrough, so adding a product is not a support ticket.\n\nThinking about a store, or fixing one that underperforms? DM me."
+      },
+      "tags": [
+        "#shopify",
+        "#ecommercedesign"
+      ],
+      "topic": "ecommerce"
+    },
+    {
+      "id": "nx-sh-02",
+      "category": "showcase",
+      "layout": "showcase",
+      "image": {
+        "kicker": "SERVICE",
+        "headline": "Booking sites for service businesses",
+        "features": [
+          "Live calendar",
+          "Automatic reminders",
+          "Deposits at booking"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "If you sell your time, your website has one job: fill the calendar.",
+        "body": "What that looks like in practice:\n\n• A real-time calendar — no double bookings, no back-and-forth.\n• Automatic reminders before the appointment, which is the cheapest way to cut no-shows.\n• Optional deposit at booking, so a slot means something.\n• Works properly on a phone, because that is where bookings happen.\n\nClinics, salons, studios, trades. DM me to talk through your setup."
+      },
+      "tags": [
+        "#bookingsystem",
+        "#smallbusinessowner",
+        "#webdesign"
+      ],
+      "topic": "booking"
+    },
+    {
+      "id": "nx-sh-03",
+      "category": "showcase",
+      "layout": "showcase",
+      "image": {
+        "kicker": "SERVICE",
+        "headline": "Automation for the admin you hate",
+        "features": [
+          "Reminders",
+          "Review requests",
+          "Follow-ups"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "The goal is not a smarter business. It is fewer things you have to remember.",
+        "body": "Typical setups:\n\n• Booking → confirmation → reminder, with nothing typed by you.\n• Job finished → review request a few days later, automatically.\n• Invoice unpaid after X days → a polite nudge that you did not have to send.\n\nSet up once, runs quietly.\n\nTell me the task you repeat most and I will tell you if it is worth automating."
+      },
+      "tags": [
+        "#businessautomation",
+        "#smallbusinessowner"
+      ],
+      "topic": "automation"
+    },
+    {
+      "id": "nx-sh-04",
+      "category": "showcase",
+      "layout": "showcase",
+      "image": {
+        "kicker": "SERVICE",
+        "headline": "Brand identity that survives contact",
+        "features": [
+          "Logo and marks",
+          "Colour and type system",
+          "Rules you can hand over"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "A logo is not a brand. A brand is what happens when someone else has to use it.",
+        "body": "What actually gets delivered:\n\n• The logo, in the versions you need — dark, light, tiny, square for social.\n• A colour and type system, with the values written down.\n• Simple rules so your posts, invoices and site look related.\n\nThe test is whether a printer, a developer or a freelancer can use it without asking you anything.\n\nDM me if your brand only exists inside one Canva file."
+      },
+      "tags": [
+        "#branding",
+        "#smallbusinessowner"
+      ],
+      "topic": "branding"
+    },
+    {
+      "id": "nx-faq-01",
+      "category": "faq",
+      "layout": "faq",
+      "image": {
+        "kicker": "FAQ",
+        "question": "How long does a website take?",
+        "answer": "Most take 2–4 weeks. Content is the bottleneck.",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "\"How long will it take?\" — the honest answer is: it depends on you more than on me.",
+        "body": "A typical small business site is 2–4 weeks of build.\n\nWhat actually causes delays is almost never the design. It is waiting on text, photos, product details and logins.\n\nSo the fastest projects are the ones where that material is gathered before we start.\n\nIf you want a realistic timeline for your specific project, DM me what you have and I will tell you."
+      },
+      "tags": [
+        "#webdesign",
+        "#smallbusinessowner"
+      ],
+      "topic": "process"
+    },
+    {
+      "id": "nx-faq-02",
+      "category": "faq",
+      "layout": "faq",
+      "image": {
+        "kicker": "FAQ",
+        "question": "Do I own the website?",
+        "answer": "Yes. Domain, hosting and accounts in your name.",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "Ask this before you hire anyone: whose name is the domain in?",
+        "body": "You should own:\n\n• The domain, registered to you.\n• The hosting or platform account, in your name.\n• Your content and images.\n\nIf a website can be switched off because of a disagreement with whoever built it, it was never really yours.\n\nThis is a fair question to ask any designer, including me."
+      },
+      "tags": [
+        "#smallbusinessowner",
+        "#webdesign"
+      ],
+      "topic": "ownership"
+    },
+    {
+      "id": "nx-faq-03",
+      "category": "faq",
+      "layout": "faq",
+      "image": {
+        "kicker": "FAQ",
+        "question": "What do you need from me to start?",
+        "answer": "Your services, your prices, and how you want to be contacted.",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "You do not need a brief, a moodboard or a plan to start a conversation.",
+        "body": "To quote properly I need three things:\n\n① What you sell, in your own words.\n② Roughly what it costs.\n③ How you want people to reach you — book, call, or message.\n\nThat is enough for a real answer instead of a vague one.\n\nPhotos, text and logos can come later."
+      },
+      "tags": [
+        "#smallbusinessowner",
+        "#freelancewebdesigner"
+      ],
+      "topic": "process"
+    },
+    {
+      "id": "nx-pf-01",
+      "category": "portfolio",
+      "layout": "compare",
+      "image": {
+        "kicker": "CONCEPT STUDY",
+        "headline": "Same content, restructured",
+        "left_title": "BEFORE",
+        "left_items": [
+          "Slogan, no offer",
+          "Prices hidden",
+          "Six competing buttons"
+        ],
+        "right_title": "AFTER",
+        "right_items": [
+          "Plain what and who",
+          "Price range shown",
+          "One clear action"
+        ],
+        "footnote": "Concept — bynexora.co"
+      },
+      "caption": {
+        "hook": "A concept study on a page structure I see constantly.",
+        "body": "Nothing here is a new colour palette. It is the same content in a different order.\n\nBefore: a slogan that could belong to any business, pricing hidden behind \"contact us\", and six buttons competing for the same click.\n\nAfter: what it is and who it is for in plain words, a starting price, and one action.\n\nThis is a concept study, not client work — shown to make the structure visible.\n\nWhat would you change?"
+      },
+      "tags": [
+        "#webdesign",
+        "#uxdesign",
+        "#landingpage"
+      ],
+      "topic": "homepage"
+    },
+    {
+      "id": "nx-pf-02",
+      "category": "portfolio",
+      "layout": "tips",
+      "image": {
+        "kicker": "HOW I WORK",
+        "headline": "A project, start to finish",
+        "items": [
+          "Call → scope and fixed price",
+          "Build → you see it weekly",
+          "Handover → you can run it"
+        ],
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "No surprises is a feature, not a courtesy.",
+        "body": "How a project runs:\n\n① A short call. I ask what you sell and who buys it. You get a fixed scope and a fixed price — not an hourly guess.\n② Build, with something to look at every week. You never wait a month wondering.\n③ Handover. Logins in your name, and a walkthrough so you can update it yourself.\n\nIf that is how you would want to be treated as a client, DM me."
+      },
+      "tags": [
+        "#freelancewebdesigner",
+        "#smallbusinessowner"
+      ],
+      "topic": "process"
+    },
+    {
+      "id": "nx-pr-01",
+      "category": "promotional",
+      "layout": "offer",
+      "image": {
+        "kicker": "FREE",
+        "headline": "10-minute site audit",
+        "sub": "Three specific things costing you enquiries",
+        "cta": "DM “SITE”",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "Send me your website and I will send back three specific things to fix.",
+        "body": "Not a report. Not a sales call. Three concrete problems and what to do about them.\n\nUsually it is something in this range: the top of the page does not say what you do, pricing is hidden, or the contact step has too much friction.\n\nDM the word SITE with your link.\n\nIf the fixes are things you can do yourself, I will tell you that too."
+      },
+      "tags": [
+        "#smallbusinessowner",
+        "#webdesign",
+        "#conversionrate"
+      ],
+      "topic": "offer"
+    },
+    {
+      "id": "nx-pr-02",
+      "category": "promotional",
+      "layout": "offer",
+      "image": {
+        "kicker": "AVAILABILITY",
+        "headline": "Two project slots",
+        "sub": "Taking on two builds this month",
+        "cta": "DM to check fit",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "I take a small number of projects at a time so each one gets attention.",
+        "body": "Two build slots open this month.\n\nA good fit is usually:\n• A service business that needs bookings instead of a contact form.\n• A store where traffic exists but the checkout leaks.\n• A business whose site has not kept up with what it actually sells now.\n\nDM me what you do and I will tell you honestly whether I am the right person for it."
+      },
+      "tags": [
+        "#freelancewebdesigner",
+        "#smallbusinessowner"
+      ],
+      "topic": "offer"
+    }
+  ]
+}

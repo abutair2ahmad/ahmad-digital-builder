@@ -1,0 +1,19 @@
+# VPS deployment, half one of two. Install both files in /etc/systemd/system/ then:
+#   systemctl enable --now igpost.timer
+[Unit]
+Description=Instagram auto-publisher — run any slot that is due
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=igpost
+WorkingDirectory=/opt/igpost
+# --live is what actually publishes; IG_PUBLISH_ENABLED in .env must also be true.
+ExecStart=/opt/igpost/instagram-autopost/bin/igpost due --live --env /opt/igpost/.env
+# The ledger and the .env are the only writable paths this service needs.
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+NoNewPrivileges=true
+ReadWritePaths=/opt/igpost/instagram-autopost/state /opt/igpost/instagram-autopost/out /opt/igpost/instagram-autopost/logs

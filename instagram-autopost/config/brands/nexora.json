@@ -1,0 +1,75 @@
+{
+  "brand": "bynexora",
+  "display_name": "Nexora",
+  "handle": "@bynexora.co",
+  "language": "en",
+  "direction": "ltr",
+  "site": "bynexora.co",
+  "voice": "Direct, senior, commercially minded. Speaks to business owners about revenue and friction, not about design trends.",
+  "palette": {
+    "bg": "#0A0A0F",
+    "surface": "#14141E",
+    "ink": "#F5F4FA",
+    "muted": "#9C9AB4",
+    "accent": "#7C6CFF",
+    "accent_ink": "#0A0A0F",
+    "accent_soft": "#1E1B3A",
+    "sand": "#2A2740",
+    "line": "#282738"
+  },
+  "type": {
+    "family": "\"Inter\", -apple-system, system-ui, \"Helvetica Neue\", Arial, sans-serif",
+    "display_weight": 700,
+    "body_weight": 400,
+    "tracking": "-0.03em"
+  },
+  "shape": {
+    "radius": 8,
+    "radius_pill": 8,
+    "stroke": 1
+  },
+  "logo_text": "NEXORA",
+  "footer_text": "bynexora.co",
+  "cta_pool": [
+    "DM “SITE” for a free 10-minute audit",
+    "Link in bio → see the work",
+    "Save this before your next redesign",
+    "Booking 2 projects this month — DM to check fit"
+  ],
+  "hashtag_pools": {
+    "core": [
+      "#nexora",
+      "#webdesign",
+      "#smallbusinesswebsite"
+    ],
+    "topic": [
+      "#shopify",
+      "#ecommercedesign",
+      "#bookingsystem",
+      "#uxdesign",
+      "#landingpage",
+      "#businessautomation",
+      "#branding",
+      "#conversionrate"
+    ],
+    "market": [
+      "#smallbusinessowner",
+      "#freelancewebdesigner",
+      "#websitedesigner"
+    ]
+  },
+  "claim_guard": {
+    "forbidden": [
+      "guaranteed",
+      "guarantee",
+      "#1 agency",
+      "best in the world",
+      "award-winning",
+      "certified partner",
+      "trusted by thousands",
+      "500+ clients"
+    ],
+    "note": "No invented social proof, client counts, awards or certifications."
+  },
+  "mark": "grid"
+}

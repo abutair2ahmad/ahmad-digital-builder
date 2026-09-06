@@ -1,0 +1,158 @@
+/* Shared post canvas. Brand palette, type and shape arrive as CSS variables that
+   render.py injects from config/brands/<brand>.json, so a layout never hard-codes
+   a colour and the two brands can never drift into looking like each other. */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { width: 1080px; height: 1080px; overflow: hidden; }
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--ink);
+  letter-spacing: var(--tracking);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* The stage is exactly the exported frame. Everything measures against this,
+   never against the viewport, so the fit checks are independent of how Chrome
+   sizes its window in screenshot vs dump-dom mode. */
+.stage {
+  position: relative;
+  width: 1080px;
+  height: 1080px;
+  padding: 88px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.stage > * { flex: 0 0 auto; }          /* natural height; auto-fit shrinks type instead */
+.stage > .spacer, .stage > .split, .stage > .cols, .stage > .slab, .stage > .fill { flex: 1 1 auto; }
+
+/* Full-bleed layouts centre their message in the space between kicker and footer,
+   rather than stacking at the top and leaving a dead half-frame underneath. */
+.fill { display: flex; flex-direction: column; justify-content: center; min-height: 0; }
+
+.stage--accent { background: var(--accent); color: var(--accent-ink); }
+.stage--accent .kicker { background: color-mix(in srgb, var(--accent-ink) 18%, transparent); color: var(--accent-ink); }
+.stage--accent .footer, .stage--accent .sub { color: color-mix(in srgb, var(--accent-ink) 78%, transparent); }
+
+/* ---- shared furniture ---- */
+
+.kicker {
+  align-self: flex-start;
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  padding: 14px 28px;
+  border-radius: var(--radius-pill);
+  background: var(--accent-soft);
+  color: var(--accent);
+  white-space: nowrap;
+}
+:root[dir="rtl"] .kicker { letter-spacing: 0; }
+
+.headline {
+  font-weight: var(--weight-display);
+  font-size: 86px;
+  line-height: 1.1;
+  letter-spacing: var(--tracking);
+  margin-top: 40px;
+}
+.headline--sm { font-size: 68px; }
+.headline--lg { font-size: 104px; }
+.fill > .headline:first-child { margin-top: 0; }
+
+.sub { font-size: 38px; line-height: 1.4; color: var(--muted); margin-top: 26px; font-weight: 400; }
+
+.spacer { flex: 1 1 auto; min-height: 24px; }
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 26px;
+  color: var(--muted);
+  border-top: var(--stroke) solid var(--line);
+  padding-top: 30px;
+}
+.stage--accent .footer { border-top-color: color-mix(in srgb, var(--accent-ink) 30%, transparent); }
+.logo { font-weight: 700; letter-spacing: 0.04em; }
+.note { font-size: 22px; opacity: .85; text-align: end; }
+
+/* ---- tips: a numbered list ---- */
+.tips { display: flex; flex-direction: column; gap: 26px; margin-top: 56px; }
+.tip {
+  display: flex; align-items: center; gap: 30px;
+  background: var(--surface);
+  border: var(--stroke) solid var(--line);
+  border-radius: var(--radius);
+  padding: 34px 38px;
+}
+.tip__n {
+  flex: 0 0 auto; width: 68px; height: 68px; border-radius: var(--radius-pill);
+  background: var(--accent); color: var(--accent-ink);
+  display: grid; place-items: center; font-size: 34px; font-weight: 700;
+}
+.tip__t { font-size: 40px; font-weight: 600; line-height: 1.25; }
+
+/* ---- problem -> solution: a split frame ---- */
+.split { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; flex: 1 1 auto; }
+.split__half {
+  flex: 1 1 0; border-radius: var(--radius); padding: 46px;
+  display: flex; flex-direction: column; justify-content: center; gap: 20px;
+}
+.split__half--bad { background: var(--surface); border: var(--stroke) solid var(--line); }
+.split__half--good { background: var(--accent); color: var(--accent-ink); }
+.split__label { font-size: 26px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
+.split__text { font-size: 52px; font-weight: 600; line-height: 1.22; }
+
+/* ---- compare: two columns ---- */
+.cols { display: flex; gap: 26px; margin-top: 52px; flex: 1 1 auto; }
+.col {
+  flex: 1 1 0; border-radius: var(--radius); padding: 44px 38px;
+  display: flex; flex-direction: column; gap: 22px;
+}
+.col { justify-content: center; }
+.col--a { background: var(--surface); border: var(--stroke) solid var(--line); }
+.col--b { background: var(--accent); color: var(--accent-ink); }
+.col__h { font-size: 32px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.col--a .col__h { color: var(--muted); }
+.col__i { font-size: 34px; line-height: 1.35; font-weight: 500; }
+.col__i + .col__i { border-top: var(--stroke) solid color-mix(in srgb, currentColor 22%, transparent); padding-top: 20px; }
+
+/* ---- faq ---- */
+.q-mark { font-size: 190px; font-weight: 700; line-height: .8; color: var(--accent); opacity: .18; }
+.q { font-size: 66px; font-weight: 700; line-height: 1.16; margin-top: -30px; }
+.a {
+  margin-top: 40px; background: var(--accent); color: var(--accent-ink);
+  border-radius: var(--radius); padding: 44px;
+  font-size: 44px; font-weight: 600; line-height: 1.3;
+}
+
+/* ---- showcase ---- */
+.chips { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 52px; }
+.chip {
+  font-size: 32px; font-weight: 600; padding: 22px 34px;
+  border-radius: var(--radius-pill);
+  background: var(--surface); border: var(--stroke) solid var(--line);
+}
+.slab {
+  margin-top: 48px; flex: 1 1 auto; min-height: 150px;
+  border-radius: var(--radius); background: var(--accent);
+  display: grid; place-items: center; overflow: hidden;
+}
+.slab__mark { font-size: 120px; font-weight: 700; color: var(--accent-ink); opacity: .9; letter-spacing: .02em; }
+
+/* ---- offer ---- */
+.cta {
+  align-self: flex-start; margin-top: 52px;
+  font-size: 42px; font-weight: 700;
+  padding: 30px 56px; border-radius: var(--radius-pill);
+  background: var(--accent-ink); color: var(--accent);
+}
