@@ -56,6 +56,16 @@ body {
 }
 :root[dir="rtl"] .kicker { letter-spacing: 0; }
 
+/* Arabic is a joined script: any tracking, however small, pulls the letters of a
+   word apart and breaks the joins. Every place that adds letter-spacing for a
+   Latin or Hebrew label has to give it back on an Arabic stage. The wordmark is
+   exempt — it stays Latin in both brands. Scoped to [lang="ar"] rather than
+   [dir="rtl"] so the Hebrew account is untouched. */
+:root[lang="ar"] .split__label,
+:root[lang="ar"] .col__h,
+:root[lang="ar"] .chip,
+:root[lang="ar"] .cta { letter-spacing: 0; }
+
 .headline {
   font-weight: var(--weight-display);
   font-size: 86px;
@@ -127,7 +137,7 @@ body {
 .col__i + .col__i { border-top: var(--stroke) solid color-mix(in srgb, currentColor 22%, transparent); padding-top: 20px; }
 
 /* ---- faq ---- */
-.q-mark { font-size: 190px; font-weight: 700; line-height: .8; color: var(--accent); opacity: .18; }
+.q-mark { font-size: 190px; font-weight: 700; line-height: .8; color: var(--accent); opacity: .18; text-align: start; }
 .q { font-size: 66px; font-weight: 700; line-height: 1.16; margin-top: -30px; }
 .a {
   margin-top: 40px; background: var(--accent); color: var(--accent-ink);
@@ -146,7 +156,16 @@ body {
   margin-top: 48px; flex: 1 1 auto; min-height: 150px;
   border-radius: var(--radius); background: var(--accent);
   display: grid; place-items: center; overflow: hidden;
+  grid-template-rows: minmax(0, 1fr);
 }
+/* The mark is drawn at its natural 330px, but the slab is only whatever is left
+   after the chips have wrapped — and a longer language wraps them onto a second
+   row, which used to cut the bottom off the mark. `minmax(0, 1fr)` stops the row
+   sizing itself to the mark, so `max-height` below has the slab's own height to
+   measure against and the mark shrinks to fit instead. It never scales the mark
+   up, so a frame that already fitted is unchanged. The fit gate cannot catch
+   this on its own: the mark carries no text to measure. */
+.slab > svg { max-width: 100%; max-height: 100%; }
 .slab__mark { font-size: 120px; font-weight: 700; color: var(--accent-ink); opacity: .9; letter-spacing: .02em; }
 
 /* ---- offer ---- */

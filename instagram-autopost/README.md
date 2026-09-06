@@ -1,4 +1,4 @@
-# Instagram auto-publisher — @movewell.il and @bynexora.co
+# Instagram auto-publisher — @movewell.il (Hebrew) and @bynexora.co (Arabic)
 
 Generates and publishes three posts a day to each account: 10:00, 15:00 and 20:30
 Asia/Jerusalem. Standard library only, no pip install, no build step.
@@ -31,6 +31,7 @@ never publishes a partially-correct image.
 ## Layout
 
     config/brands/*.json    palette, type, shape, CTAs, hashtag pools, claim guard
+    assets/fonts/           font files a brand embeds into its own renders
     config/schedule.json    slots, timezone, category rotation, cooldowns
     content/*.json          the idea banks — 20 per brand
     templates/base.css      the shared 1080x1080 canvas
@@ -92,8 +93,19 @@ recovered by the next one, inside the 90-minute catch-up window.
 * Python 3.9+ (`zoneinfo`), Chrome or Chromium on `PATH` or in a standard location.
 * Fonts. macOS has everything already. On Linux install `fonts-noto-core` and
   `fonts-noto-hebrew`, or MoveWell's Hebrew renders as fallback glyphs.
+  Nexora needs nothing installed: its brand config lists the IBM Plex Sans Arabic
+  faces under `assets/fonts/`, and `render.py` inlines them into every stage as
+  data URIs. Arabic is a joined script, and a host missing an Arabic font would
+  produce a frame that measures perfectly and still cannot be posted, so that face
+  travels with the repository rather than with the machine. Any brand can opt in
+  the same way with a `webfonts` block; a brand without one renders on system
+  fonts exactly as before.
 
 ## Adding content
+
+MoveWell publishes in Hebrew and Nexora in Arabic; each brand's `language` and
+`direction` drive the stage's `lang`/`dir`, the layout labels and the Arabic
+typographic rules in `base.css`. Write new ideas in the account's own language.
 
 Append to `content/movewell.json` or `content/nexora.json`. An idea needs `id`,
 `category`, `layout`, `topic`, an `image` block matching its layout, a `caption`

@@ -18,8 +18,12 @@ def _e(value):
 
 def _footer(brand, idea):
     note = idea.get("image", {}).get("footnote") or brand.get("footer_text", "")
+    # The wordmark is Latin in both brands. On an RTL stage it is pinned to `ltr`
+    # so NEXORA is never re-ordered by the bidi algorithm, whatever sits next to
+    # it. The note is left alone: it may mix Arabic with the URL, and bidi already
+    # keeps a Latin run such as bynexora.co reading forwards inside Arabic text.
     return (
-        '<div class="footer"><span class="logo">%s</span>'
+        '<div class="footer"><span class="logo" dir="ltr">%s</span>'
         '<span class="note" data-fit>%s</span></div>'
     ) % (_e(brand.get("logo_text", "")), _e(note))
 
@@ -80,9 +84,18 @@ def tips(brand, idea):
     ) % (_kicker(idea), _e(img["headline"]), rows, _footer(brand, idea))
 
 
+# The two split labels, per brand language. A layout label is furniture rather
+# than content, so it lives with the layout instead of being repeated in every
+# idea in the content bank.
+SPLIT_LABELS = {
+    "he": ("הבעיה", "הפתרון"),
+    "ar": ("المشكلة", "الحل"),
+}
+
+
 def problem_solution(brand, idea):
     img = idea["image"]
-    bad_label, good_label = ("הבעיה", "הפתרון") if brand.get("language") == "he" else ("PROBLEM", "SOLUTION")
+    bad_label, good_label = SPLIT_LABELS.get(brand.get("language"), ("PROBLEM", "SOLUTION"))
     return (
         '<div class="stage">%s<div class="split">'
         '<div class="split__half split__half--bad"><div class="split__label">%s</div>'
@@ -114,10 +127,13 @@ def compare(brand, idea):
 
 def faq(brand, idea):
     img = idea["image"]
+    # Arabic writes its question mark as U+061F, mirrored the other way. Using the
+    # ASCII one on an Arabic stage reads as a typo at thumbnail size.
+    mark = "\u061f" if brand.get("language") == "ar" else "?"
     return (
-        '<div class="stage">%s<div class="fill"><div class="q-mark">?</div>'
+        '<div class="stage">%s<div class="fill"><div class="q-mark">%s</div>'
         '<h1 class="q" data-fit>%s</h1><div class="a" data-fit>%s</div></div>%s</div>'
-    ) % (_kicker(idea), _e(img["question"]), _e(img["answer"]), _footer(brand, idea))
+    ) % (_kicker(idea), _e(mark), _e(img["question"]), _e(img["answer"]), _footer(brand, idea))
 
 
 def showcase(brand, idea):

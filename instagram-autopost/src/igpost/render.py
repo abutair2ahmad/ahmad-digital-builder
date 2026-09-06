@@ -10,12 +10,17 @@ measurements returned here describe exactly the frame that was captured rather
 than a second, separately laid-out run.
 """
 
+import base64
 import json
 import os
 import re
 import subprocess
 
 from . import layouts
+
+# <root>/src/igpost/render.py -> <root>. Brand font files are declared relative to
+# the project root so a brand config never has to know where it was installed.
+PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 CHROME_CANDIDATES = (
     "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
@@ -98,6 +103,34 @@ def find_chrome(explicit=None):
     raise RenderError("no Chrome/Chromium binary found for rendering")
 
 
+def webfont_css(brand):
+    """Inline the brand's own font files as data URIs.
+
+    A post is rendered on whatever host the scheduler happens to be running on —
+    a laptop, a VPS, a GitHub runner — and a missing system font is invisible to
+    the fit report, which only measures what the DOM claimed. That is survivable
+    for Latin and fatal for a joined script: Arabic falling back to a face with no
+    shaping tables measures perfectly and produces an image nobody should post.
+    Embedding the faces the repository already ships makes the frame identical
+    everywhere and removes the "install these fonts first" failure mode.
+
+    A brand with no `webfonts` key renders exactly as before, on system fonts.
+    A declared file that is missing raises, which fails the slot at the render
+    stage — cheaply, and long before anything reaches Instagram.
+    """
+    faces = []
+    for face in brand.get("webfonts", []):
+        with open(os.path.join(PROJECT_ROOT, face["file"]), "rb") as handle:
+            payload = base64.b64encode(handle.read()).decode("ascii")
+        faces.append(
+            "@font-face{font-family:%s;font-style:normal;font-weight:%s;"
+            "font-display:block;src:url(data:font/woff2;base64,%s) format('woff2');%s}"
+            % (json.dumps(face["family"]), face["weight"], payload,
+               ("unicode-range:%s;" % face["unicode_range"]) if face.get("unicode_range") else "")
+        )
+    return "\n".join(faces)
+
+
 def build_html(brand, idea, css_path):
     """Assemble the standalone HTML stage for one post."""
     with open(css_path, "r", encoding="utf-8") as handle:
@@ -121,10 +154,10 @@ def build_html(brand, idea, css_path):
     ])
     return (
         '<!doctype html>\n<html lang="%s" dir="%s"><head><meta charset="utf-8">\n'
-        "<style>:root{\n%s\n}\n%s</style></head><body>\n%s\n"
+        "<style>%s\n:root{\n%s\n}\n%s</style></head><body>\n%s\n"
         "<script>%s</script></body></html>\n"
     ) % (brand.get("language", "en"), brand.get("direction", "ltr"),
-         variables, css, layouts.build(brand, idea), QA_SCRIPT)
+         webfont_css(brand), variables, css, layouts.build(brand, idea), QA_SCRIPT)
 
 
 def render(brand, idea, css_path, html_path, png_path, chrome=None, timeout=60):
