@@ -1,0 +1,19 @@
+{
+  "timezone": "Asia/Jerusalem",
+  "slots": ["10:00", "15:00", "20:30"],
+  "catch_up_minutes": 90,
+  "idea_cooldown_days": 21,
+  "layout_cooldown_days": 3,
+  "_comment_rotation": "Which content category each slot takes, by weekday (0=Monday). Promotional appears at most once a day and never twice in a row within a day, so the feed stays mostly useful rather than mostly advertising.",
+  "rotation": {
+    "0": ["educational", "problem_solution", "showcase"],
+    "1": ["educational", "faq", "promotional"],
+    "2": ["problem_solution", "showcase", "educational"],
+    "3": ["educational", "portfolio", "faq"],
+    "4": ["faq", "educational", "promotional"],
+    "5": ["showcase", "educational", "problem_solution"],
+    "6": ["educational", "portfolio", "showcase"]
+  },
+  "_comment_categories": "portfolio is concept/process work for Nexora and product-context work for MoveWell. 'social_proof' is deliberately absent: it is only enabled once real, verifiable evidence exists.",
+  "categories": ["educational", "problem_solution", "showcase", "faq", "portfolio", "promotional"]
+}

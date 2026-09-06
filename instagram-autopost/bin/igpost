@@ -1,0 +1,185 @@
+#!/usr/bin/env python3
+"""Command line for the Instagram auto-publisher.
+
+  status                      what is configured, what is due, what has published
+  plan   [--date D]           show the day's plan for both accounts without rendering
+  render --brand B [--date D] render every slot for a day, publish nothing
+  run    [--brand B] [--slot S] [--date D] [--live]
+                              run due slots (or one named slot). Dry run unless --live
+  due                         run whatever is due right now, both accounts
+  history --brand B [-n N]    recent ledger entries
+  verify                      read-only Instagram identity + quota check
+
+Nothing publishes without --live AND IG_PUBLISH_ENABLED=true.
+"""
+
+import argparse
+import json
+import os
+import sys
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "src"))
+
+from igpost import clock, compose, history, imagehost, planner, publisher, runner   # noqa: E402
+from igpost.accounts import BRANDS, account_status, load_account                     # noqa: E402
+from igpost.envfile import read_env                                                  # noqa: E402
+
+DEFAULT_ENV = os.path.join(os.path.dirname(ROOT), ".env")
+
+
+def _schedule():
+    with open(os.path.join(ROOT, "config", "schedule.json"), "r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def _today(schedule, given=None):
+    return given or clock.now_in(schedule["timezone"]).strftime("%Y-%m-%d")
+
+
+def cmd_status(args):
+    schedule = _schedule()
+    env = read_env(args.env)
+    now = clock.now_in(schedule["timezone"])
+    print("Now (%s): %s" % (schedule["timezone"], now.strftime("%Y-%m-%d %H:%M %Z")))
+    print("Slots: %s   catch-up window: %d min" % (", ".join(schedule["slots"]),
+                                                   schedule.get("catch_up_minutes", 90)))
+    live = env.get("IG_PUBLISH_ENABLED", "").strip().lower() in ("1", "true", "yes", "on")
+    print("Publishing: %s" % ("LIVE" if live else "DISABLED (dry run)"))
+    host = imagehost.configured(env)
+    print("Image host: %s — %s%s" % (host["backend"], "ready" if host["ready"] else "NOT READY",
+                                     "" if host["ready"] else " (missing: %s)" % ", ".join(host["missing"])))
+    print("\nAccounts:")
+    for brand in BRANDS:
+        state = account_status(brand, args.env)
+        print("  %-9s %-14s id:%-3s token:%-3s %s"
+              % (state["brand"], state["handle"],
+                 "set" if state["ig_id_set"] else "—", "set" if state["token_set"] else "—",
+                 "READY" if state["ready"] else "not configured"))
+    print("\nDue now: %s" % (clock.due_slots(now, schedule) or "nothing"))
+    nxt = clock.next_slot(now, schedule)
+    print("Next slot: %s %s" % (nxt["date"], nxt["slot"]) if nxt else "Next slot: —")
+    print("\nPublished today:")
+    today = now.strftime("%Y-%m-%d")
+    for brand in BRANDS:
+        print("  %-9s %d of %d" % (brand, history.published_count(
+            os.path.join(ROOT, "state"), brand, today), len(schedule["slots"])))
+
+
+def cmd_plan(args):
+    schedule = _schedule()
+    date_str = _today(schedule, args.date)
+    for brand in BRANDS:
+        brand_cfg, content, _ = runner.load_configs(ROOT, brand)
+        print("\n=== %s (%s) — %s ===" % (brand_cfg["display_name"], brand_cfg["handle"], date_str))
+        for slot in schedule["slots"]:
+            key = history.post_key(brand, date_str, slot)
+            idea, why = planner.choose(content, schedule, os.path.join(ROOT, "state"),
+                                       brand, date_str, slot, key)
+            if idea is None:
+                print("  %-6s (skip) %s" % (slot, why))
+                continue
+            post = compose.compose(brand_cfg, idea, key, content)
+            print("  %-6s %-10s %-18s %s" % (slot, idea["category"], idea["id"],
+                                             idea["image"].get("headline")
+                                             or idea["image"].get("question")
+                                             or idea["image"].get("problem")))
+            print("         cta: %s | %d tags | %d chars"
+                  % (post["cta"], len(post["hashtags"]), post["length"]))
+
+
+def cmd_render(args):
+    schedule = _schedule()
+    date_str = _today(schedule, args.date)
+    brands = [args.brand] if args.brand else list(BRANDS)
+    for brand in brands:
+        for slot in schedule["slots"]:
+            result = runner.run_slot(ROOT, brand, date_str, slot, env_path=args.env, dry_run=True)
+            print("  -> %s: %s" % (result["key"], result["action"]))
+
+
+def cmd_run(args):
+    schedule = _schedule()
+    date_str = _today(schedule, args.date)
+    brands = [args.brand] if args.brand else list(BRANDS)
+    slots = [args.slot] if args.slot else schedule["slots"]
+    for brand in brands:
+        for slot in slots:
+            runner.run_slot(ROOT, brand, date_str, slot, env_path=args.env,
+                            dry_run=(not args.live))
+
+
+def cmd_due(args):
+    schedule = _schedule()
+    now = clock.now_in(schedule["timezone"])
+    due = clock.due_slots(now, schedule)
+    if not due:
+        print("nothing due (now %s)" % now.strftime("%Y-%m-%d %H:%M %Z"))
+        return
+    for entry in due:
+        for brand in BRANDS:
+            runner.run_slot(ROOT, brand, entry["date"], entry["slot"],
+                            env_path=args.env, dry_run=(not args.live))
+
+
+def cmd_history(args):
+    events = history.read_all(os.path.join(ROOT, "state"), args.brand)
+    for event in events[-args.number:]:
+        print("%-20s %-11s %-24s %s" % (event.get("at", "")[:19], event.get("status"),
+                                        event.get("key"), event.get("idea_id")
+                                        or event.get("reason", "")[:60]))
+    if not events:
+        print("(no history for %s)" % args.brand)
+
+
+def cmd_verify(args):
+    for brand in BRANDS:
+        account = load_account(brand, args.env)
+        if account is None:
+            print("%-9s not configured — skipped" % brand)
+            continue
+        env = read_env(args.env)
+        host = env.get("INSTAGRAM_GRAPH_HOST") or publisher.DEFAULT_HOST
+        try:
+            identity = publisher.verify_account(account, host=host)
+            limit = publishing_limit_safe(account, host)
+            print("%-9s @%s type=%s id_matches_env=%s quota_used=%s"
+                  % (brand, identity["username"], identity["account_type"],
+                     identity["id_matches_env"], limit))
+        except publisher.PublishError as exc:
+            print("%-9s check failed: %s" % (brand, exc))
+
+
+def publishing_limit_safe(account, host):
+    try:
+        return publisher.publishing_limit(account, host=host).get("quota_usage")
+    except publisher.PublishError:
+        return "unavailable"
+
+
+def main():
+    parser = argparse.ArgumentParser(prog="igpost", description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--env", default=DEFAULT_ENV)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    sub.add_parser("status").set_defaults(func=cmd_status)
+    sub.add_parser("verify").set_defaults(func=cmd_verify)
+
+    p = sub.add_parser("plan"); p.add_argument("--date"); p.set_defaults(func=cmd_plan)
+    p = sub.add_parser("render"); p.add_argument("--brand", choices=BRANDS); p.add_argument("--date")
+    p.set_defaults(func=cmd_render)
+    p = sub.add_parser("run"); p.add_argument("--brand", choices=BRANDS)
+    p.add_argument("--slot"); p.add_argument("--date")
+    p.add_argument("--live", action="store_true", help="actually publish")
+    p.set_defaults(func=cmd_run)
+    p = sub.add_parser("due"); p.add_argument("--live", action="store_true"); p.set_defaults(func=cmd_due)
+    p = sub.add_parser("history"); p.add_argument("--brand", required=True, choices=BRANDS)
+    p.add_argument("-n", "--number", type=int, default=20); p.set_defaults(func=cmd_history)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()
