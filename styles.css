@@ -408,6 +408,7 @@ html[lang="en"] .hero__title {
 .work__card:hover {
   border-color: color-mix(in srgb, var(--accent) 45%, var(--line));
 }
+.work__card[data-card-link] { cursor: pointer; }
 /* .reveal.is-in resets transform later in this file at equal weight,
    so the lift needs the extra class to survive once a card has revealed */
 .work__card:hover,

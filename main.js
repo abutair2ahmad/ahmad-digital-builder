@@ -144,4 +144,15 @@
   } else {
     for (var k = 0; k < reveals.length; k++) reveals[k].classList.add('is-in');
   }
+
+  /* ---------- whole-card click for work cards that opt in via data-card-link ---------- */
+
+  var linkedCards = document.querySelectorAll('.work__card[data-card-link]');
+  for (var c = 0; c < linkedCards.length; c++) {
+    linkedCards[c].addEventListener('click', function (e) {
+      if (e.target.closest('a, button')) return;
+      var href = this.getAttribute('data-card-link');
+      window.open(href, '_blank', 'noopener,noreferrer');
+    });
+  }
 })();
