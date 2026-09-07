@@ -1,0 +1,75 @@
+{%- liquid assign s = section.settings -%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    <div class="{% if s.align == 'center' %}text-center mx-auto{% endif %}">
+      {%- if s.eyebrow != blank -%}<span class="t-eyebrow" style="margin-bottom:var(--s-4)">{{ s.eyebrow }}</span>{%- endif -%}
+      {%- comment -%}
+        The measure sits on the heading itself so `ch` resolves against the
+        display serif rather than the body sans.
+      {%- endcomment -%}
+      <h1 class="t-h1" style="max-width:{% if s.align == 'center' %}20ch;margin-inline:auto{% else %}17ch{% endif %}">{{ s.heading | default: page.title }}</h1>
+    </div>
+    {%- if s.text != blank -%}
+      <div class="rte t-lede" style="max-width:52ch;margin-top:var(--s-5){% if s.align == 'center' %};margin-inline:auto;text-align:center{% endif %}">{{ s.text }}</div>
+    {%- endif -%}
+    {%- if s.image != blank or s.fallback_image != blank -%}
+      <div style="margin-top:var(--s-7)">
+        {% render 'responsive-image',
+          image: s.image,
+          fallback: s.fallback_image,
+          alt: s.image_alt,
+          ratio: s.ratio,
+          sizes: '100vw',
+          widths: '800,1200,1600,2000',
+          placeholder: 'lifestyle-1' %}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Page hero",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "info": "Falls back to the page title." },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" }
+      ],
+      "default": "left"
+    },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text" },
+    { "type": "text", "id": "fallback_image", "label": "Bundled demo image" },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "wide", "label": "16:9" },
+        { "value": "landscape", "label": "3:2" }
+      ],
+      "default": "wide"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 96 }
+  ],
+  "presets": [{ "name": "Page hero" }]
+}
+{% endschema %}

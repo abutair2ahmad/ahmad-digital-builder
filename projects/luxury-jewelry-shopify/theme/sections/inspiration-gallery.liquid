@@ -1,0 +1,84 @@
+{%- liquid assign s = section.settings -%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header', eyebrow: s.eyebrow, heading: s.heading, text: s.text, align: s.align %}
+    <div class="grid grid--4 grid--m1">
+      {%- for block in section.blocks -%}
+        <figure class="{% if settings.enable_reveal %}reveal{% endif %}" data-delay="{{ forloop.index0 | modulo: 4 }}" {{ block.shopify_attributes }}>
+          <div class="media media--{{ s.ratio }} tile__media">
+            {% render 'responsive-image',
+              image: block.settings.image,
+              fallback: block.settings.fallback_image,
+              alt: block.settings.caption,
+              sizes: '(min-width: 1100px) 24vw, (min-width: 750px) 32vw, 92vw',
+              widths: '300,400,600,800',
+              placeholder: 'image',
+              no_wrapper: true %}
+          </div>
+          {%- if block.settings.caption != blank -%}
+            <figcaption class="t-meta" style="margin-top:var(--s-3)">{{ block.settings.caption }}</figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Inspiration gallery",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "From the archive" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Commissions we have made" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" },
+        { "value": "split", "label": "Split" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Image ratio",
+      "options": [
+        { "value": "portrait", "label": "Portrait" },
+        { "value": "square", "label": "Square" }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "limit": 8,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Bundled demo image" },
+        { "type": "text", "id": "caption", "label": "Caption", "default": "Oval solitaire, 1.40ct, 18k yellow gold — 2024" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Inspiration gallery", "blocks": [{ "type": "image" }, { "type": "image" }, { "type": "image" }, { "type": "image" }] }
+  ]
+}
+{% endschema %}

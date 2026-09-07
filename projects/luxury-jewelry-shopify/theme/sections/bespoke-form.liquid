@@ -1,0 +1,143 @@
+{%- liquid
+  assign s = section.settings
+  assign jewellery_types = s.types | split: ','
+  assign metals = s.metals | split: ','
+  assign stones = s.stones | split: ','
+  assign budgets = s.budgets | split: ','
+-%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" id="{{ s.anchor | default: 'enquire' }}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    <div class="split" style="align-items:start">
+      <div class="split__text">
+        {%- if s.eyebrow != blank -%}<span class="t-eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+        {%- if s.heading != blank -%}<h2 class="t-h2">{{ s.heading }}</h2>{%- endif -%}
+        {%- if s.text != blank -%}<div class="rte t-lede">{{ s.text }}</div>{%- endif -%}
+        {%- if s.reassurance != blank -%}
+          <ul class="product__assurance" style="margin-top:var(--s-4)">
+            {%- assign lines = s.reassurance | split: ',' -%}
+            {%- for line in lines -%}<li>{{ line | strip }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+
+      <div>
+        {%- form 'contact', id: 'bespoke-enquiry' -%}
+          {%- if form.posted_successfully? -%}
+            <p class="form__success">{{ s.success_message }}</p>
+          {%- else -%}
+            {%- if form.errors -%}
+              <p class="form__error" role="alert" style="margin-bottom:var(--s-5)">
+                {{ form.errors | default_errors }}
+              </p>
+            {%- endif -%}
+
+            <div class="form-grid form-grid--2">
+              <label class="field">
+                <span class="field__label">Name</span>
+                <input class="input" type="text" name="contact[name]" autocomplete="name" required
+                  value="{{ form.name }}">
+              </label>
+
+              <label class="field">
+                <span class="field__label">Email</span>
+                <input class="input" type="email" name="contact[email]" autocomplete="email" required
+                  value="{{ form.email }}">
+              </label>
+
+              <label class="field">
+                <span class="field__label">Telephone <span style="text-transform:none;letter-spacing:0;color:var(--c-stone)">(optional)</span></span>
+                <input class="input" type="tel" name="contact[phone]" autocomplete="tel" value="{{ form.phone }}">
+              </label>
+
+              <label class="field">
+                <span class="field__label">Piece</span>
+                <select class="select" name="contact[jewellery type]">
+                  {%- for t in jewellery_types -%}<option>{{ t | strip }}</option>{%- endfor -%}
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Metal</span>
+                <select class="select" name="contact[metal]">
+                  {%- for m in metals -%}<option>{{ m | strip }}</option>{%- endfor -%}
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Stone</span>
+                <select class="select" name="contact[stone]">
+                  {%- for st in stones -%}<option>{{ st | strip }}</option>{%- endfor -%}
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Budget</span>
+                <select class="select" name="contact[budget]">
+                  {%- for b in budgets -%}<option>{{ b | strip }}</option>{%- endfor -%}
+                </select>
+              </label>
+
+              <label class="field">
+                <span class="field__label">Wear date <span style="text-transform:none;letter-spacing:0;color:var(--c-stone)">(optional)</span></span>
+                <input class="input" type="date" name="contact[target date]">
+              </label>
+
+              <label class="field form-grid__full">
+                <span class="field__label">Reference or inspiration <span style="text-transform:none;letter-spacing:0;color:var(--c-stone)">(optional)</span></span>
+                <input class="input" type="url" name="contact[inspiration]" placeholder="A link to a photograph, a Pinterest board, an heirloom">
+              </label>
+
+              <label class="field form-grid__full">
+                <span class="field__label">Tell us about the piece</span>
+                <textarea class="textarea" name="contact[body]" rows="5" required
+                  placeholder="Who it is for, the occasion, anything you already know you want.">{{ form.body }}</textarea>
+              </label>
+
+              <div class="form-grid__full" style="display:grid;gap:var(--s-4);justify-items:start">
+                <button class="btn" type="submit">{{ s.submit_label }}</button>
+                {%- if s.small_print != blank -%}
+                  <p class="t-meta" style="max-width:48ch">{{ s.small_print }}</p>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Bespoke enquiry",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "enquire" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Commission" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Begin Your Bespoke Journey" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell us what you have in mind. We reply within two working days with an honest view of what is possible, what it will cost and how long it will take.</p>" },
+    { "type": "text", "id": "reassurance", "label": "Reassurance lines", "info": "Comma separated.", "default": "No obligation and no deposit to begin, You will see drawings before you commit, Stones are shown loose, with certificates" },
+    { "type": "header", "content": "Field options" },
+    { "type": "text", "id": "types", "label": "Piece options", "default": "Engagement ring, Wedding band, Eternity ring, Earrings, Necklace, Bracelet, Remodelling an heirloom, Something else" },
+    { "type": "text", "id": "metals", "label": "Metal options", "default": "Undecided, 18k yellow gold, 18k white gold, 18k rose gold, 14k gold, Platinum" },
+    { "type": "text", "id": "stones", "label": "Stone options", "default": "Undecided, Natural diamond, Lab-grown diamond, Sapphire, Emerald, Client's own stone" },
+    { "type": "text", "id": "budgets", "label": "Budget options", "default": "Under £2,500, £2,500 – £5,000, £5,000 – £10,000, £10,000 – £25,000, Above £25,000, Prefer to discuss" },
+    { "type": "header", "content": "Submission" },
+    { "type": "text", "id": "submit_label", "label": "Button", "default": "Send enquiry" },
+    { "type": "textarea", "id": "success_message", "label": "Success message", "default": "Thank you. Your enquiry is with the atelier — we reply within two working days." },
+    { "type": "text", "id": "small_print", "label": "Small print", "default": "We use your details only to answer this enquiry." },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "alabaster"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "presets": [{ "name": "Bespoke enquiry" }]
+}
+{% endschema %}

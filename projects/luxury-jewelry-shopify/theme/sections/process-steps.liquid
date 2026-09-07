@@ -1,0 +1,87 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header',
+      eyebrow: s.eyebrow,
+      heading: s.heading,
+      text: s.text,
+      align: s.align %}
+
+    <div class="steps">
+      {%- for block in section.blocks -%}
+        <article class="step{% if settings.enable_reveal %} reveal{% endif %}" {{ block.shopify_attributes }}>
+          <span class="step__num">{{ forloop.index | prepend: '0' | slice: -2, 2 }}</span>
+          <h3 class="step__title">{{ block.settings.title }}</h3>
+          <div class="step__text rte">
+            {{ block.settings.text }}
+            {%- if block.settings.detail != blank -%}
+              <p class="t-meta" style="margin-top:var(--s-3)">{{ block.settings.detail }}</p>
+            {%- endif -%}
+          </div>
+        </article>
+      {%- endfor -%}
+    </div>
+
+    {%- if s.cta_label != blank -%}
+      <div style="margin-top:var(--s-7)">
+        <a class="btn" href="{{ s.cta_url | default: '#' }}">{{ s.cta_label }}</a>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Process steps",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "How a commission works" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Five steps, six to nine weeks" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" },
+        { "value": "split", "label": "Split" }
+      ],
+      "default": "left"
+    },
+    { "type": "text", "id": "cta_label", "label": "Button", "default": "Begin Your Bespoke Journey" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Consultation" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>An hour, in the atelier or by video. We talk about the wearer, the occasion and the budget before anything is drawn.</p>" },
+        { "type": "text", "id": "detail", "label": "Detail line", "default": "Week 1 · no obligation" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Process steps",
+      "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }, { "type": "step" }, { "type": "step" }]
+    }
+  ]
+}
+{% endschema %}

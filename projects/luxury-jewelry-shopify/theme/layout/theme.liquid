@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_paper }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 48, height: 48 }}">
+      <link rel="apple-touch-icon" href="{{ settings.favicon | image_url: width: 180, height: 180 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &mdash; {{ 'general.meta.tags' | t: tags: current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &mdash; {{ 'general.meta.page' | t: page: current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &mdash; {{ shop.name }}{% endunless -%}
+    </title>
+
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {%- liquid
+      assign display = settings.font_display
+      assign body = settings.font_body
+      assign display_bold = display | font_modify: 'weight', '500'
+      assign body_medium = body | font_modify: 'weight', '500'
+      assign body_italic = body | font_modify: 'style', 'italic'
+    -%}
+
+    {%- unless display.system? -%}
+      <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+      {{ display | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
+    {%- endunless -%}
+    {%- unless body.system? -%}
+      {{ body | font_url | preload_tag: as: 'font', type: 'font/woff2' }}
+    {%- endunless -%}
+
+    {{ 'base.css' | asset_url | stylesheet_tag: preload: true }}
+    {{ 'components.css' | asset_url | stylesheet_tag: preload: true }}
+
+    {% style %}
+      {{ display | font_face: font_display: 'swap' }}
+      {{ display_bold | font_face: font_display: 'swap' }}
+      {{ body | font_face: font_display: 'swap' }}
+      {{ body_medium | font_face: font_display: 'swap' }}
+      {{ body_italic | font_face: font_display: 'swap' }}
+
+      :root {
+        --c-ink: {{ settings.color_ink }};
+        --c-ink-soft: {{ settings.color_ink_soft }};
+        --c-stone: {{ settings.color_stone }};
+        --c-paper: {{ settings.color_paper }};
+        --c-alabaster: {{ settings.color_alabaster }};
+        --c-line: {{ settings.color_line }};
+        --c-accent: {{ settings.color_accent }};
+        --c-accent-deep: {{ settings.color_accent_deep }};
+
+        --c-ink-05: {{ settings.color_ink | color_modify: 'alpha', 0.05 }};
+        --c-ink-10: {{ settings.color_ink | color_modify: 'alpha', 0.10 }};
+        --c-paper-90: {{ settings.color_paper | color_modify: 'alpha', 0.90 }};
+
+        {% if display.system? %}
+          --f-display: Georgia, "Times New Roman", serif;
+        {% else %}
+          --f-display: {{ display.family }}, {{ display.fallback_families }};
+        {% endif %}
+        {% if body.system? %}
+          --f-body: system-ui, -apple-system, "Segoe UI", sans-serif;
+        {% else %}
+          --f-body: {{ body.family }}, {{ body.fallback_families }};
+        {% endif %}
+
+        --type-scale: {{ settings.type_scale | divided_by: 100.0 }};
+        --page-max: {{ settings.page_width }}px;
+        --radius: {% if settings.corner_style == 'soft' %}2px{% else %}0px{% endif %};
+      }
+    {% endstyle %}
+
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.Cavelier = { moneyFormat: {{ shop.money_format | json }} };
+      window.Shopify = window.Shopify || {};
+      window.Shopify.routes = window.Shopify.routes || { root: {{ routes.root_url | json }} };
+    </script>
+
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ request.page_type | handle }}{% if settings.enable_reveal == false %} no-reveal{% endif %}">
+    <a class="skip-link" href="#main">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+    {% sections 'header-group' %}
+
+    <main id="main" role="main">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {%- if settings.cart_type == 'drawer' -%}
+      {% section 'cart-drawer' %}
+    {%- endif -%}
+
+    <ul hidden>
+      <li id="a11y-new-window-message">{{ 'general.accessibility.next' | t }}</li>
+    </ul>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+{%- liquid assign s = section.settings -%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header', heading: s.heading, align: 'left', heading_class: 't-h3' %}
+    <div class="grid grid--4 grid--scroll">
+      {%- assign shown = 0 -%}
+      {%- if recommendations.performed and recommendations.products_count > 0 -%}
+        {%- for rp in recommendations.products limit: s.count -%}
+          {% render 'product-card', card_product: rp, index: forloop.index %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- assign source = collections[s.fallback_collection] | default: product.collections.first -%}
+        {%- for rp in source.products limit: 8 -%}
+          {%- if rp.id != product.id and shown < s.count -%}
+            {% render 'product-card', card_product: rp, index: forloop.index %}
+            {%- assign shown = shown | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "You may also consider",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "You may also consider" },
+    { "type": "range", "id": "count", "min": 2, "max": 8, "step": 1, "label": "Products", "default": 4 },
+    { "type": "text", "id": "fallback_collection", "label": "Fallback collection handle", "default": "engagement" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "alabaster"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 104 }
+  ]
+}
+{% endschema %}

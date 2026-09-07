@@ -1,0 +1,467 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-editorial",
+      "settings": {
+        "layout": "full",
+        "image_alt": "A slender platinum solitaire ring worn on a hand resting on raw ivory silk",
+        "fallback_image": "cavelier-hero.jpg",
+        "fallback_image_mobile": "cavelier-hero-mobile.jpg",
+        "eyebrow": "Made to order · Clerkenwell, London",
+        "heading": "Nothing is made until it is yours.",
+        "text": "Engagement rings, wedding bands and fine jewellery, cut and set to commission — six to nine weeks, hallmarked with the year it was made.",
+        "text_color": "light",
+        "cta_label": "Engagement rings",
+        "cta_url": "/collections/engagement",
+        "cta2_label": "Begin a bespoke commission",
+        "cta2_url": "/pages/bespoke"
+      }
+    },
+    "assurances": {
+      "type": "trust-row",
+      "blocks": {
+        "a": {
+          "type": "item",
+          "settings": {
+            "title": "Made to order",
+            "text": "Nothing is cast until it is commissioned. We hold no finished stock, and never have."
+          }
+        },
+        "b": {
+          "type": "item",
+          "settings": {
+            "title": "Stones you choose",
+            "text": "Natural or lab-grown, GIA or IGI certified, shown to you loose before they are set."
+          }
+        },
+        "c": {
+          "type": "item",
+          "settings": {
+            "title": "Cared for, for life",
+            "text": "Complimentary resizing in the first year, and re-polishing and re-setting for as long as you wear it."
+          }
+        }
+      },
+      "block_order": [
+        "a",
+        "b",
+        "c"
+      ],
+      "settings": {
+        "heading": "The house standard",
+        "background": "paper",
+        "spacing": 80
+      }
+    },
+    "collections": {
+      "type": "collection-tiles",
+      "blocks": {
+        "t1": {
+          "type": "tile",
+          "settings": {
+            "heading": "Engagement",
+            "text": "Solitaires, three-stone and low-set designs, cut for the hand that will wear them.",
+            "fallback_image": "cavelier-collection-engagement.jpg",
+            "image_alt": "A round brilliant diamond solitaire ring resting against folded ivory linen",
+            "link": "/collections/engagement",
+            "cta": "View engagement",
+            "collection": "engagement"
+          }
+        },
+        "t2": {
+          "type": "tile",
+          "settings": {
+            "heading": "Wedding bands",
+            "text": "Plain, milled and set. Made in pairs, matched by hand.",
+            "fallback_image": "cavelier-collection-wedding.jpg",
+            "image_alt": "Two slender wedding bands, one gold and one platinum, resting on bone plaster",
+            "link": "/collections/wedding",
+            "cta": "View bands",
+            "collection": "wedding"
+          }
+        },
+        "t3": {
+          "type": "tile",
+          "settings": {
+            "heading": "Fine jewellery",
+            "text": "Earrings, necklaces and bracelets in 18k gold.",
+            "fallback_image": "cavelier-collection-fine.jpg",
+            "image_alt": "A fine 18k gold chain necklace pooled into a sculptural coil on ivory paper",
+            "link": "/collections/fine-jewellery",
+            "cta": "View fine jewellery",
+            "collection": "fine-jewellery"
+          }
+        },
+        "t4": {
+          "type": "tile",
+          "settings": {
+            "heading": "Diamonds",
+            "text": "Sourced to your brief.",
+            "fallback_image": "cavelier-collection-diamonds.jpg",
+            "image_alt": "Loose round brilliant and emerald-cut diamonds beside jeweller's tweezers",
+            "link": "/collections/diamonds",
+            "cta": "About our stones",
+            "collection": "diamonds"
+          }
+        },
+        "t5": {
+          "type": "tile",
+          "settings": {
+            "heading": "Rings",
+            "text": "Sculptural gold, worn every day.",
+            "fallback_image": "cavelier-collection-rings.jpg",
+            "image_alt": "A sculptural 18k gold band photographed against warm bone paper",
+            "link": "/collections/rings",
+            "cta": "View rings",
+            "collection": "rings"
+          }
+        },
+        "t6": {
+          "type": "tile",
+          "settings": {
+            "heading": "Bespoke",
+            "text": "Begin with a conversation.",
+            "fallback_image": "cavelier-collection-bespoke.jpg",
+            "image_alt": "A graphite ring sketch on tracing paper beside a carved wax model",
+            "link": "/pages/bespoke",
+            "cta": "The process"
+          }
+        }
+      },
+      "block_order": [
+        "t1",
+        "t2",
+        "t3",
+        "t4",
+        "t5",
+        "t6"
+      ],
+      "settings": {
+        "eyebrow": "The collections",
+        "heading": "Begin with the occasion",
+        "text": "<p>Six directions, one bench. Everything below is made after it is ordered.</p>",
+        "link_label": "All collections",
+        "link_url": "/collections",
+        "align": "split",
+        "layout": "editorial",
+        "caption_style": "below",
+        "background": "paper",
+        "spacing": 120
+      }
+    },
+    "featured": {
+      "type": "featured-products",
+      "blocks": {
+        "p1": {
+          "type": "product",
+          "settings": {
+            "fallback_image": "cavelier-product-solitaire.jpg",
+            "fallback_image_alt": "cavelier-product-solitaire-alt.jpg",
+            "product": "aveline-solitaire"
+          }
+        },
+        "p2": {
+          "type": "product",
+          "settings": {
+            "fallback_image": "cavelier-product-emerald.jpg",
+            "fallback_image_alt": "cavelier-product-emerald-alt.jpg",
+            "product": "marlowe-emerald-cut"
+          }
+        },
+        "p3": {
+          "type": "product",
+          "settings": {
+            "fallback_image": "cavelier-product-oval.jpg",
+            "fallback_image_alt": "cavelier-product-oval-alt.jpg",
+            "product": "solene-oval"
+          }
+        },
+        "p4": {
+          "type": "product",
+          "settings": {
+            "fallback_image": "cavelier-product-eternity.jpg",
+            "fallback_image_alt": "cavelier-product-eternity-alt.jpg",
+            "product": "verrine-eternity-band"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
+      "settings": {
+        "eyebrow": "Selected work",
+        "heading": "In the current book",
+        "count": 4,
+        "columns": "4",
+        "link_label": "All pieces",
+        "align": "split",
+        "background": "paper",
+        "spacing": 120,
+        "collection": "engagement"
+      }
+    },
+    "atelier": {
+      "type": "story-split",
+      "blocks": {
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Founded",
+            "value": "2016, Clerkenwell Green"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Metals",
+            "value": "14k and 18k gold, platinum"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Stones",
+            "value": "Natural and lab-grown, GIA / IGI"
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "label": "Lead time",
+            "value": "6–9 weeks"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
+      "settings": {
+        "fallback_image": "cavelier-atelier.jpg",
+        "image_alt": "A goldsmith setting a diamond into a ring at a wooden bench",
+        "image_ratio": "portrait",
+        "caption": "Setting a 1.20ct oval, bench three.",
+        "media_position": "left",
+        "media_width": "even",
+        "eyebrow": "The atelier",
+        "heading": "Six weeks at a bench in Clerkenwell",
+        "text": "<p>Margot Cavelier trained on the benches of Hatton Garden and opened the house in 2016 with one rule that has not changed: nothing is cast speculatively.</p><p>A commission begins as a conversation, becomes a drawing, then a wax — and only then metal. You see each stage. Nothing is a surprise except, we hope, the finished thing.</p>",
+        "cta_label": "Our story",
+        "cta_url": "/pages/about",
+        "background": "paper",
+        "spacing": 120
+      }
+    },
+    "campaign": {
+      "type": "full-bleed-image",
+      "settings": {
+        "fallback_image": "cavelier-campaign.jpg",
+        "image_alt": "A fine gold chain with a single diamond pendant worn at the collarbone",
+        "ratio": "wide",
+        "width": "full",
+        "quote": "We do not sell what is left over. We make what is asked for.",
+        "attribution": "Margot Cavelier, founder",
+        "align": "left",
+        "spacing": 0
+      }
+    },
+    "process": {
+      "type": "process-steps",
+      "blocks": {
+        "st1": {
+          "type": "step",
+          "settings": {
+            "title": "Consultation",
+            "text": "<p>An hour, in the atelier or by video. We talk about the wearer, the occasion and the budget before anything is drawn.</p>",
+            "detail": "Week 1 · no obligation, no deposit"
+          }
+        },
+        "st2": {
+          "type": "step",
+          "settings": {
+            "title": "Design",
+            "text": "<p>Hand drawings first, then a scaled rendering. You see the profile, the gallery and the band width before a stone is bought.</p>",
+            "detail": "Weeks 1–2 · two rounds included"
+          }
+        },
+        "st3": {
+          "type": "step",
+          "settings": {
+            "title": "Stone selection",
+            "text": "<p>We source to your brief and show you three or four candidates loose, with certificates, under the same light.</p>",
+            "detail": "Weeks 2–3 · GIA or IGI"
+          }
+        },
+        "st4": {
+          "type": "step",
+          "settings": {
+            "title": "Craftsmanship",
+            "text": "<p>Carved in wax, cast in your metal, then set and finished by hand at the bench. Hallmarked at the London Assay Office.</p>",
+            "detail": "Weeks 3–8"
+          }
+        },
+        "st5": {
+          "type": "step",
+          "settings": {
+            "title": "Delivery",
+            "text": "<p>Collected in the atelier, or delivered insured and signed-for, in a box made for the piece.</p>",
+            "detail": "Week 8–9 · worldwide"
+          }
+        }
+      },
+      "block_order": [
+        "st1",
+        "st2",
+        "st3",
+        "st4",
+        "st5"
+      ],
+      "settings": {
+        "eyebrow": "How a commission works",
+        "heading": "Five steps, six to nine weeks",
+        "text": "<p>The same sequence whether you are remodelling an heirloom or starting from a blank sheet.</p>",
+        "align": "split",
+        "cta_label": "Begin Your Bespoke Journey",
+        "cta_url": "/pages/bespoke",
+        "background": "alabaster",
+        "spacing": 120
+      }
+    },
+    "diamonds": {
+      "type": "story-split",
+      "settings": {
+        "fallback_image": "cavelier-materials.jpg",
+        "image_alt": "Raw 18k gold wire, a carved wax ring model and a loose emerald-cut diamond in a paper parcel",
+        "image_ratio": "landscape",
+        "media_position": "right",
+        "media_width": "wide",
+        "eyebrow": "Materials",
+        "heading": "Two kinds of diamond, stated plainly",
+        "text": "<p>We set natural and lab-grown stones and we will never pretend one is the other. Natural stones are bought through two Antwerp houses we have used since 2017. Lab-grown stones are IGI certified and typically let a client go one to two carats further for the same budget.</p><p>Gold is 14k or 18k, recycled where the alloy allows. Every stone above 0.30ct arrives with its own certificate, which is yours to keep.</p>",
+        "cta_label": "Read the diamond guide",
+        "cta_url": "/blogs/journal/understanding-diamond-cuts",
+        "background": "paper",
+        "spacing": 120
+      }
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "blocks": {
+        "q1": {
+          "type": "quote",
+          "settings": {
+            "quote": "We arrived with a photograph of my grandmother's ring and left with something that felt like it had always existed.",
+            "name": "H. and J.",
+            "detail": "Emerald-cut commission, 2024"
+          }
+        },
+        "q2": {
+          "type": "quote",
+          "settings": {
+            "quote": "Margot talked me out of a bigger stone and into a better one. I have thought about that conversation a lot since.",
+            "name": "D. R.",
+            "detail": "Oval solitaire, 2023"
+          }
+        },
+        "q3": {
+          "type": "quote",
+          "settings": {
+            "quote": "Eight weeks, and I was told exactly where it was at every stage. It is the only purchase of that size I have never worried about.",
+            "name": "A. Ó.",
+            "detail": "Wedding bands, 2025"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3"
+      ],
+      "settings": {
+        "eyebrow": "In their words",
+        "heading": "Commissions, remembered",
+        "align": "left",
+        "background": "alabaster",
+        "spacing": 112
+      }
+    },
+    "journal": {
+      "type": "journal-preview",
+      "blocks": {
+        "j1": {
+          "type": "entry",
+          "settings": {
+            "kicker": "Guide",
+            "title": "How to choose an engagement ring",
+            "excerpt": "Start with the hand, not the carat. A practical order of operations.",
+            "fallback_image": "cavelier-journal-1.jpg",
+            "link": "/blogs/journal/how-to-choose-an-engagement-ring"
+          }
+        },
+        "j2": {
+          "type": "entry",
+          "settings": {
+            "kicker": "Stones",
+            "title": "Understanding diamond cuts",
+            "excerpt": "Why an emerald cut forgives less than a brilliant, and what that means for your budget.",
+            "fallback_image": "cavelier-journal-2.jpg",
+            "link": "/blogs/journal/understanding-diamond-cuts"
+          }
+        },
+        "j3": {
+          "type": "entry",
+          "settings": {
+            "kicker": "Metal",
+            "title": "14k or 18k gold",
+            "excerpt": "One is harder. One is warmer. Neither is better — it depends on the wearer.",
+            "fallback_image": "cavelier-journal-3.jpg",
+            "link": "/blogs/journal/14k-vs-18k-gold"
+          }
+        }
+      },
+      "block_order": [
+        "j1",
+        "j2",
+        "j3"
+      ],
+      "settings": {
+        "eyebrow": "The journal",
+        "heading": "Notes on stones, metal and making",
+        "count": 3,
+        "link_label": "All entries",
+        "background": "paper",
+        "spacing": 120,
+        "blog": "journal"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "The Letter",
+        "heading": "Eight letters a year, no more",
+        "text": "<p>New work, stones we have found, and the occasional note from the bench.</p>",
+        "note": "We do not share your address. Unsubscribe in one click.",
+        "background": "ink",
+        "spacing": 96
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "assurances",
+    "collections",
+    "featured",
+    "atelier",
+    "campaign",
+    "process",
+    "diamonds",
+    "testimonials",
+    "journal",
+    "newsletter"
+  ]
+}

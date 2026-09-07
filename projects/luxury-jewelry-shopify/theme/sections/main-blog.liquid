@@ -1,0 +1,65 @@
+{%- liquid assign s = section.settings -%}
+<div class="page section">
+  <header class="coll-intro" style="margin-bottom:var(--s-8)">
+    {%- if s.eyebrow != blank -%}<span class="t-eyebrow">{{ s.eyebrow }}</span>{%- endif -%}
+    <h1 class="t-h1">{{ blog.title }}</h1>
+    {%- if s.intro != blank -%}<div class="rte t-lede">{{ s.intro }}</div>{%- endif -%}
+  </header>
+
+  {%- paginate blog.articles by s.per_page -%}
+    {%- if blog.articles.size > 0 -%}
+      {%- assign lead = blog.articles.first -%}
+      {%- if s.feature_first and paginate.current_page == 1 -%}
+        {%- assign lead_alt = lead.image.alt | default: lead.title -%}
+        <a class="split split--wide-media" href="{{ lead.url }}" style="margin-bottom:var(--s-9)">
+          <div class="split__media article-card">
+            <div class="article-card__media" style="aspect-ratio:16/10">
+              {% render 'responsive-image', image: lead.image, alt: lead_alt,
+                 sizes: '(min-width: 900px) 62vw, 92vw', widths: '600,900,1200,1600', placeholder: 'image', no_wrapper: true %}
+            </div>
+          </div>
+          <div class="split__text">
+            <span class="t-eyebrow">{{ lead.tags.first | default: 'Journal' }}</span>
+            <h2 class="t-h2">{{ lead.title }}</h2>
+            <p class="t-lede">{{ lead.excerpt_or_content | strip_html | truncate: 180 }}</p>
+            <span class="link-arrow">{{ 'blogs.article.read_more' | t }}</span>
+          </div>
+        </a>
+      {%- endif -%}
+
+      <div class="grid grid--3 grid--m1">
+        {%- for article in blog.articles -%}
+          {%- if s.feature_first and paginate.current_page == 1 and forloop.first -%}{%- continue -%}{%- endif -%}
+          {%- assign card_alt = article.image.alt | default: article.title -%}
+          <a class="article-card{% if settings.enable_reveal %} reveal{% endif %}" data-delay="{{ forloop.index0 | modulo: 3 }}" href="{{ article.url }}">
+            <div class="article-card__media">
+              {% render 'responsive-image', image: article.image, alt: card_alt,
+                 sizes: '(min-width: 750px) 32vw, 92vw', widths: '400,600,800,1000', placeholder: 'image', no_wrapper: true %}
+            </div>
+            <div class="stack" style="--s-4: var(--s-2)">
+              <span class="t-eyebrow">{{ article.tags.first | default: 'Journal' }}</span>
+              <h2 class="article-card__title">{{ article.title }}</h2>
+              <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 116 }}</p>
+              <span class="t-meta">{{ article.published_at | date: '%e %B %Y' }}</span>
+            </div>
+          </a>
+        {%- endfor -%}
+      </div>
+
+      {% render 'pagination', paginate: paginate %}
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Blog",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The journal" },
+    { "type": "richtext", "id": "intro", "label": "Intro", "default": "<p>Guides, notes from the bench, and the occasional opinion about stones.</p>" },
+    { "type": "checkbox", "id": "feature_first", "label": "Feature the most recent entry", "default": true },
+    { "type": "range", "id": "per_page", "min": 6, "max": 24, "step": 3, "label": "Entries per page", "default": 9 }
+  ]
+}
+{% endschema %}

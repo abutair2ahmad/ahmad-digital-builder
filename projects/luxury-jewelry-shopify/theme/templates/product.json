@@ -1,0 +1,55 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "blocks": {
+        "desc": { "type": "description", "settings": { "heading": "The piece", "open": true } },
+        "specs": {
+          "type": "specs",
+          "settings": {
+            "heading": "Materials and stone",
+            "rows": "Metal | 18k gold or platinum, your choice\nSetting | Four-claw, cut-down\nStone | Natural or lab-grown diamond\nColour / clarity | F–G, VS or better\nCertification | GIA or IGI, supplied\nBand width | 1.9mm\nHallmark | London Assay Office",
+            "open": false
+          }
+        },
+        "care": {
+          "type": "text",
+          "settings": {
+            "heading": "Care",
+            "text": "<p>Remove before swimming, sport and sleep. Clean with warm water, a drop of unscented soap and a soft brush. We re-polish and re-set complimentary, for as long as you wear it.</p>",
+            "open": false
+          }
+        },
+        "made": {
+          "type": "text",
+          "settings": {
+            "heading": "Made to order",
+            "text": "<p>This piece is begun after you order it. Allow six to nine weeks from confirmation to hallmark. If you need it sooner, tell us — we can sometimes move a commission forward.</p>",
+            "open": false
+          }
+        },
+        "shipping": {
+          "type": "text",
+          "settings": {
+            "heading": "Delivery and returns",
+            "text": "<p>Complimentary insured, signed-for delivery worldwide. Fourteen days to return an unworn stock design for a full refund. Bespoke commissions and engraved pieces are not returnable, which we will say clearly before you commit.</p>",
+            "open": false
+          }
+        }
+      },
+      "block_order": ["desc", "specs", "care", "made", "shipping"],
+      "settings": {
+        "tax_note": "Duties and taxes calculated at checkout",
+        "assurances": "Complimentary insured delivery worldwide, Complimentary resizing within the first year, Lifetime cleaning and re-polishing",
+        "bespoke_url": "/pages/bespoke",
+        "size_guide_page": "/pages/size-guide",
+        "demo_images": "cavelier-product-solitaire.jpg, cavelier-product-solitaire-alt.jpg, cavelier-product-solitaire-detail.jpg"
+      }
+    },
+    "related": {
+      "type": "related-products",
+      "settings": { "heading": "You may also consider", "count": 4, "fallback_collection": "engagement", "background": "alabaster", "spacing": 104 }
+    }
+  },
+  "order": ["main", "related"]
+}

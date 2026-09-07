@@ -1,0 +1,46 @@
+<div class="page section">
+  <div style="display:flex;align-items:baseline;justify-content:space-between;gap:var(--s-5);margin-bottom:var(--s-7)">
+    <h1 class="t-h2">{{ 'customer.account.title' | t }}</h1>
+    <a class="link link--static t-meta" href="{{ routes.account_logout_url }}">{{ 'customer.account.logout' | t }}</a>
+  </div>
+
+  <div class="split" style="align-items:start">
+    <div>
+      <h2 class="t-eyebrow" style="margin-bottom:var(--s-5)">{{ 'customer.account.orders' | t }}</h2>
+      {%- paginate customer.orders by 12 -%}
+        {%- if customer.orders.size > 0 -%}
+          <table class="t-meta">
+            <thead>
+              <tr style="text-align:left;border-bottom:1px solid var(--c-line)">
+                <th style="padding-block:var(--s-3)">{{ 'customer.order.title' | t: name: '' | strip }}</th>
+                <th>{{ 'customer.order.date' | t: date: '' | strip }}</th>
+                <th style="text-align:right">{{ 'customer.order.total' | t }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%- for order in customer.orders -%}
+                <tr style="border-bottom:1px solid var(--c-line)">
+                  <td style="padding-block:var(--s-4)"><a class="link link--static" href="{{ order.customer_url }}">{{ order.name }}</a></td>
+                  <td>{{ order.created_at | date: '%e %b %Y' }}</td>
+                  <td style="text-align:right">{{ order.total_price | money }}</td>
+                </tr>
+              {%- endfor -%}
+            </tbody>
+          </table>
+          {% render 'pagination', paginate: paginate %}
+        {%- else -%}
+          <p class="t-lede">{{ 'customer.account.no_orders' | t }}</p>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+
+    <div>
+      <h2 class="t-eyebrow" style="margin-bottom:var(--s-5)">{{ 'customer.account.addresses' | t }}</h2>
+      {%- if customer.default_address -%}
+        <address class="t-meta" style="font-style:normal;line-height:1.9">{{ customer.default_address | format_address }}</address>
+      {%- endif -%}
+      <a class="link-arrow" href="{{ routes.account_addresses_url }}" style="margin-top:var(--s-5);display:inline-flex">{{ 'customer.addresses.edit' | t }}</a>
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Account", "tag": "div", "settings": [] }{% endschema %}

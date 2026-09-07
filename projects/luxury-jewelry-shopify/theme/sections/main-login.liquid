@@ -1,0 +1,41 @@
+<div class="page page--narrow section">
+  <div style="max-width:420px">
+    <h1 class="t-h2" style="margin-bottom:var(--s-6)">{{ 'customer.login.title' | t }}</h1>
+
+    {%- form 'customer_login', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <p class="form__error" role="alert" style="margin-bottom:var(--s-5)">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <label class="field">
+        <span class="field__label">{{ 'customer.login.email' | t }}</span>
+        <input class="input" type="email" name="customer[email]" autocomplete="email" required>
+      </label>
+      <label class="field">
+        <span class="field__label">{{ 'customer.login.password' | t }}</span>
+        <input class="input" type="password" name="customer[password]" autocomplete="current-password" required>
+      </label>
+      <div style="margin-top:var(--s-6);display:grid;gap:var(--s-4);justify-items:start">
+        <button class="btn btn--full" type="submit">{{ 'customer.login.submit' | t }}</button>
+        <a class="link link--static t-meta" href="#recover">{{ 'customer.login.forgot' | t }}</a>
+        <a class="link link--static t-meta" href="{{ routes.account_register_url }}">{{ 'customer.login.create' | t }}</a>
+      </div>
+    {%- endform -%}
+
+    <div id="recover" style="margin-top:var(--s-8);padding-top:var(--s-6);border-top:1px solid var(--c-line)">
+      <h2 class="t-h3" style="margin-bottom:var(--s-3)">{{ 'customer.recover.title' | t }}</h2>
+      <p class="t-meta" style="margin-bottom:var(--s-5)">{{ 'customer.recover.instructions' | t }}</p>
+      {%- form 'recover_customer_password' -%}
+        {%- if form.posted_successfully? -%}
+          <p class="form__success">{{ 'customer.recover.success' | t }}</p>
+        {%- else -%}
+          <label class="field">
+            <span class="field__label">{{ 'customer.login.email' | t }}</span>
+            <input class="input" type="email" name="email" autocomplete="email" required>
+          </label>
+          <button class="btn btn--ghost" type="submit" style="margin-top:var(--s-5)">{{ 'customer.recover.submit' | t }}</button>
+        {%- endif -%}
+      {%- endform -%}
+    </div>
+  </div>
+</div>
+{% schema %}{ "name": "Login", "tag": "div", "settings": [] }{% endschema %}

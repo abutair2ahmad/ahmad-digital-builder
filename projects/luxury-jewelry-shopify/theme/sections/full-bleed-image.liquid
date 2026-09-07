@@ -1,0 +1,83 @@
+{%- liquid
+  assign s = section.settings
+-%}
+<section class="{% if s.width == 'contained' %}section{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="{% if s.width == 'contained' %}page{% endif %}">
+    <figure class="{% if settings.enable_reveal %}reveal{% endif %}">
+      <div class="media media--{{ s.ratio }}">
+        {% render 'responsive-image',
+          image: s.image,
+          fallback: s.fallback_image,
+          alt: s.image_alt,
+          sizes: '100vw',
+          widths: '800,1200,1600,2000',
+          placeholder: 'lifestyle-1',
+          no_wrapper: true %}
+      </div>
+      {%- if s.quote != blank or s.caption != blank -%}
+        <figcaption class="page" style="padding-block: var(--s-6) 0">
+          {%- if s.quote != blank -%}
+            <blockquote class="quote" style="border:0;padding:0;max-width:28ch;{% if s.align == 'center' %}margin-inline:auto;text-align:center{% endif %}">
+              {{ s.quote }}
+              {%- if s.attribution != blank -%}
+                <cite class="quote__cite">{{ s.attribution }}</cite>
+              {%- endif -%}
+            </blockquote>
+          {%- endif -%}
+          {%- if s.caption != blank -%}
+            <p class="t-meta" style="margin-top:var(--s-4)">{{ s.caption }}</p>
+          {%- endif -%}
+        </figcaption>
+      {%- endif -%}
+    </figure>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Full-bleed image",
+  "tag": "section",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "image_alt", "label": "Image alt text", "default": "A fine gold chain with a single diamond pendant, worn" },
+    { "type": "text", "id": "fallback_image", "label": "Bundled demo image" },
+    {
+      "type": "select",
+      "id": "ratio",
+      "label": "Ratio",
+      "options": [
+        { "value": "wide", "label": "16:9" },
+        { "value": "landscape", "label": "3:2" },
+        { "value": "square", "label": "1:1" }
+      ],
+      "default": "wide"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "Width",
+      "options": [
+        { "value": "full", "label": "Edge to edge" },
+        { "value": "contained", "label": "Within the page" }
+      ],
+      "default": "full"
+    },
+    { "type": "header", "content": "Caption" },
+    { "type": "textarea", "id": "quote", "label": "Pull quote" },
+    { "type": "text", "id": "attribution", "label": "Attribution" },
+    { "type": "text", "id": "caption", "label": "Small caption" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Caption alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" }
+      ],
+      "default": "left"
+    },
+    { "type": "range", "id": "spacing", "min": 0, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 0 }
+  ],
+  "presets": [{ "name": "Full-bleed image" }]
+}
+{% endschema %}

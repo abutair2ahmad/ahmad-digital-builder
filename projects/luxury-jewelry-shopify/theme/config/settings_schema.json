@@ -1,0 +1,214 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Cavelier",
+    "theme_version": "1.0.0",
+    "theme_author": "Ahmad Abutair",
+    "theme_documentation_url": "https://github.com/abutair2ahmad/ahmad-digital-builder/tree/main/projects/luxury-jewelry-shopify",
+    "theme_support_url": "https://github.com/abutair2ahmad/ahmad-digital-builder/issues"
+  },
+  {
+    "name": "t:settings.logo.name",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "t:settings.logo.image"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "min": 80,
+        "max": 320,
+        "step": 4,
+        "unit": "px",
+        "label": "t:settings.logo.width",
+        "default": 168
+      },
+      {
+        "type": "text",
+        "id": "wordmark",
+        "label": "t:settings.logo.wordmark",
+        "info": "t:settings.logo.wordmark_info",
+        "default": "Cavelier"
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "t:settings.logo.favicon"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.colors.name",
+    "settings": [
+      { "type": "header", "content": "t:settings.colors.neutrals" },
+      { "type": "color", "id": "color_ink", "label": "t:settings.colors.ink", "default": "#16130F" },
+      { "type": "color", "id": "color_ink_soft", "label": "t:settings.colors.ink_soft", "default": "#4A443B" },
+      { "type": "color", "id": "color_stone", "label": "t:settings.colors.stone", "default": "#8B8175" },
+      { "type": "color", "id": "color_paper", "label": "t:settings.colors.paper", "default": "#F6F3EE" },
+      { "type": "color", "id": "color_alabaster", "label": "t:settings.colors.alabaster", "default": "#EDE8E0" },
+      { "type": "color", "id": "color_line", "label": "t:settings.colors.line", "default": "#DCD5CA" },
+      { "type": "header", "content": "t:settings.colors.accent_header" },
+      {
+        "type": "paragraph",
+        "content": "t:settings.colors.accent_note"
+      },
+      { "type": "color", "id": "color_accent", "label": "t:settings.colors.accent", "default": "#9B7B45" },
+      { "type": "color", "id": "color_accent_deep", "label": "t:settings.colors.accent_deep", "default": "#7A5F33" }
+    ]
+  },
+  {
+    "name": "t:settings.type.name",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_display",
+        "label": "t:settings.type.display",
+        "info": "t:settings.type.display_info",
+        "default": "bodoni_moda_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "t:settings.type.body",
+        "info": "t:settings.type.body_info",
+        "default": "jost_n4"
+      },
+      {
+        "type": "range",
+        "id": "type_scale",
+        "min": 90,
+        "max": 115,
+        "step": 1,
+        "unit": "%",
+        "label": "t:settings.type.scale",
+        "default": 100
+      },
+      {
+        "type": "checkbox",
+        "id": "prose_in_serif",
+        "label": "t:settings.type.prose_serif",
+        "info": "t:settings.type.prose_serif_info",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "t:settings.layout.name",
+    "settings": [
+      {
+        "type": "range",
+        "id": "page_width",
+        "min": 1200,
+        "max": 1800,
+        "step": 20,
+        "unit": "px",
+        "label": "t:settings.layout.page_width",
+        "default": 1560
+      },
+      {
+        "type": "select",
+        "id": "corner_style",
+        "label": "t:settings.layout.corners",
+        "options": [
+          { "value": "square", "label": "t:settings.layout.corners_square" },
+          { "value": "soft", "label": "t:settings.layout.corners_soft" }
+        ],
+        "default": "square",
+        "info": "t:settings.layout.corners_info"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_reveal",
+        "label": "t:settings.layout.reveal",
+        "info": "t:settings.layout.reveal_info",
+        "default": true
+      }
+    ]
+  },
+  {
+    "name": "t:settings.product.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "card_image_ratio",
+        "label": "t:settings.product.ratio",
+        "options": [
+          { "value": "portrait", "label": "t:settings.product.ratio_portrait" },
+          { "value": "square", "label": "t:settings.product.ratio_square" }
+        ],
+        "default": "portrait"
+      },
+      {
+        "type": "checkbox",
+        "id": "card_hover_image",
+        "label": "t:settings.product.hover",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "card_show_metal",
+        "label": "t:settings.product.metal",
+        "info": "t:settings.product.metal_info",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "made_to_order_label",
+        "label": "t:settings.product.mto_label",
+        "default": "Made to order"
+      },
+      {
+        "type": "text",
+        "id": "lead_time",
+        "label": "t:settings.product.lead_time",
+        "default": "6–9 weeks"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.cart.name",
+    "settings": [
+      {
+        "type": "select",
+        "id": "cart_type",
+        "label": "t:settings.cart.type",
+        "options": [
+          { "value": "drawer", "label": "t:settings.cart.type_drawer" },
+          { "value": "page", "label": "t:settings.cart.type_page" }
+        ],
+        "default": "drawer"
+      },
+      {
+        "type": "richtext",
+        "id": "cart_note",
+        "label": "t:settings.cart.note",
+        "default": "<p>Every piece is made to order in our Clerkenwell atelier. Complimentary insured delivery worldwide.</p>"
+      }
+    ]
+  },
+  {
+    "name": "t:settings.social.name",
+    "settings": [
+      { "type": "text", "id": "social_instagram", "label": "Instagram", "default": "https://instagram.com" },
+      { "type": "text", "id": "social_pinterest", "label": "Pinterest" },
+      { "type": "text", "id": "social_facebook", "label": "Facebook" }
+    ]
+  },
+  {
+    "name": "t:settings.disclosure.name",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:settings.disclosure.help"
+      },
+      {
+        "type": "text",
+        "id": "concept_disclosure",
+        "label": "t:settings.disclosure.label",
+        "default": "Independent concept project created to demonstrate luxury e-commerce art direction and Shopify development capabilities."
+      }
+    ]
+  }
+]

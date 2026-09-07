@@ -1,0 +1,264 @@
+{%- liquid
+  assign p = product
+  assign v = p.selected_or_first_available_variant
+  assign s = section.settings
+
+  assign has_size = false
+  for opt in p.options_with_values
+    assign n = opt.name | downcase
+    if n contains 'size'
+      assign has_size = true
+    endif
+  endfor
+-%}
+
+<div
+  class="page section"
+  data-product
+  data-add-text="{{ 'products.product.add_to_cart' | t }}"
+  data-sold-text="{{ 'products.product.sold_out' | t }}"
+  data-unavailable-text="{{ 'products.product.unavailable' | t }}">
+
+  <nav class="crumbs" aria-label="{{ 'general.breadcrumbs.label' | t }}">
+    <a href="{{ routes.root_url }}">{{ 'general.breadcrumbs.home' | t }}</a>
+    <span aria-hidden="true">/</span>
+    {%- if collection -%}
+      <a href="{{ collection.url }}">{{ collection.title }}</a>
+      <span aria-hidden="true">/</span>
+    {%- endif -%}
+    <span aria-current="page">{{ p.title }}</span>
+  </nav>
+
+  <div class="product">
+    {% render 'product-gallery', gallery_product: p, demo_images: s.demo_images %}
+
+    <div class="product__info">
+      {%- if s.eyebrow != blank or p.type != blank -%}
+        <span class="t-eyebrow product__eyebrow">{{ s.eyebrow | default: p.type }}</span>
+      {%- endif -%}
+
+      <h1 class="t-h2 product__title">{{ p.title }}</h1>
+
+      <div class="product__price" data-price>
+        {%- if v.compare_at_price > v.price -%}
+          <del>{{ v.compare_at_price | money }}</del><ins>{{ v.price | money }}</ins>
+        {%- else -%}
+          {{ v.price | money }}
+        {%- endif -%}
+      </div>
+      <p class="product__tax">{{ s.tax_note }}</p>
+
+      {%- if p.description != blank -%}
+        {%- assign desc_plain = p.description | replace: '</p>', '</p> ' | replace: '<br>', ' ' | strip_html -%}
+        <div class="product__desc rte">{{ desc_plain | truncatewords: 42 }}</div>
+      {%- endif -%}
+
+      <script type="application/json" data-variants>
+        [
+          {%- for variant in p.variants -%}
+            {
+              "id": {{ variant.id }},
+              "options": {{ variant.options | json }},
+              "price": {{ variant.price }},
+              "compare_at_price": {{ variant.compare_at_price | default: 0 }},
+              "available": {{ variant.available }},
+              "sku": {{ variant.sku | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ]
+      </script>
+
+      {%- form 'product', p, data-product-form: '', class: 'product__form', novalidate: 'novalidate' -%}
+        <input type="hidden" name="id" value="{{ v.id }}" data-variant-id>
+
+        {%- unless p.has_only_default_variant -%}
+          {%- for option in p.options_with_values -%}
+            {%- liquid
+              assign oname = option.name | downcase
+              assign is_size = false
+              if oname contains 'size'
+                assign is_size = true
+              endif
+              assign is_metal = false
+              if oname contains 'metal' or oname contains 'colour' or oname contains 'color'
+                assign is_metal = true
+              endif
+            -%}
+            <div class="opt" data-option-group>
+              <div class="opt__head">
+                <span class="opt__name">{{ option.name }}</span>
+                <span class="opt__value" data-option-current>{{ option.selected_value }}</span>
+              </div>
+              {%- if is_size and s.size_guide_page != blank -%}
+                <div class="opt__aside">
+                  <a href="{{ s.size_guide_page }}">{{ 'products.product.size_guide' | t }}</a>
+                </div>
+              {%- endif -%}
+              <div class="{% if is_size %}sizes{% else %}swatches{% endif %}">
+                {%- for value in option.values -%}
+                  {%- liquid
+                    assign vid = section.id | append: '-' | append: forloop.parentloop.index | append: '-' | append: forloop.index
+                    assign vdown = value | downcase
+                    assign swatch_color = ''
+                    if is_metal
+                      if vdown contains 'yellow'
+                        assign swatch_color = '#C9A55C'
+                      elsif vdown contains 'rose'
+                        assign swatch_color = '#D2A08C'
+                      elsif vdown contains 'white'
+                        assign swatch_color = '#E3E1DC'
+                      elsif vdown contains 'platinum'
+                        assign swatch_color = '#D8D8D6'
+                      endif
+                    endif
+                  -%}
+                  <label class="swatch" for="opt-{{ vid }}">
+                    <input
+                      type="radio"
+                      id="opt-{{ vid }}"
+                      name="options[{{ option.name | escape }}]"
+                      value="{{ value | escape }}"
+                      data-option-index="{{ forloop.parentloop.index0 }}"
+                      {% if option.selected_value == value %}checked{% endif %}>
+                    <span class="swatch__face">
+                      {%- if swatch_color != blank -%}
+                        <span class="swatch__dot" style="background:{{ swatch_color }}" aria-hidden="true"></span>
+                      {%- endif -%}
+                      {{ value }}
+                    </span>
+                  </label>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endunless -%}
+
+        <div class="opt">
+          <span class="opt__name">{{ 'products.product.quantity' | t }}</span>
+          <div class="qty">
+            <button type="button" data-qty="down" aria-label="{{ 'products.product.decrease' | t }}">{% render 'icon', name: 'minus' %}</button>
+            <label class="visually-hidden" for="qty-{{ section.id }}">{{ 'products.product.quantity' | t }}</label>
+            <input id="qty-{{ section.id }}" type="number" name="quantity" min="1" value="1">
+            <button type="button" data-qty="up" aria-label="{{ 'products.product.increase' | t }}">{% render 'icon', name: 'plus' %}</button>
+          </div>
+        </div>
+
+        <div class="product__buy">
+          <button class="btn btn--full" type="submit" name="add" data-add {% unless v.available %}disabled{% endunless %}>
+            <span data-add-text>
+              {%- if v.available -%}{{ 'products.product.add_to_cart' | t }}{%- else -%}{{ 'products.product.sold_out' | t }}{%- endif -%}
+            </span>
+          </button>
+        </div>
+
+        <ul class="product__assurance">
+          <li>{{ settings.made_to_order_label }} — {{ 'products.product.lead_time' | t: time: settings.lead_time }}</li>
+          {%- assign extra = s.assurances | split: ',' -%}
+          {%- for line in extra -%}<li>{{ line | strip }}</li>{%- endfor -%}
+        </ul>
+      {%- endform -%}
+
+      {%- if s.bespoke_url != blank -%}
+        <aside class="bespoke-prompt">
+          <p>{{ 'products.product.bespoke_prompt' | t }}</p>
+          <a class="link-arrow" href="{{ s.bespoke_url }}">{{ 'products.product.bespoke_link' | t }}</a>
+        </aside>
+      {%- endif -%}
+
+      <div class="product__details accordion">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'specs' -%}
+              <details class="accordion__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="accordion__summary">{{ block.settings.heading }}<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__panel">
+                  <dl>
+                    {%- assign rows = block.settings.rows | newline_to_br | split: '<br />' -%}
+                    {%- for row in rows -%}
+                      {%- assign pair = row | strip | split: '|' -%}
+                      {%- if pair.size == 2 -%}
+                        <div class="accordion__row">
+                          <dt>{{ pair[0] | strip }}</dt>
+                          <dd>{{ pair[1] | strip }}</dd>
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                    {%- if p.metafields.custom.carat != blank -%}
+                      <div class="accordion__row"><dt>Carat</dt><dd>{{ p.metafields.custom.carat }}</dd></div>
+                    {%- endif -%}
+                    {%- if v.sku != blank -%}
+                      <div class="accordion__row"><dt>{{ 'products.product.sku' | t }}</dt><dd data-sku>{{ v.sku }}</dd></div>
+                    {%- endif -%}
+                  </dl>
+                </div>
+              </details>
+            {%- when 'text' -%}
+              <details class="accordion__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="accordion__summary">{{ block.settings.heading }}<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__panel rte">{{ block.settings.text }}</div>
+              </details>
+            {%- when 'description' -%}
+              <details class="accordion__item" {% if block.settings.open %}open{% endif %} {{ block.shopify_attributes }}>
+                <summary class="accordion__summary">{{ block.settings.heading }}<span class="accordion__icon" aria-hidden="true"></span></summary>
+                <div class="accordion__panel rte">{{ p.description }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="buybar" data-buybar>
+  <div class="buybar__info">
+    <p class="buybar__title">{{ p.title }}</p>
+    <p class="buybar__price" data-buybar-price>{{ v.price | money }}</p>
+  </div>
+  <a class="btn btn--sm" href="#main">{{ 'products.product.add_to_cart' | t }}</a>
+</div>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "info": "Falls back to the product type." },
+    { "type": "text", "id": "tax_note", "label": "Note under the price", "default": "Duties and taxes calculated at checkout" },
+    { "type": "text", "id": "assurances", "label": "Assurance lines", "info": "Comma separated.", "default": "Complimentary insured delivery worldwide, Complimentary resizing within the first year, Lifetime cleaning and re-polishing" },
+    { "type": "url", "id": "bespoke_url", "label": "Bespoke page" },
+    { "type": "url", "id": "size_guide_page", "label": "Size guide page" },
+    { "type": "text", "id": "demo_images", "label": "Bundled demo images", "info": "Comma separated asset filenames, used only when the product has no media." }
+  ],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "Full description",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "The piece" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": true }
+      ]
+    },
+    {
+      "type": "specs",
+      "name": "Specification table",
+      "limit": 2,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Materials and stone" },
+        { "type": "textarea", "id": "rows", "label": "Rows", "info": "One per line, as Label | Value", "default": "Metal | 18k gold or platinum\nSetting | Four-claw, cut-down\nStone | Natural or lab-grown diamond\nCertification | GIA or IGI\nBand width | 1.9mm" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    },
+    {
+      "type": "text",
+      "name": "Text panel",
+      "limit": 5,
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Heading", "default": "Care" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Remove before swimming, sport and sleep. Clean with warm water, a drop of unscented soap and a soft brush. We re-polish and re-set complimentary, for life.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ]
+}
+{% endschema %}

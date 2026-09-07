@@ -1,0 +1,65 @@
+{%- liquid assign s = section.settings -%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% elsif s.background == 'ink' %} section--ink{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header', eyebrow: s.eyebrow, heading: s.heading, align: s.align %}
+    <div class="testimonials{% if section.blocks.size > 1 %} testimonials--3{% endif %}">
+      {%- for block in section.blocks -%}
+        <figure class="testimonial{% if settings.enable_reveal %} reveal{% endif %}" data-delay="{{ forloop.index0 | modulo: 3 }}" {{ block.shopify_attributes }}>
+          <span class="testimonial__mark" aria-hidden="true"></span>
+          <blockquote class="testimonial__quote">{{ block.settings.quote }}</blockquote>
+          <figcaption class="testimonial__who">
+            {{ block.settings.name }}{% if block.settings.detail != blank %} · {{ block.settings.detail }}{% endif %}
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "In their words" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Commissions, remembered" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" },
+        { "value": "ink", "label": "Ink" }
+      ],
+      "default": "alabaster"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "blocks": [
+    {
+      "type": "quote",
+      "name": "Quote",
+      "limit": 6,
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "We arrived with a photograph of my grandmother's ring and left with something that felt like it had always existed." },
+        { "type": "text", "id": "name", "label": "Name", "default": "H. and J." },
+        { "type": "text", "id": "detail", "label": "Detail", "default": "Emerald-cut commission, 2024" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Testimonials", "blocks": [{ "type": "quote" }, { "type": "quote" }, { "type": "quote" }] }
+  ]
+}
+{% endschema %}

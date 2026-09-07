@@ -1,0 +1,28 @@
+<div class="page page--narrow section">
+  <div style="max-width:420px">
+    <h1 class="t-h2" style="margin-bottom:var(--s-6)">{{ 'customer.register.title' | t }}</h1>
+    {%- form 'create_customer', novalidate: 'novalidate' -%}
+      {%- if form.errors -%}
+        <p class="form__error" role="alert" style="margin-bottom:var(--s-5)">{{ form.errors | default_errors }}</p>
+      {%- endif -%}
+      <label class="field">
+        <span class="field__label">{{ 'customer.register.first_name' | t }}</span>
+        <input class="input" type="text" name="customer[first_name]" autocomplete="given-name">
+      </label>
+      <label class="field">
+        <span class="field__label">{{ 'customer.register.last_name' | t }}</span>
+        <input class="input" type="text" name="customer[last_name]" autocomplete="family-name">
+      </label>
+      <label class="field">
+        <span class="field__label">{{ 'customer.login.email' | t }}</span>
+        <input class="input" type="email" name="customer[email]" autocomplete="email" required>
+      </label>
+      <label class="field">
+        <span class="field__label">{{ 'customer.login.password' | t }}</span>
+        <input class="input" type="password" name="customer[password]" autocomplete="new-password" required>
+      </label>
+      <button class="btn btn--full" type="submit" style="margin-top:var(--s-6)">{{ 'customer.register.submit' | t }}</button>
+    {%- endform -%}
+  </div>
+</div>
+{% schema %}{ "name": "Register", "tag": "div", "settings": [] }{% endschema %}

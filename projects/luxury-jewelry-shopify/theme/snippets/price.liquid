@@ -1,0 +1,25 @@
+{%- comment -%}
+  Price for a product or a variant.
+  Accepts: target (product|variant), show_from (Boolean), class (String)
+{%- endcomment -%}
+{%- liquid
+  assign t = target | default: product
+  if t.compare_at_price_max
+    assign compare = t.compare_at_price_max
+    assign amount = t.price
+    assign varies = t.price_varies
+  else
+    assign compare = t.compare_at_price
+    assign amount = t.price
+    assign varies = false
+  endif
+-%}
+<span class="{{ class | default: 'card__price' }}">
+  {%- if compare > amount -%}
+    <del>{{ compare | money }}</del><ins>{{ amount | money }}</ins>
+  {%- elsif varies and show_from -%}
+    {{ 'products.product.from_price' | t: price: amount | money }}
+  {%- else -%}
+    {{ amount | money }}
+  {%- endif -%}
+</span>

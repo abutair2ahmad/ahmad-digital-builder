@@ -1,0 +1,16 @@
+<div class="page page--narrow section">
+  <h1 class="t-h2" style="margin-bottom:var(--s-7)">{{ 'customer.account.addresses' | t }}</h1>
+  {%- paginate customer.addresses by 6 -%}
+    {%- for address in customer.addresses -%}
+      <div style="padding-block:var(--s-5);border-bottom:1px solid var(--c-line)">
+        {%- if address == customer.default_address -%}
+          <span class="t-eyebrow" style="margin-bottom:var(--s-3)">{{ 'customer.addresses.default' | t }}</span>
+        {%- endif -%}
+        <address class="t-meta" style="font-style:normal;line-height:1.9">{{ address | format_address }}</address>
+      </div>
+    {%- endfor -%}
+    {% render 'pagination', paginate: paginate %}
+  {%- endpaginate -%}
+  <a class="link-arrow" href="{{ routes.account_url }}" style="margin-top:var(--s-6);display:inline-flex">{{ 'customer.account.title' | t }}</a>
+</div>
+{% schema %}{ "name": "Addresses", "tag": "div", "settings": [] }{% endschema %}

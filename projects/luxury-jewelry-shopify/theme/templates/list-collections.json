@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-list-collections",
+      "settings": {
+        "eyebrow": "The house",
+        "heading": "Collections",
+        "intro": "<p>Six directions, one bench.</p>"
+      }
+    }
+  },
+  "order": ["main"]
+}

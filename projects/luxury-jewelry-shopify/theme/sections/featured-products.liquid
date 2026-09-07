@@ -1,0 +1,97 @@
+{%- liquid
+  assign s = section.settings
+  assign products = s.collection.products
+  assign count = s.count
+-%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header',
+      eyebrow: s.eyebrow,
+      heading: s.heading,
+      text: s.text,
+      link_label: s.link_label,
+      link_url: s.collection.url,
+      align: s.align %}
+
+    <div class="grid grid--{{ s.columns }} grid--scroll">
+      {%- if products.size > 0 -%}
+        {%- for product in products limit: count -%}
+          {% render 'product-card', card_product: product, index: forloop.index %}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          {% render 'product-card',
+            card_product: block.settings.product,
+            index: forloop.index,
+            demo_image: block.settings.fallback_image,
+            demo_alt_image: block.settings.fallback_image_alt %}
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Featured pieces",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Selected work" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Pieces in the current book" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "collection", "id": "collection", "label": "Collection", "info": "When set, products come from the collection. Otherwise the blocks below are used." },
+    { "type": "range", "id": "count", "min": 2, "max": 12, "step": 1, "label": "Products to show", "default": 4 },
+    {
+      "type": "select",
+      "id": "columns",
+      "label": "Columns",
+      "options": [
+        { "value": "3", "label": "Three" },
+        { "value": "4", "label": "Four" }
+      ],
+      "default": "4"
+    },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "All pieces" },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Header alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" },
+        { "value": "split", "label": "Split" }
+      ],
+      "default": "split"
+    },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Piece",
+      "limit": 12,
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "fallback_image", "label": "Bundled demo image" },
+        { "type": "text", "id": "fallback_image_alt", "label": "Bundled demo hover image" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured pieces",
+      "blocks": [{ "type": "product" }, { "type": "product" }, { "type": "product" }, { "type": "product" }]
+    }
+  ]
+}
+{% endschema %}

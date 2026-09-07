@@ -1,0 +1,24 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-blog",
+      "settings": {
+        "eyebrow": "The journal",
+        "intro": "<p>Guides written for people about to spend a lot of money on something they have never bought before, plus notes from the bench.</p>",
+        "feature_first": true,
+        "per_page": 9
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "The Letter",
+        "heading": "Eight letters a year, no more",
+        "text": "<p>New work, stones we have found, and the occasional note from the bench.</p>",
+        "background": "alabaster",
+        "spacing": 96
+      }
+    }
+  },
+  "order": ["main", "newsletter"]
+}

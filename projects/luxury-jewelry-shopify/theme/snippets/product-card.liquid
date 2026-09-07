@@ -1,0 +1,118 @@
+{%- comment -%}
+  Product card.
+  Accepts:
+    card_product {Object}   the product
+    index        {Number}   for reveal delay + eager loading of the first row
+    sizes        {String}
+    show_badge   {Boolean}  default true
+    demo_image   {String}   asset filename used when the product has no media
+    demo_alt_image {String} asset filename for the hover state
+{%- endcomment -%}
+{%- liquid
+  assign p = card_product
+  assign ratio = 'portrait'
+  if settings.card_image_ratio == 'square'
+    assign ratio = 'square'
+  endif
+  assign card_sizes = sizes | default: '(min-width: 1100px) 24vw, (min-width: 750px) 32vw, 68vw'
+  assign card_loading = 'lazy'
+  if index and index < 4
+    assign card_loading = 'eager'
+  endif
+  assign show_hover = false
+  if settings.card_hover_image and p.media.size > 1
+    assign show_hover = true
+  elsif settings.card_hover_image and demo_alt_image != blank
+    assign show_hover = true
+  endif
+
+  assign card_alt = p.featured_media.alt | default: p.title
+  assign card_badge = p.metafields.custom.badge | default: ''
+
+  assign metal_option = null
+  for opt in p.options_with_values
+    assign name_down = opt.name | downcase
+    if name_down contains 'metal'
+      assign metal_option = opt
+    endif
+  endfor
+-%}
+
+{%- if p == blank -%}
+  <article class="card">
+    <div class="card__media media media--{{ ratio }}">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+    <div class="card__body">
+      <h3 class="card__title">{{ 'onboarding.product_title' | t }}</h3>
+      <span class="card__price">{{ 1495 | times: 100 | money }}</span>
+    </div>
+  </article>
+{%- else -%}
+  <article class="card{% if settings.enable_reveal %} reveal{% endif %}"{% if index %} data-delay="{{ index | modulo: 4 }}"{% endif %}>
+    <div class="card__media media media--{{ ratio }}">
+      {%- if p.featured_media -%}
+        {{ p.featured_media
+          | image_url: width: 1200
+          | image_tag:
+            widths: '300,400,500,600,800,1000,1200',
+            sizes: card_sizes,
+            alt: card_alt,
+            class: 'card__img card__img--main',
+            loading: card_loading
+        }}
+        {%- if show_hover and p.media[1] -%}
+          {{ p.media[1]
+            | image_url: width: 1000
+            | image_tag:
+              widths: '300,400,500,600,800,1000',
+              sizes: card_sizes,
+              alt: '',
+              class: 'card__img card__img--alt',
+              loading: 'lazy'
+          }}
+        {%- endif -%}
+      {%- elsif demo_image != blank -%}
+        {% render 'responsive-image',
+          fallback: demo_image,
+          alt: p.title,
+          sizes: card_sizes,
+          widths: '300,400,500,600,800,1000',
+          loading: card_loading,
+          class: 'card__img card__img--main',
+          no_wrapper: true %}
+        {%- if show_hover and demo_alt_image != blank -%}
+          {% render 'responsive-image',
+            fallback: demo_alt_image,
+            alt: '',
+            sizes: card_sizes,
+            widths: '300,400,500,600,800',
+            class: 'card__img card__img--alt',
+            no_wrapper: true %}
+        {%- endif -%}
+      {%- else -%}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {%- endif -%}
+
+      {%- if show_badge != false -%}
+        {%- if p.available == false -%}
+          <span class="card__badge">{{ 'products.product.sold_out' | t }}</span>
+        {%- elsif card_badge != blank -%}
+          <span class="card__badge">{{ card_badge }}</span>
+        {%- elsif p.tags contains 'New' -%}
+          <span class="card__badge">New</span>
+        {%- elsif p.tags contains 'Made to order' -%}
+          <span class="card__badge">{{ settings.made_to_order_label }}</span>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <div class="card__body">
+      <h3 class="card__title">
+        <a href="{{ p.url }}" class="card__link">{{ p.title }}</a>
+      </h3>
+      {%- if settings.card_show_metal and metal_option -%}
+        <span class="card__meta">{{ metal_option.values | join: ' · ' }}</span>
+      {%- endif -%}
+      {% render 'price', target: p, show_from: true %}
+    </div>
+  </article>
+{%- endif -%}

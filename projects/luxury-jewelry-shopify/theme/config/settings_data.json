@@ -1,0 +1,61 @@
+{
+  "current": {
+    "logo_width": 168,
+    "wordmark": "Cavelier",
+    "color_ink": "#16130F",
+    "color_ink_soft": "#4A443B",
+    "color_stone": "#8B8175",
+    "color_paper": "#F6F3EE",
+    "color_alabaster": "#EDE8E0",
+    "color_line": "#DCD5CA",
+    "color_accent": "#9B7B45",
+    "color_accent_deep": "#7A5F33",
+    "font_display": "bodoni_moda_n4",
+    "font_body": "jost_n4",
+    "type_scale": 100,
+    "prose_in_serif": true,
+    "page_width": 1560,
+    "corner_style": "square",
+    "enable_reveal": true,
+    "card_image_ratio": "portrait",
+    "card_hover_image": true,
+    "card_show_metal": true,
+    "made_to_order_label": "Made to order",
+    "lead_time": "6–9 weeks",
+    "cart_type": "drawer",
+    "cart_note": "<p>Every piece is made to order in our Clerkenwell atelier. Complimentary insured delivery worldwide.</p>",
+    "social_instagram": "https://instagram.com",
+    "social_pinterest": "",
+    "social_facebook": "",
+    "concept_disclosure": "Independent concept project created to demonstrate luxury e-commerce art direction and Shopify development capabilities. CAVELIER is a fictional house; it is not a real company and nothing here is for sale.",
+    "sections": {}
+  },
+  "presets": {
+    "Cavelier — Bone": {
+      "color_ink": "#16130F",
+      "color_ink_soft": "#4A443B",
+      "color_stone": "#8B8175",
+      "color_paper": "#F6F3EE",
+      "color_alabaster": "#EDE8E0",
+      "color_line": "#DCD5CA",
+      "color_accent": "#9B7B45",
+      "color_accent_deep": "#7A5F33",
+      "font_display": "bodoni_moda_n4",
+      "font_body": "jost_n4",
+      "corner_style": "square"
+    },
+    "Cavelier — Slate": {
+      "color_ink": "#14161A",
+      "color_ink_soft": "#41474F",
+      "color_stone": "#818A93",
+      "color_paper": "#F2F3F2",
+      "color_alabaster": "#E6E8E7",
+      "color_line": "#D4D7D6",
+      "color_accent": "#6E7F72",
+      "color_accent_deep": "#4E5C52",
+      "font_display": "bodoni_moda_n4",
+      "font_body": "jost_n4",
+      "corner_style": "square"
+    }
+  }
+}

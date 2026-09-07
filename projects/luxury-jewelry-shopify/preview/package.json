@@ -1,0 +1,16 @@
+{
+  "name": "cavelier-preview",
+  "private": true,
+  "type": "module",
+  "description": "Local Liquid renderer used to visually QA the Cavelier Shopify theme without a store.",
+  "scripts": {
+    "render": "node render.js",
+    "shots": "node shots.js"
+  },
+  "dependencies": {
+    "liquidjs": "^10.21.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}

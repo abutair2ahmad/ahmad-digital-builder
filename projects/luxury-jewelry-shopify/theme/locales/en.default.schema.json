@@ -1,0 +1,70 @@
+{
+  "settings": {
+    "logo": {
+      "name": "Logo",
+      "image": "Logo image",
+      "width": "Logo width",
+      "wordmark": "Wordmark fallback",
+      "wordmark_info": "Shown when no logo image is set. Set in the display serif, letterspaced.",
+      "favicon": "Favicon"
+    },
+    "colors": {
+      "name": "Colours",
+      "neutrals": "Neutrals",
+      "ink": "Ink (primary text)",
+      "ink_soft": "Ink soft (secondary text)",
+      "stone": "Stone (metadata)",
+      "paper": "Paper (page background)",
+      "alabaster": "Alabaster (alternating sections)",
+      "line": "Hairline",
+      "accent_header": "Signature accent",
+      "accent_note": "One accent only. It is used for hairlines, hover underlines and small marks — never as a button fill or a gradient.",
+      "accent": "Accent",
+      "accent_deep": "Accent (text safe)"
+    },
+    "type": {
+      "name": "Typography",
+      "display": "Display serif",
+      "display_info": "Headings, product titles and long-form prose.",
+      "body": "Body sans",
+      "body_info": "Navigation, buttons, prices and metadata.",
+      "scale": "Type scale",
+      "prose_serif": "Set long-form prose in the display serif",
+      "prose_serif_info": "Journal articles and the brand story read as editorial rather than as a blog."
+    },
+    "layout": {
+      "name": "Layout",
+      "page_width": "Maximum page width",
+      "corners": "Corner style",
+      "corners_square": "Square",
+      "corners_soft": "Softened (2px)",
+      "corners_info": "Square is the house default. Rounded cards read as software, not as jewellery.",
+      "reveal": "Reveal sections on scroll",
+      "reveal_info": "A single 18px fade-and-rise, once per element. Disabled automatically for visitors who prefer reduced motion."
+    },
+    "product": {
+      "name": "Product cards",
+      "ratio": "Card image ratio",
+      "ratio_portrait": "Portrait (4:5)",
+      "ratio_square": "Square (1:1)",
+      "hover": "Reveal second image on hover",
+      "metal": "Show metal options on the card",
+      "metal_info": "Reads the option named Metal and lists its values as small caps.",
+      "mto_label": "Made-to-order label",
+      "lead_time": "Default lead time"
+    },
+    "cart": {
+      "name": "Cart",
+      "type": "Cart style",
+      "type_drawer": "Drawer",
+      "type_page": "Page",
+      "note": "Cart reassurance note"
+    },
+    "social": { "name": "Social" },
+    "disclosure": {
+      "name": "Concept disclosure",
+      "label": "Disclosure line",
+      "help": "Shown quietly in the footer. Keep it if this store is a portfolio or concept build."
+    }
+  }
+}

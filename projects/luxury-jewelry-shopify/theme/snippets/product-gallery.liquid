@@ -1,0 +1,80 @@
+{%- comment -%}
+  Product gallery. Desktop: a vertical stack of full-width images (gallery-like,
+  no thumbnails, no carousel chrome). Mobile: a snap-scrolling strip with dots.
+  Accepts: gallery_product, demo_images (comma separated asset filenames)
+{%- endcomment -%}
+{%- liquid
+  assign p = gallery_product | default: product
+  assign media_count = p.media.size
+  assign demo_list = demo_images | default: '' | split: ','
+-%}
+<div class="product__media" data-buybar-anchor>
+  {%- if media_count > 0 -%}
+    <div class="gallery gallery--stack" data-gallery>
+      {%- for media in p.media -%}
+        {%- liquid
+          assign item_loading = 'lazy'
+          assign item_priority = 'auto'
+          if forloop.first
+            assign item_loading = 'eager'
+            assign item_priority = 'high'
+          endif
+          assign media_alt = media.alt | default: p.title
+        -%}
+        <div class="gallery__item">
+          {{ media
+            | image_url: width: 1600
+            | image_tag:
+              widths: '500,700,900,1100,1400,1600',
+              sizes: '(min-width: 950px) 56vw, 84vw',
+              alt: media_alt,
+              loading: item_loading,
+              fetchpriority: item_priority
+          }}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if media_count > 1 -%}
+      <div class="gallery__dots" aria-hidden="true">
+        {%- for media in p.media -%}
+          <span class="gallery__dot{% if forloop.first %} is-active{% endif %}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- elsif demo_list.size > 0 -%}
+    <div class="gallery gallery--stack" data-gallery>
+      {%- for file in demo_list -%}
+        {%- liquid
+          assign item_loading = 'lazy'
+          assign item_priority = 'auto'
+          if forloop.first
+            assign item_loading = 'eager'
+            assign item_priority = 'high'
+          endif
+        -%}
+        {%- assign gallery_file = file | strip -%}
+        <div class="gallery__item">
+          {% render 'responsive-image',
+            fallback: gallery_file,
+            alt: p.title,
+            sizes: '(min-width: 950px) 56vw, 84vw',
+            widths: '500,700,900,1100,1400',
+            loading: item_loading,
+            fetchpriority: item_priority,
+            no_wrapper: true %}
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if demo_list.size > 1 -%}
+      <div class="gallery__dots" aria-hidden="true">
+        {%- for file in demo_list -%}
+          <span class="gallery__dot{% if forloop.first %} is-active{% endif %}"></span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    <div class="gallery gallery--stack">
+      <div class="gallery__item media media--portrait">{{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}</div>
+    </div>
+  {%- endif -%}
+</div>

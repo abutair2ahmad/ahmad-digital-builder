@@ -1,0 +1,57 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="announcement" data-announcement data-interval="{{ section.settings.interval | times: 1000 }}">
+    <div class="page">
+      <div class="announcement__inner">
+        {%- for block in section.blocks -%}
+          <div class="announcement__item{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.link != blank -%}
+              <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+            {%- else -%}
+              {{ block.settings.text }}
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "class": "announcement-section",
+  "settings": [
+    {
+      "type": "range",
+      "id": "interval",
+      "min": 4,
+      "max": 12,
+      "step": 1,
+      "unit": "s",
+      "label": "Rotation interval",
+      "default": 6
+    }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "limit": 4,
+      "settings": [
+        { "type": "text", "id": "text", "label": "Text", "default": "Complimentary insured delivery worldwide" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement bar",
+      "blocks": [
+        { "type": "message", "settings": { "text": "Complimentary insured delivery worldwide" } },
+        { "type": "message", "settings": { "text": "Every piece made to order in London — 6–9 weeks" } }
+      ]
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

@@ -1,0 +1,68 @@
+{%- liquid assign s = section.settings -%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    <div class="{% if s.align == 'center' %}mx-auto text-center{% endif %}{% if settings.enable_reveal %} reveal{% endif %}" style="max-width:{{ s.width }}ch">
+      {%- if s.eyebrow != blank -%}<span class="t-eyebrow" style="margin-bottom:var(--s-4)">{{ s.eyebrow }}</span>{%- endif -%}
+      {%- if s.heading != blank -%}
+        <h2 class="{{ s.heading_size }}" style="margin-bottom:var(--s-5)">{{ s.heading }}</h2>
+      {%- endif -%}
+      {%- if s.text != blank -%}
+        <div class="rte {% if settings.prose_in_serif and s.serif %}prose prose--serif{% else %}t-lede{% endif %}"{% if s.align == 'center' %} style="margin-inline:auto"{% endif %}>{{ s.text }}</div>
+      {%- endif -%}
+      {%- if s.cta_label != blank -%}
+        <div style="margin-top:var(--s-6)">
+          <a class="btn btn--ghost" href="{{ s.cta_url | default: '#' }}">{{ s.cta_label }}</a>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Rich text",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "A house built on restraint" },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "label": "Heading size",
+      "options": [
+        { "value": "t-h1", "label": "Large" },
+        { "value": "t-h2", "label": "Medium" },
+        { "value": "t-h3", "label": "Small" }
+      ],
+      "default": "t-h2"
+    },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>We work slowly, in a small number of shapes, and we do not chase seasons.</p>" },
+    { "type": "checkbox", "id": "serif", "label": "Set the text in the display serif", "default": true },
+    { "type": "range", "id": "width", "min": 40, "max": 90, "step": 2, "unit": "ch", "label": "Measure", "default": 68 },
+    {
+      "type": "select",
+      "id": "align",
+      "label": "Alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centred" }
+      ],
+      "default": "left"
+    },
+    { "type": "text", "id": "cta_label", "label": "Button" },
+    { "type": "url", "id": "cta_url", "label": "Button link" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "presets": [{ "name": "Rich text" }]
+}
+{% endschema %}

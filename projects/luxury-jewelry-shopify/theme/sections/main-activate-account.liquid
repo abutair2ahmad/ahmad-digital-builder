@@ -1,0 +1,17 @@
+<div class="page page--narrow section">
+  <div style="max-width:420px">
+    <h1 class="t-h2" style="margin-bottom:var(--s-6)">{{ 'customer.activate.title' | t }}</h1>
+    {%- form 'activate_customer_password' -%}
+      {%- if form.errors -%}<p class="form__error" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+      <label class="field">
+        <span class="field__label">{{ 'customer.login.password' | t }}</span>
+        <input class="input" type="password" name="customer[password]" autocomplete="new-password" required>
+      </label>
+      <div style="margin-top:var(--s-6);display:grid;gap:var(--s-3)">
+        <button class="btn btn--full" type="submit">{{ 'customer.activate.submit' | t }}</button>
+        <button class="btn btn--ghost btn--full btn--sm" type="submit" name="decline">{{ 'customer.activate.decline' | t }}</button>
+      </div>
+    {%- endform -%}
+  </div>
+</div>
+{% schema %}{ "name": "Activate account", "tag": "div", "settings": [] }{% endschema %}

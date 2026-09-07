@@ -1,0 +1,47 @@
+{%- for filter in filters -%}
+  {%- case filter.type -%}
+    {%- when 'list', 'boolean' -%}
+      <details class="facet" {% if filter.active_values.size > 0 or open_first and forloop.first %}open{% endif %}>
+        <summary class="facet__summary">
+          {{ filter.label }}
+          <span class="accordion__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="facet__panel">
+          {%- for value in filter.values -%}
+            <label class="facet__opt">
+              <input
+                type="checkbox"
+                name="{{ value.param_name }}"
+                value="{{ value.value }}"
+                {% if value.active %}checked{% endif %}
+                {% if value.count == 0 and value.active == false %}disabled{% endif %}>
+              <span class="facet__box" aria-hidden="true"></span>
+              <span>{{ value.label }}</span>
+              <span class="facet__count">({{ value.count }})</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </details>
+    {%- when 'price_range' -%}
+      <details class="facet" {% if filter.min_value.value or filter.max_value.value %}open{% endif %}>
+        <summary class="facet__summary">
+          {{ filter.label }}
+          <span class="accordion__icon" aria-hidden="true"></span>
+        </summary>
+        <div class="facet__panel" style="grid-template-columns:1fr 1fr;display:grid;gap:var(--s-4)">
+          <label class="field">
+            <span class="field__label">From</span>
+            <input class="input" type="number" inputmode="numeric" name="{{ filter.min_value.param_name }}"
+              value="{% if filter.min_value.value %}{{ filter.min_value.value | divided_by: 100 }}{% endif %}"
+              min="0" max="{{ filter.range_max | divided_by: 100 }}" placeholder="0">
+          </label>
+          <label class="field" style="margin-top:0">
+            <span class="field__label">To</span>
+            <input class="input" type="number" inputmode="numeric" name="{{ filter.max_value.param_name }}"
+              value="{% if filter.max_value.value %}{{ filter.max_value.value | divided_by: 100 }}{% endif %}"
+              min="0" max="{{ filter.range_max | divided_by: 100 }}" placeholder="{{ filter.range_max | divided_by: 100 }}">
+          </label>
+        </div>
+      </details>
+  {%- endcase -%}
+{%- endfor -%}

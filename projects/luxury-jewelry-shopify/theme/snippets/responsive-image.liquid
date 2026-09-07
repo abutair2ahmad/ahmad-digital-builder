@@ -1,0 +1,73 @@
+{%- comment -%}
+  Renders one responsive image, in order of preference:
+    1. a merchant-uploaded image object  -> Shopify CDN, srcset + sizes
+    2. a bundled demo asset filename     -> theme asset, srcset + sizes
+    3. Shopify's placeholder SVG         -> so the theme is never broken on install
+
+  Accepts:
+    image        {Object}  image_picker / media / article.image
+    fallback     {String}  asset filename, e.g. 'cavelier-hero.jpg'
+    placeholder  {String}  placeholder_svg_tag name, default 'collection-1'
+    alt          {String}  required for anything meaningful
+    ratio        {String}  portrait | square | landscape | wide | tall | natural
+    sizes        {String}  defaults to 100vw
+    widths       {String}  comma separated, defaults below
+    loading      {String}  lazy (default) | eager
+    fetchpriority{String}  auto (default) | high
+    class        {String}  extra classes on the <img>
+    wrapper_class{String}  extra classes on the wrapping .media
+    no_wrapper   {Boolean} render only the <img>
+{%- endcomment -%}
+
+{%- liquid
+  assign r = ratio | default: 'landscape'
+  assign img_sizes = sizes | default: '100vw'
+  assign img_widths = widths | default: '400,600,800,1000,1200,1600,2000'
+  assign img_loading = loading | default: 'lazy'
+  assign img_priority = fetchpriority | default: 'auto'
+  assign img_alt = alt | default: '' | escape
+  assign img_class = class | default: ''
+  assign ph = placeholder | default: 'collection-1'
+-%}
+
+{%- capture image_markup -%}
+  {%- if image != blank -%}
+    {{ image
+      | image_url: width: 2000
+      | image_tag:
+        widths: img_widths,
+        sizes: img_sizes,
+        alt: img_alt,
+        class: img_class,
+        loading: img_loading,
+        fetchpriority: img_priority
+    }}
+  {%- elsif fallback != blank -%}
+    {%- capture srcset -%}
+      {%- assign width_list = img_widths | split: ',' -%}
+      {%- for w in width_list -%}
+        {%- assign wt = w | strip -%}
+        {%- if wt != blank and wt != '2000' -%}
+          {{ fallback | asset_img_url: wt | append: 'x' }} {{ wt }}w{%- unless forloop.last -%}, {% endunless -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endcapture -%}
+    <img
+      src="{{ fallback | asset_img_url: '1200x' }}"
+      srcset="{{ srcset | strip | strip_newlines }}"
+      sizes="{{ img_sizes }}"
+      alt="{{ img_alt }}"
+      class="{{ img_class }}"
+      loading="{{ img_loading }}"
+      fetchpriority="{{ img_priority }}"
+      decoding="{% if img_loading == 'eager' %}sync{% else %}async{% endif %}">
+  {%- else -%}
+    {{ ph | placeholder_svg_tag: 'placeholder-svg' }}
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- if no_wrapper -%}
+  {{ image_markup }}
+{%- else -%}
+  <div class="media media--{{ r }} {{ wrapper_class }}">{{ image_markup }}</div>
+{%- endif -%}

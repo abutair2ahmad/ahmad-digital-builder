@@ -1,0 +1,4 @@
+{
+  "sections": { "main": { "type": "main-page", "settings": { "serif": false } } },
+  "order": ["main"]
+}

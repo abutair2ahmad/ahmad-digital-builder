@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1250" viewBox="0 0 1000 1250" role="img">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0" stop-color="#EDE7DC"/>
+      <stop offset="1" stop-color="#D8CDBD"/>
+    </linearGradient>
+    <radialGradient id="l" cx="45%" cy="53%" r="62%">
+      <stop offset="0" stop-color="#FFFDF9" stop-opacity="0.85"/>
+      <stop offset="0.55" stop-color="#FFFDF9" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#FFFDF9" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="s" cx="55%" cy="87%" r="52%">
+      <stop offset="0" stop-color="#6E6355" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#6E6355" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+  <rect width="1000" height="1250" fill="url(#g)"/>
+  <rect width="1000" height="1250" fill="url(#s)"/>
+  <rect width="1000" height="1250" fill="url(#l)"/>
+  <g transform="rotate(-9 500 650)" opacity="0.5">
+    <ellipse cx="500" cy="650" rx="170" ry="170" fill="none" stroke="#8B8175" stroke-opacity="0.45" stroke-width="6"/>
+    <ellipse cx="500" cy="650" rx="170" ry="170" fill="none" stroke="#FFFDF9" stroke-opacity="0.5" stroke-width="2" transform="translate(0 -4)"/>
+  </g>
+  <rect width="1000" height="1250" filter="url(#n)" opacity="0.045"/>
+</svg>

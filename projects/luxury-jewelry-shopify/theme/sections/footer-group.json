@@ -1,0 +1,36 @@
+{
+  "type": "footer",
+  "name": "Footer group",
+  "sections": {
+    "footer": {
+      "type": "footer",
+      "blocks": {
+        "care": {
+          "type": "menu",
+          "settings": { "heading": "Customer care", "menu": "footer" }
+        },
+        "house": {
+          "type": "menu",
+          "settings": { "heading": "The house", "menu": "footer" }
+        },
+        "atelier": {
+          "type": "text",
+          "settings": {
+            "heading": "Atelier",
+            "text": "<p>18 Clerkenwell Green<br>London EC1R 0DP<br>Visits by appointment</p>"
+          }
+        }
+      },
+      "block_order": ["care", "house", "atelier"],
+      "settings": {
+        "newsletter_heading": "The Letter",
+        "newsletter_text": "Occasional notes on new work, stones we have found, and the making of things. No more than eight times a year.",
+        "social_heading": "Elsewhere",
+        "contact_email": "atelier@cavelier.example",
+        "legal_menu": "footer",
+        "copyright_suffix": "All rights reserved."
+      }
+    }
+  },
+  "order": ["footer"]
+}

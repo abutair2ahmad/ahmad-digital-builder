@@ -1,0 +1,25 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "eyebrow": "Collection",
+        "intro": "<p>Every piece below is made after it is ordered, in the metal and stone you choose. Prices shown are for the specification listed; a different stone changes the price, and we will tell you exactly how.</p>",
+        "per_page": 16,
+        "columns": "4",
+        "filter_style": "rail"
+      }
+    },
+    "assurances": {
+      "type": "trust-row",
+      "blocks": {
+        "a": { "type": "item", "settings": { "title": "Try before you commit", "text": "Sterling silver sizing models posted free, anywhere in the UK." } },
+        "b": { "type": "item", "settings": { "title": "Certified stones", "text": "Every diamond above 0.30ct arrives with its GIA or IGI certificate." } },
+        "c": { "type": "item", "settings": { "title": "Resized in year one", "text": "Fingers change. The first resize is on the house." } }
+      },
+      "block_order": ["a", "b", "c"],
+      "settings": { "heading": "Buying at a distance", "background": "alabaster", "spacing": 88 }
+    }
+  },
+  "order": ["main", "assurances"]
+}

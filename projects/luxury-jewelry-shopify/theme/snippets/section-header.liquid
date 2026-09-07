@@ -1,0 +1,31 @@
+{%- comment -%}
+  Eyebrow / heading / supporting text, with an optional right-hand link.
+  Accepts: eyebrow, heading, text, link_label, link_url, align (left|center|split), heading_class
+{%- endcomment -%}
+{%- liquid
+  assign a = align | default: 'left'
+  assign hclass = heading_class | default: 't-h2'
+-%}
+{%- if eyebrow != blank or heading != blank or text != blank -%}
+  <div class="sec-head{% if a == 'center' %} sec-head--center{% elsif a == 'split' %} sec-head--split{% endif %}">
+    <div class="stack">
+      {%- if eyebrow != blank -%}<span class="t-eyebrow">{{ eyebrow }}</span>{%- endif -%}
+      {%- if heading != blank -%}
+        <h2 class="{{ hclass }} sec-head__title">{{ heading }}</h2>
+      {%- endif -%}
+      {%- if text != blank and a != 'split' -%}
+        <div class="t-lede sec-head__text rte">{{ text }}</div>
+      {%- endif -%}
+    </div>
+    {%- if a == 'split' -%}
+      <div class="sec-head__aside stack">
+        {%- if text != blank -%}<div class="t-lede sec-head__text rte">{{ text }}</div>{%- endif -%}
+        {%- if link_label != blank -%}
+          <a class="link-arrow" href="{{ link_url | default: '#' }}">{{ link_label }}</a>
+        {%- endif -%}
+      </div>
+    {%- elsif link_label != blank -%}
+      <a class="link-arrow" href="{{ link_url | default: '#' }}">{{ link_label }}</a>
+    {%- endif -%}
+  </div>
+{%- endif -%}

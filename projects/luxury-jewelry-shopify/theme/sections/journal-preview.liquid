@@ -1,0 +1,103 @@
+{%- liquid
+  assign s = section.settings
+  assign blog = s.blog
+-%}
+<section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {% render 'section-header',
+      eyebrow: s.eyebrow,
+      heading: s.heading,
+      text: s.text,
+      link_label: s.link_label,
+      link_url: blog.url,
+      align: 'split' %}
+
+    <div class="grid grid--3 grid--m1">
+      {%- if blog.articles.size > 0 -%}
+        {%- for article in blog.articles limit: s.count -%}
+          {%- assign card_alt = article.image.alt | default: article.title -%}
+          <a class="article-card{% if settings.enable_reveal %} reveal{% endif %}" data-delay="{{ forloop.index0 | modulo: 3 }}" href="{{ article.url }}">
+            <div class="article-card__media">
+              {% render 'responsive-image',
+                image: article.image,
+                alt: card_alt,
+                sizes: '(min-width: 750px) 32vw, 92vw',
+                widths: '400,600,800,1000',
+                placeholder: 'image',
+                no_wrapper: true %}
+            </div>
+            <div class="stack" style="--s-4: var(--s-2)">
+              <span class="t-eyebrow">{{ article.tags.first | default: 'Journal' }}</span>
+              <h3 class="article-card__title">{{ article.title }}</h3>
+              <p class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 116 }}</p>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for block in section.blocks -%}
+          <a class="article-card{% if settings.enable_reveal %} reveal{% endif %}" data-delay="{{ forloop.index0 | modulo: 3 }}" href="{{ block.settings.link | default: '#' }}" {{ block.shopify_attributes }}>
+            <div class="article-card__media">
+              {% render 'responsive-image',
+                image: block.settings.image,
+                fallback: block.settings.fallback_image,
+                alt: block.settings.title,
+                sizes: '(min-width: 750px) 32vw, 92vw',
+                widths: '400,600,800,1000',
+                placeholder: 'image',
+                no_wrapper: true %}
+            </div>
+            <div class="stack" style="--s-4: var(--s-2)">
+              <span class="t-eyebrow">{{ block.settings.kicker }}</span>
+              <h3 class="article-card__title">{{ block.settings.title }}</h3>
+              <p class="article-card__excerpt">{{ block.settings.excerpt }}</p>
+            </div>
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Journal",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The journal" },
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Notes on stones, metal and making" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "blog", "id": "blog", "label": "Blog" },
+    { "type": "range", "id": "count", "min": 2, "max": 6, "step": 1, "label": "Articles to show", "default": 3 },
+    { "type": "text", "id": "link_label", "label": "Link label", "default": "All entries" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 112 }
+  ],
+  "blocks": [
+    {
+      "type": "entry",
+      "name": "Placeholder entry",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "kicker", "label": "Kicker", "default": "Guide" },
+        { "type": "text", "id": "title", "label": "Title", "default": "How to choose an engagement ring" },
+        { "type": "text", "id": "excerpt", "label": "Excerpt", "default": "Start with the hand, not the carat. A practical order of operations." },
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "fallback_image", "label": "Bundled demo image" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Journal", "blocks": [{ "type": "entry" }, { "type": "entry" }, { "type": "entry" }] }
+  ]
+}
+{% endschema %}

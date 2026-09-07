@@ -1,0 +1,135 @@
+{
+  "sections": {
+    "hero": {
+      "type": "page-hero",
+      "settings": {
+        "eyebrow": "Est. 2016 · Clerkenwell Green",
+        "heading": "A small house that makes one thing at a time",
+        "text": "<p>CAVELIER holds no finished stock. There is no window of unsold rings, no seasonal drop, no warehouse. There is a bench, a kiln, a safe with other people's stones in it, and a book of commissions in the order they were taken.</p>",
+        "align": "left",
+        "fallback_image": "cavelier-atelier-wide.jpg",
+        "image_alt": "The Clerkenwell atelier, a jeweller's bench beside a tall window",
+        "ratio": "wide",
+        "background": "paper",
+        "spacing": 88
+      }
+    },
+    "philosophy": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Philosophy",
+        "heading": "Restraint is the whole idea",
+        "heading_size": "t-h2",
+        "text": "<p>Fine jewellery has a habit of shouting. We are not interested in that. The pieces we are proudest of are the ones a stranger does not notice and the wearer never takes off — a band with the right taper, a solitaire set low enough to live under a glove.</p><p>So we work in a small number of shapes, refine them slowly, and decline the ones that only photograph well. If a design needs a lighting rig to be beautiful, it is not finished.</p>",
+        "serif": true,
+        "width": 62,
+        "align": "left",
+        "background": "paper",
+        "spacing": 96
+      }
+    },
+    "founder": {
+      "type": "story-split",
+      "blocks": {
+        "s1": { "type": "spec", "settings": { "label": "Trained", "value": "Hatton Garden, 2009–2014" } },
+        "s2": { "type": "spec", "settings": { "label": "Opened the house", "value": "2016" } },
+        "s3": { "type": "spec", "settings": { "label": "Commissions to date", "value": "Just over 900" } },
+        "s4": { "type": "spec", "settings": { "label": "People at the bench", "value": "Four" } }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"],
+      "settings": {
+        "fallback_image": "cavelier-founder.jpg",
+        "image_alt": "The founder examining a ring through a jeweller's loupe beside a tall atelier window",
+        "image_ratio": "portrait",
+        "caption": "Margot Cavelier, Clerkenwell Green.",
+        "media_position": "right",
+        "eyebrow": "The founder",
+        "heading": "Margot Cavelier",
+        "text": "<p>Margot spent five years on other people's benches in Hatton Garden, mostly repairing rings that had been designed by someone who had never worn one. She opened CAVELIER in 2016 in a first-floor room off Clerkenwell Green with one rule: nothing gets cast until somebody has asked for it.</p><p>She still takes every first consultation herself. She will also, fairly often, talk you out of the stone you came in for.</p>",
+        "background": "paper",
+        "spacing": 112
+      }
+    },
+    "atelier": {
+      "type": "full-bleed-image",
+      "settings": {
+        "fallback_image": "cavelier-atelier.jpg",
+        "image_alt": "Hands setting a diamond into a gold ring at a wooden bench pin",
+        "ratio": "wide",
+        "width": "full",
+        "quote": "Everything here is made within twenty feet of where it is designed.",
+        "attribution": "The atelier, Clerkenwell Green",
+        "align": "left",
+        "spacing": 0
+      }
+    },
+    "craft": {
+      "type": "story-split",
+      "settings": {
+        "fallback_image": "cavelier-materials.jpg",
+        "image_alt": "Raw 18k gold wire, a carved wax ring model and a loose emerald-cut diamond in a paper parcel",
+        "image_ratio": "landscape",
+        "media_position": "left",
+        "media_width": "wide",
+        "eyebrow": "Materials",
+        "heading": "What we buy, and from whom",
+        "text": "<p>Gold is 14k or 18k, recycled wherever the alloy allows it without compromising the colour. Platinum is 950. Natural diamonds come through two Antwerp houses we have used since 2017 and are supplied with GIA certificates; lab-grown stones are IGI certified. Coloured stones are bought at origin where we can, and we will tell you when we could not.</p><p>Everything above 0.30ct arrives with its own certificate, which is yours to keep.</p>",
+        "background": "paper",
+        "spacing": 112
+      }
+    },
+    "sourcing": {
+      "type": "story-split",
+      "settings": {
+        "fallback_image": "cavelier-collection-diamonds.jpg",
+        "image_alt": "Loose round brilliant and emerald-cut diamonds beside jeweller's tweezers on a bone-grey surface",
+        "image_ratio": "portrait",
+        "media_position": "right",
+        "eyebrow": "Responsible sourcing",
+        "heading": "Stated without decoration",
+        "text": "<p>We buy from suppliers who can name the origin of a stone, and we say so when they cannot. Our gold is refined in the UK and is recycled where the alloy allows. We do not use the word \"ethical\" as a marketing term, because in this trade it is doing very little work.</p><p>What we can promise is specific: named suppliers, certificates you can check, and a straight answer if you ask where something came from.</p>",
+        "cta_label": "Ask us about a stone",
+        "cta_url": "/pages/contact",
+        "background": "paper",
+        "spacing": 112
+      }
+    },
+    "mto": {
+      "type": "rich-text",
+      "settings": {
+        "eyebrow": "Made to order",
+        "heading": "Why you wait six weeks",
+        "heading_size": "t-h2",
+        "text": "<p>Because nothing is made in advance. That is inconvenient, and it is deliberate. A house with stock has to sell the stock — it will steer you toward what is in the drawer, discount what did not move, and cast a hundred of something in the hope that thirty sell.</p><p>We would rather be slower and honest about it. The waiting is the part where the piece becomes yours.</p>",
+        "serif": true,
+        "width": 62,
+        "align": "left",
+        "cta_label": "Begin a commission",
+        "cta_url": "/pages/bespoke",
+        "background": "alabaster",
+        "spacing": 112
+      }
+    },
+    "assurances": {
+      "type": "trust-row",
+      "blocks": {
+        "a": { "type": "item", "settings": { "title": "Hand finished", "text": "Filed, emeried and polished by hand. No tumbling, no shortcut to a mirror." } },
+        "b": { "type": "item", "settings": { "title": "Hallmarked", "text": "Every piece is assayed and hallmarked in London with the year it was made." } },
+        "c": { "type": "item", "settings": { "title": "Lifetime care", "text": "Cleaning, re-polishing and re-setting for as long as you wear it." } }
+      },
+      "block_order": ["a", "b", "c"],
+      "settings": { "heading": "The house standard", "background": "paper", "spacing": 88 }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "eyebrow": "The Letter",
+        "heading": "Eight letters a year, no more",
+        "text": "<p>New work, stones we have found, and the occasional note from the bench.</p>",
+        "background": "ink",
+        "spacing": 96
+      }
+    }
+  },
+  "order": ["hero", "philosophy", "founder", "atelier", "craft", "sourcing", "mto", "assurances", "newsletter"]
+}

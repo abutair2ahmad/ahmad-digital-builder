@@ -1,0 +1,30 @@
+<div class="page section">
+  <h1 class="t-h2" style="margin-bottom:var(--s-2)">{{ 'customer.order.title' | t: name: order.name }}</h1>
+  <p class="t-meta" style="margin-bottom:var(--s-7)">{{ 'customer.order.date' | t: date: order.created_at | date: '%e %B %Y' }}</p>
+
+  <table class="t-meta">
+    <thead>
+      <tr style="text-align:left;border-bottom:1px solid var(--c-line)">
+        <th style="padding-block:var(--s-3)">{{ 'customer.order.product' | t }}</th>
+        <th>{{ 'customer.order.quantity' | t }}</th>
+        <th style="text-align:right">{{ 'customer.order.price' | t }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- for line in order.line_items -%}
+        <tr style="border-bottom:1px solid var(--c-line)">
+          <td style="padding-block:var(--s-4)">
+            {{ line.title }}
+            {%- unless line.variant.title contains 'Default' -%}<br><span style="color:var(--c-stone)">{{ line.variant.title }}</span>{%- endunless -%}
+          </td>
+          <td>{{ line.quantity }}</td>
+          <td style="text-align:right">{{ line.final_line_price | money }}</td>
+        </tr>
+      {%- endfor -%}
+    </tbody>
+    <tfoot>
+      <tr><td colspan="2" style="padding-top:var(--s-4)">{{ 'customer.order.total' | t }}</td><td style="text-align:right;padding-top:var(--s-4)">{{ order.total_price | money }}</td></tr>
+    </tfoot>
+  </table>
+</div>
+{% schema %}{ "name": "Order", "tag": "div", "settings": [] }{% endschema %}

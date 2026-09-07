@@ -1,0 +1,82 @@
+{%- liquid
+  assign s = section.settings
+  assign terms = search.terms | default: ''
+-%}
+<div class="page">
+  <div class="search-hero">
+    <h1 class="t-h1">{{ 'search.title' | t }}</h1>
+    <form class="search-form" action="{{ routes.search_url }}" method="get" role="search">
+      <input type="hidden" name="options[prefix]" value="last">
+      <label class="visually-hidden" for="q">{{ 'search.title' | t }}</label>
+      <input id="q" type="search" name="q" value="{{ terms | escape }}"
+        placeholder="{{ 'search.placeholder' | t }}" autocomplete="off">
+      <button class="icon-btn" type="submit" aria-label="{{ 'search.submit' | t }}">{% render 'icon', name: 'search' %}</button>
+    </form>
+
+    {%- if s.suggestions != blank -%}
+      <div class="t-meta" style="display:flex;flex-wrap:wrap;gap:var(--s-4)">
+        <span>{{ 'search.suggestions' | t }}:</span>
+        {%- assign sugg = s.suggestions | split: ',' -%}
+        {%- for item in sugg -%}
+          <a class="link link--static" href="{{ routes.search_url }}?q={{ item | strip | url_encode }}">{{ item | strip }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+
+  {%- if search.performed -%}
+    <p class="t-meta" style="margin-bottom:var(--s-6)">
+      {{ 'search.results_with_count' | t: count: search.results_count, terms: terms }}
+    </p>
+
+    {%- if search.results_count == 0 -%}
+      <p class="t-lede" style="max-width:44ch;padding-bottom:var(--s-9)">{{ 'search.no_results' | t: terms: terms }}</p>
+    {%- else -%}
+      {%- paginate search.results by s.per_page -%}
+        {%- assign products = search.results | where: 'object_type', 'product' -%}
+
+        {%- if products.size > 0 -%}
+          <h2 class="t-eyebrow" style="margin-bottom:var(--s-5)">{{ 'search.products' | t }}</h2>
+          <div class="grid grid--4" style="margin-bottom:var(--s-9)">
+            {%- for item in products -%}
+              {% render 'product-card', card_product: item, index: forloop.index %}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign others = 0 -%}
+        {%- for item in search.results -%}
+          {%- if item.object_type != 'product' -%}{%- assign others = others | plus: 1 -%}{%- endif -%}
+        {%- endfor -%}
+
+        {%- if others > 0 -%}
+          <h2 class="t-eyebrow" style="margin-bottom:var(--s-4)">{{ 'search.articles' | t }} &amp; {{ 'search.pages' | t }}</h2>
+          <div style="padding-bottom:var(--s-7)">
+            {%- for item in search.results -%}
+              {%- if item.object_type != 'product' -%}
+                <a class="result-row" href="{{ item.url }}">
+                  <span class="result-row__kind">{% if item.object_type == 'article' %}{{ 'search.articles' | t }}{% else %}{{ 'search.pages' | t }}{% endif %}</span>
+                  <h3 class="result-row__title">{{ item.title }}</h3>
+                  <p class="result-row__text">{{ item.content | strip_html | truncate: 170 }}</p>
+                </a>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {% render 'pagination', paginate: paginate %}
+      {%- endpaginate -%}
+    {%- endif -%}
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Search",
+  "tag": "div",
+  "settings": [
+    { "type": "text", "id": "suggestions", "label": "Suggested searches", "info": "Comma separated.", "default": "Oval, Emerald cut, Eternity, 18k gold, Tennis bracelet" },
+    { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Results per page", "default": 20 }
+  ]
+}
+{% endschema %}

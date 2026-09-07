@@ -1,0 +1,16 @@
+<div class="page page--narrow section">
+  <h1 class="t-h1" style="max-width:20ch;margin-bottom:var(--s-6)">{{ page.title }}</h1>
+  <div class="rte prose {% if settings.prose_in_serif and section.settings.serif %}prose--serif{% endif %}">
+    {{ page.content }}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Page",
+  "tag": "div",
+  "settings": [
+    { "type": "checkbox", "id": "serif", "label": "Set the body in the display serif", "default": false }
+  ]
+}
+{% endschema %}

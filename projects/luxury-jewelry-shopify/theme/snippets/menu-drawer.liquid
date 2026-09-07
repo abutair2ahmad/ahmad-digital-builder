@@ -1,0 +1,45 @@
+<div class="drawer drawer--left" id="menu-drawer" aria-hidden="true" role="dialog" aria-modal="true" aria-label="{{ 'general.accessibility.menu' | t }}">
+  <div class="drawer__scrim" data-drawer-scrim></div>
+  <div class="drawer__panel">
+    <div class="drawer__head">
+      <span class="drawer__title">{{ 'general.accessibility.menu' | t }}</span>
+      <button class="icon-btn" type="button" data-drawer-close aria-label="{{ 'general.accessibility.close' | t }}">
+        {% render 'icon', name: 'close' %}
+      </button>
+    </div>
+    <div class="drawer__body">
+      <ul class="menu__list">
+        {%- for link in menu.links -%}
+          <li>
+            {%- if link.links.size > 0 -%}
+              <button class="menu__link menu__toggle" type="button" aria-expanded="false">
+                {{ link.title }}
+                {% render 'icon', name: 'plus' %}
+              </button>
+              <div class="menu__sub">
+                <div>
+                  <a href="{{ link.url }}">All {{ link.title | downcase }}</a>
+                  {%- for child in link.links -%}
+                    <a href="{{ child.url }}">{{ child.title }}</a>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- else -%}
+              <a class="menu__link" href="{{ link.url }}">{{ link.title }}</a>
+            {%- endif -%}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      <div class="menu__meta">
+        <a href="{{ routes.search_url }}">{{ 'search.title' | t }}</a>
+        {%- if shop.customer_accounts_enabled -%}
+          <a href="{{ routes.account_url }}">{{ 'general.accessibility.account' | t }}</a>
+        {%- endif -%}
+        {%- if settings.social_instagram != blank -%}
+          <a href="{{ settings.social_instagram }}" rel="noopener" target="_blank">Instagram</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>

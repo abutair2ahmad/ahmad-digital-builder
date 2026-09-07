@@ -1,0 +1,21 @@
+{
+  "type": "header",
+  "name": "Header group",
+  "sections": {
+    "announcement": {
+      "type": "announcement-bar",
+      "blocks": {
+        "m1": { "type": "message", "settings": { "text": "Complimentary insured delivery worldwide" } },
+        "m2": { "type": "message", "settings": { "text": "Every piece is made to order in London — 6–9 weeks" } },
+        "m3": { "type": "message", "settings": { "text": "Book a private appointment at the atelier" } }
+      },
+      "block_order": ["m1", "m2", "m3"],
+      "settings": { "interval": 6 }
+    },
+    "header": {
+      "type": "header",
+      "settings": { "menu": "main-menu" }
+    }
+  },
+  "order": ["announcement", "header"]
+}

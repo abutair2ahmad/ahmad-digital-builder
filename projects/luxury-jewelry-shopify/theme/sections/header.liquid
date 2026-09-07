@@ -1,0 +1,103 @@
+{%- liquid
+  assign menu = section.settings.menu
+  assign wordmark = settings.wordmark | default: shop.name
+-%}
+<header class="header" data-header>
+  <div class="page">
+    <div class="header__inner">
+      <nav class="header__nav header__nav--start" aria-label="Primary">
+        <button
+          class="icon-btn"
+          type="button"
+          data-drawer-open="menu-drawer"
+          aria-label="{{ 'general.accessibility.open_menu' | t }}"
+          aria-controls="menu-drawer"
+          style="display:none"
+          data-mobile-only>
+          {% render 'icon', name: 'menu' %}
+        </button>
+
+        {%- for link in menu.links limit: 4 -%}
+          {%- if link.links.size > 0 -%}
+            <div class="nav__group">
+              <a class="nav__link" href="{{ link.url }}" aria-haspopup="true"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+              <div class="nav__panel">
+                {%- for child in link.links -%}
+                  <a href="{{ child.url }}">{{ child.title }}</a>
+                {%- endfor -%}
+              </div>
+            </div>
+          {%- else -%}
+            <a class="nav__link" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+          {%- endif -%}
+        {%- endfor -%}
+      </nav>
+
+      <a class="header__brand" href="{{ routes.root_url }}" aria-label="{{ shop.name }} — home">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo
+            | image_url: width: 600
+            | image_tag:
+              widths: '160,240,320,480,600',
+              sizes: settings.logo_width | append: 'px',
+              alt: shop.name,
+              class: 'header__logo',
+              loading: 'eager',
+              width: settings.logo_width
+          }}
+        {%- else -%}
+          <span class="header__wordmark">{{ wordmark }}</span>
+        {%- endif -%}
+      </a>
+
+      <nav class="header__nav header__nav--end" aria-label="Secondary">
+        {%- for link in menu.links offset: 4 limit: 3 -%}
+          <a class="nav__link" href="{{ link.url }}"{% if link.active %} aria-current="page"{% endif %}>{{ link.title }}</a>
+        {%- endfor -%}
+
+        <div class="header__actions">
+          <a class="icon-btn" data-header-secondary href="{{ routes.search_url }}" aria-label="{{ 'general.accessibility.search' | t }}">
+            {% render 'icon', name: 'search' %}
+          </a>
+          {%- if shop.customer_accounts_enabled -%}
+            <a class="icon-btn" data-header-secondary href="{{ routes.account_url }}" aria-label="{{ 'general.accessibility.account' | t }}">
+              {% render 'icon', name: 'account' %}
+            </a>
+          {%- endif -%}
+          <a
+            class="icon-btn cart-btn"
+            href="{{ routes.cart_url }}"
+            aria-label="{{ 'general.accessibility.cart' | t }}"
+            {% if settings.cart_type == 'drawer' %}data-drawer-open="cart-drawer" aria-controls="cart-drawer"{% endif %}>
+            {% render 'icon', name: 'bag' %}
+            <span class="cart-count" data-cart-count{% if cart.item_count == 0 %} hidden{% endif %}>{{ cart.item_count }}</span>
+          </a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+{% render 'menu-drawer', menu: menu %}
+
+<style>
+  @media (max-width: 1023px) {
+    .header [data-mobile-only] { display: inline-flex !important; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Menu",
+      "default": "main-menu",
+      "info": "The first four items sit to the left of the wordmark; items five to seven sit to the right."
+    }
+  ],
+  "enabled_on": { "groups": ["header"] }
+}
+{% endschema %}

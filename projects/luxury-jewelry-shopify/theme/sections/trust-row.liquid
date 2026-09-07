@@ -1,0 +1,51 @@
+{%- liquid assign s = section.settings -%}
+<section class="section section--tight{% if s.background == 'alabaster' %} section--alabaster{% endif %}" style="--section-y: {{ s.spacing }}px">
+  <div class="page">
+    {%- if s.heading != blank -%}
+      <h2 class="t-eyebrow" style="margin-bottom:var(--s-5)">{{ s.heading }}</h2>
+    {%- endif -%}
+    <div class="trust">
+      {%- for block in section.blocks -%}
+        <div class="trust__item" {{ block.shopify_attributes }}>
+          <h3 class="trust__title">{{ block.settings.title }}</h3>
+          <p class="trust__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Assurances",
+  "tag": "section",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Small heading", "default": "The house standard" },
+    {
+      "type": "select",
+      "id": "background",
+      "label": "Background",
+      "options": [
+        { "value": "paper", "label": "Paper" },
+        { "value": "alabaster", "label": "Alabaster" }
+      ],
+      "default": "paper"
+    },
+    { "type": "range", "id": "spacing", "min": 40, "max": 180, "step": 4, "unit": "px", "label": "Section spacing", "default": 88 }
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "Assurance",
+      "limit": 6,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Made to order" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Nothing is cast until it is commissioned. Six to nine weeks, hallmarked with the year it was made." }
+      ]
+    }
+  ],
+  "presets": [
+    { "name": "Assurances", "blocks": [{ "type": "item" }, { "type": "item" }, { "type": "item" }] }
+  ]
+}
+{% endschema %}
