@@ -153,7 +153,7 @@
 
         <ul class="product__assurance">
           <li>{{ settings.made_to_order_label }} — {{ 'products.product.lead_time' | t: time: settings.lead_time }}</li>
-          {%- assign extra = s.assurances | split: ',' -%}
+          {%- assign extra = s.assurances | split: '|' -%}
           {%- for line in extra -%}<li>{{ line | strip }}</li>{%- endfor -%}
         </ul>
       {%- endform -%}
@@ -224,7 +224,7 @@
   "settings": [
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "info": "Falls back to the product type." },
     { "type": "text", "id": "tax_note", "label": "Note under the price", "default": "Duties and taxes calculated at checkout" },
-    { "type": "text", "id": "assurances", "label": "Assurance lines", "info": "Comma separated.", "default": "Complimentary insured delivery worldwide, Complimentary resizing within the first year, Lifetime cleaning and re-polishing" },
+    { "type": "text", "id": "assurances", "label": "Assurance lines", "info": "Separate with |", "default": "Complimentary insured delivery worldwide|Complimentary resizing within the first year|Lifetime cleaning and re-polishing" },
     { "type": "url", "id": "bespoke_url", "label": "Bespoke page" },
     { "type": "url", "id": "size_guide_page", "label": "Size guide page" },
     { "type": "text", "id": "demo_images", "label": "Bundled demo images", "info": "Comma separated asset filenames, used only when the product has no media." }

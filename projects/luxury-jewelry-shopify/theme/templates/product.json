@@ -3,7 +3,13 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "desc": { "type": "description", "settings": { "heading": "The piece", "open": true } },
+        "desc": {
+          "type": "description",
+          "settings": {
+            "heading": "The piece",
+            "open": true
+          }
+        },
         "specs": {
           "type": "specs",
           "settings": {
@@ -37,10 +43,16 @@
           }
         }
       },
-      "block_order": ["desc", "specs", "care", "made", "shipping"],
+      "block_order": [
+        "desc",
+        "specs",
+        "care",
+        "made",
+        "shipping"
+      ],
       "settings": {
         "tax_note": "Duties and taxes calculated at checkout",
-        "assurances": "Complimentary insured delivery worldwide, Complimentary resizing within the first year, Lifetime cleaning and re-polishing",
+        "assurances": "Complimentary insured delivery worldwide|Complimentary resizing within the first year|Lifetime cleaning and re-polishing",
         "bespoke_url": "/pages/bespoke",
         "size_guide_page": "/pages/size-guide",
         "demo_images": "cavelier-product-solitaire.jpg, cavelier-product-solitaire-alt.jpg, cavelier-product-solitaire-detail.jpg"
@@ -48,8 +60,17 @@
     },
     "related": {
       "type": "related-products",
-      "settings": { "heading": "You may also consider", "count": 4, "fallback_collection": "engagement", "background": "alabaster", "spacing": 104 }
+      "settings": {
+        "heading": "You may also consider",
+        "count": 4,
+        "fallback_collection": "engagement",
+        "background": "alabaster",
+        "spacing": 104
+      }
     }
   },
-  "order": ["main", "related"]
+  "order": [
+    "main",
+    "related"
+  ]
 }

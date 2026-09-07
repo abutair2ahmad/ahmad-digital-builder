@@ -1,9 +1,9 @@
 {%- liquid
   assign s = section.settings
-  assign jewellery_types = s.types | split: ','
-  assign metals = s.metals | split: ','
-  assign stones = s.stones | split: ','
-  assign budgets = s.budgets | split: ','
+  assign jewellery_types = s.types | split: '|'
+  assign metals = s.metals | split: '|'
+  assign stones = s.stones | split: '|'
+  assign budgets = s.budgets | split: '|'
 -%}
 <section class="section{% if s.background == 'alabaster' %} section--alabaster{% endif %}" id="{{ s.anchor | default: 'enquire' }}" style="--section-y: {{ s.spacing }}px">
   <div class="page">
@@ -14,7 +14,7 @@
         {%- if s.text != blank -%}<div class="rte t-lede">{{ s.text }}</div>{%- endif -%}
         {%- if s.reassurance != blank -%}
           <ul class="product__assurance" style="margin-top:var(--s-4)">
-            {%- assign lines = s.reassurance | split: ',' -%}
+            {%- assign lines = s.reassurance | split: '|' -%}
             {%- for line in lines -%}<li>{{ line | strip }}</li>{%- endfor -%}
           </ul>
         {%- endif -%}
@@ -116,12 +116,12 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Commission" },
     { "type": "text", "id": "heading", "label": "Heading", "default": "Begin Your Bespoke Journey" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell us what you have in mind. We reply within two working days with an honest view of what is possible, what it will cost and how long it will take.</p>" },
-    { "type": "text", "id": "reassurance", "label": "Reassurance lines", "info": "Comma separated.", "default": "No obligation and no deposit to begin, You will see drawings before you commit, Stones are shown loose, with certificates" },
+    { "type": "text", "id": "reassurance", "label": "Reassurance lines", "info": "Separate each line with a vertical bar |", "default": "No obligation and no deposit to begin|You will see drawings before you commit|Stones are shown loose, with certificates" },
     { "type": "header", "content": "Field options" },
-    { "type": "text", "id": "types", "label": "Piece options", "default": "Engagement ring, Wedding band, Eternity ring, Earrings, Necklace, Bracelet, Remodelling an heirloom, Something else" },
-    { "type": "text", "id": "metals", "label": "Metal options", "default": "Undecided, 18k yellow gold, 18k white gold, 18k rose gold, 14k gold, Platinum" },
-    { "type": "text", "id": "stones", "label": "Stone options", "default": "Undecided, Natural diamond, Lab-grown diamond, Sapphire, Emerald, Client's own stone" },
-    { "type": "text", "id": "budgets", "label": "Budget options", "default": "Under £2,500, £2,500 – £5,000, £5,000 – £10,000, £10,000 – £25,000, Above £25,000, Prefer to discuss" },
+    { "type": "text", "id": "types", "label": "Piece options", "info": "Separate with |", "default": "Engagement ring|Wedding band|Eternity ring|Earrings|Necklace|Bracelet|Remodelling an heirloom|Something else" },
+    { "type": "text", "id": "metals", "label": "Metal options", "info": "Separate with |", "default": "Undecided|18k yellow gold|18k white gold|18k rose gold|14k gold|Platinum" },
+    { "type": "text", "id": "stones", "label": "Stone options", "info": "Separate with |", "default": "Undecided|Natural diamond|Lab-grown diamond|Sapphire|Emerald|Client's own stone" },
+    { "type": "text", "id": "budgets", "label": "Budget options", "info": "Separate with | — prices contain commas", "default": "Under £2,500|£2,500 – £5,000|£5,000 – £10,000|£10,000 – £25,000|Above £25,000|Prefer to discuss" },
     { "type": "header", "content": "Submission" },
     { "type": "text", "id": "submit_label", "label": "Button", "default": "Send enquiry" },
     { "type": "textarea", "id": "success_message", "label": "Success message", "default": "Thank you. Your enquiry is with the atelier — we reply within two working days." },

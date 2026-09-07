@@ -2,8 +2,13 @@
   "sections": {
     "main": {
       "type": "main-search",
-      "settings": { "suggestions": "Oval, Emerald cut, Eternity, 18k gold, Tennis bracelet", "per_page": 20 }
+      "settings": {
+        "suggestions": "Oval|Emerald cut|Eternity|18k gold|Tennis bracelet",
+        "per_page": 20
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

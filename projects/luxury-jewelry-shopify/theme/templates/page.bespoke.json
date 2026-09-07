@@ -31,13 +31,54 @@
     "process": {
       "type": "process-steps",
       "blocks": {
-        "st1": { "type": "step", "settings": { "title": "Consultation", "text": "<p>An hour, in the atelier or by video. We talk about the wearer, how they use their hands, the occasion and the budget — before anything is drawn. Bring photographs of anything you love, including things that are not jewellery.</p>", "detail": "Week 1 · no obligation, no deposit" } },
-        "st2": { "type": "step", "settings": { "title": "Design", "text": "<p>Hand drawings first, because they are quicker to argue with. Then a scaled rendering showing profile, gallery and band width from every angle. Two rounds of revision are included; almost nobody needs a third.</p>", "detail": "Weeks 1–2 · two rounds included" } },
-        "st3": { "type": "step", "settings": { "title": "Stone selection", "text": "<p>We source to your brief through two Antwerp houses and show you three or four candidates loose, under the same light, with their certificates. You will be told plainly what you are paying for and what you are not.</p>", "detail": "Weeks 2–3 · GIA or IGI certified" } },
-        "st4": { "type": "step", "settings": { "title": "Craftsmanship", "text": "<p>Carved in wax, cast in your metal, then set, filed, emeried and polished by hand at the bench. Hallmarked at the London Assay Office with the year it was made. We photograph it before it leaves.</p>", "detail": "Weeks 3–8 · made in Clerkenwell" } },
-        "st5": { "type": "step", "settings": { "title": "Delivery", "text": "<p>Collected in the atelier with a glass of something, or delivered insured and signed-for anywhere in the world, in a box made for the piece. Your certificate and valuation travel with it.</p>", "detail": "Weeks 8–9 · worldwide" } }
+        "st1": {
+          "type": "step",
+          "settings": {
+            "title": "Consultation",
+            "text": "<p>An hour, in the atelier or by video. We talk about the wearer, how they use their hands, the occasion and the budget — before anything is drawn. Bring photographs of anything you love, including things that are not jewellery.</p>",
+            "detail": "Week 1 · no obligation, no deposit"
+          }
+        },
+        "st2": {
+          "type": "step",
+          "settings": {
+            "title": "Design",
+            "text": "<p>Hand drawings first, because they are quicker to argue with. Then a scaled rendering showing profile, gallery and band width from every angle. Two rounds of revision are included; almost nobody needs a third.</p>",
+            "detail": "Weeks 1–2 · two rounds included"
+          }
+        },
+        "st3": {
+          "type": "step",
+          "settings": {
+            "title": "Stone selection",
+            "text": "<p>We source to your brief through two Antwerp houses and show you three or four candidates loose, under the same light, with their certificates. You will be told plainly what you are paying for and what you are not.</p>",
+            "detail": "Weeks 2–3 · GIA or IGI certified"
+          }
+        },
+        "st4": {
+          "type": "step",
+          "settings": {
+            "title": "Craftsmanship",
+            "text": "<p>Carved in wax, cast in your metal, then set, filed, emeried and polished by hand at the bench. Hallmarked at the London Assay Office with the year it was made. We photograph it before it leaves.</p>",
+            "detail": "Weeks 3–8 · made in Clerkenwell"
+          }
+        },
+        "st5": {
+          "type": "step",
+          "settings": {
+            "title": "Delivery",
+            "text": "<p>Collected in the atelier with a glass of something, or delivered insured and signed-for anywhere in the world, in a box made for the piece. Your certificate and valuation travel with it.</p>",
+            "detail": "Weeks 8–9 · worldwide"
+          }
+        }
       },
-      "block_order": ["st1", "st2", "st3", "st4", "st5"],
+      "block_order": [
+        "st1",
+        "st2",
+        "st3",
+        "st4",
+        "st5"
+      ],
       "settings": {
         "eyebrow": "The process",
         "heading": "Five steps, six to nine weeks",
@@ -52,12 +93,41 @@
     "craft": {
       "type": "story-split",
       "blocks": {
-        "s1": { "type": "spec", "settings": { "label": "Drawing", "value": "By hand, then rendered" } },
-        "s2": { "type": "spec", "settings": { "label": "Model", "value": "Carved wax, cast in-house" } },
-        "s3": { "type": "spec", "settings": { "label": "Setting", "value": "Hand-set at the bench" } },
-        "s4": { "type": "spec", "settings": { "label": "Finish", "value": "Emery and hand polish" } }
+        "s1": {
+          "type": "spec",
+          "settings": {
+            "label": "Drawing",
+            "value": "By hand, then rendered"
+          }
+        },
+        "s2": {
+          "type": "spec",
+          "settings": {
+            "label": "Model",
+            "value": "Carved wax, cast in-house"
+          }
+        },
+        "s3": {
+          "type": "spec",
+          "settings": {
+            "label": "Setting",
+            "value": "Hand-set at the bench"
+          }
+        },
+        "s4": {
+          "type": "spec",
+          "settings": {
+            "label": "Finish",
+            "value": "Emery and hand polish"
+          }
+        }
       },
-      "block_order": ["s1", "s2", "s3", "s4"],
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ],
       "settings": {
         "fallback_image": "cavelier-atelier.jpg",
         "image_alt": "A goldsmith setting a diamond into a gold ring with fine steel tools",
@@ -73,12 +143,41 @@
     "gallery": {
       "type": "inspiration-gallery",
       "blocks": {
-        "g1": { "type": "image", "settings": { "fallback_image": "cavelier-product-oval.jpg", "caption": "Oval solitaire, 1.40ct, 18k yellow gold — 2024" } },
-        "g2": { "type": "image", "settings": { "fallback_image": "cavelier-product-emerald.jpg", "caption": "Emerald cut, 2.05ct, platinum — 2023" } },
-        "g3": { "type": "image", "settings": { "fallback_image": "cavelier-product-sculptural.jpg", "caption": "Remodelled heirloom band, 18k rose gold — 2025" } },
-        "g4": { "type": "image", "settings": { "fallback_image": "cavelier-product-eternity.jpg", "caption": "Half eternity, 0.90ct total, platinum — 2024" } }
+        "g1": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "cavelier-product-oval.jpg",
+            "caption": "Oval solitaire, 1.40ct, 18k yellow gold — 2024"
+          }
+        },
+        "g2": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "cavelier-product-emerald.jpg",
+            "caption": "Emerald cut, 2.05ct, platinum — 2023"
+          }
+        },
+        "g3": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "cavelier-product-sculptural.jpg",
+            "caption": "Remodelled heirloom band, 18k rose gold — 2025"
+          }
+        },
+        "g4": {
+          "type": "image",
+          "settings": {
+            "fallback_image": "cavelier-product-eternity.jpg",
+            "caption": "Half eternity, 0.90ct total, platinum — 2024"
+          }
+        }
       },
-      "block_order": ["g1", "g2", "g3", "g4"],
+      "block_order": [
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ],
       "settings": {
         "eyebrow": "From the archive",
         "heading": "Commissions we have made",
@@ -92,25 +191,101 @@
     "benefits": {
       "type": "trust-row",
       "blocks": {
-        "b1": { "type": "item", "settings": { "title": "No bespoke premium", "text": "A commission costs the same as a stock design of the same metal, stone and setting. You pay for materials and bench hours, not for the word." } },
-        "b2": { "type": "item", "settings": { "title": "Nothing bought blind", "text": "Drawings before stones, stones before casting, casting before payment in full. You can stop at any stage." } },
-        "b3": { "type": "item", "settings": { "title": "Yours alone", "text": "We do not repeat a bespoke design for another client. The drawings stay in your file." } }
+        "b1": {
+          "type": "item",
+          "settings": {
+            "title": "No bespoke premium",
+            "text": "A commission costs the same as a stock design of the same metal, stone and setting. You pay for materials and bench hours, not for the word."
+          }
+        },
+        "b2": {
+          "type": "item",
+          "settings": {
+            "title": "Nothing bought blind",
+            "text": "Drawings before stones, stones before casting, casting before payment in full. You can stop at any stage."
+          }
+        },
+        "b3": {
+          "type": "item",
+          "settings": {
+            "title": "Yours alone",
+            "text": "We do not repeat a bespoke design for another client. The drawings stay in your file."
+          }
+        }
       },
-      "block_order": ["b1", "b2", "b3"],
-      "settings": { "heading": "Why commission", "background": "alabaster", "spacing": 96 }
+      "block_order": [
+        "b1",
+        "b2",
+        "b3"
+      ],
+      "settings": {
+        "heading": "Why commission",
+        "background": "alabaster",
+        "spacing": 96
+      }
     },
     "faq": {
       "type": "faq",
       "blocks": {
-        "q1": { "type": "qa", "settings": { "question": "How long does a commission take?", "answer": "<p>Six to nine weeks from approved drawing to hallmark. A sourced stone or an unusually complex setting can add two to three weeks, and we will tell you before you commit rather than after.</p>" } },
-        "q2": { "type": "qa", "settings": { "question": "What does it cost?", "answer": "<p>The same as a stock design of the same specification. Most engagement commissions sit between £2,500 and £12,000; the stone is usually two thirds of that. We quote a fixed price after the design stage and it does not move.</p>" } },
-        "q3": { "type": "qa", "settings": { "question": "Do I need to know what I want?", "answer": "<p>No. Roughly half of our clients arrive with a photograph of something they do not actually like, which is still useful information. Bring anything — a building, a piece of furniture, a colour.</p>" } },
-        "q4": { "type": "qa", "settings": { "question": "Can you use my own stone or remodel an heirloom?", "answer": "<p>Often, yes. We will assess the stone for chips and check the setting is viable before we accept it, and we will be honest if remodelling would risk a piece that ought to be left alone.</p>" } },
-        "q5": { "type": "qa", "settings": { "question": "Natural or lab-grown?", "answer": "<p>Both, and we will never pretend one is the other. A lab-grown stone typically lets you go one to two carats further for the same budget. A natural stone holds resale value that a lab-grown one does not. Neither answer is wrong.</p>" } },
-        "q6": { "type": "qa", "settings": { "question": "Can I visit the atelier?", "answer": "<p>Yes, by appointment, on Clerkenwell Green. Consultations are also held by video, and about a third of our commissions are made for clients we never meet in person.</p>" } },
-        "q7": { "type": "qa", "settings": { "question": "What if I do not like the finished piece?", "answer": "<p>It has not happened, because you approve the drawing, the wax and the stone. Bespoke commissions are not returnable, and we say so plainly before you pay a deposit.</p>" } }
+        "q1": {
+          "type": "qa",
+          "settings": {
+            "question": "How long does a commission take?",
+            "answer": "<p>Six to nine weeks from approved drawing to hallmark. A sourced stone or an unusually complex setting can add two to three weeks, and we will tell you before you commit rather than after.</p>"
+          }
+        },
+        "q2": {
+          "type": "qa",
+          "settings": {
+            "question": "What does it cost?",
+            "answer": "<p>The same as a stock design of the same specification. Most engagement commissions sit between £2,500 and £12,000; the stone is usually two thirds of that. We quote a fixed price after the design stage and it does not move.</p>"
+          }
+        },
+        "q3": {
+          "type": "qa",
+          "settings": {
+            "question": "Do I need to know what I want?",
+            "answer": "<p>No. Roughly half of our clients arrive with a photograph of something they do not actually like, which is still useful information. Bring anything — a building, a piece of furniture, a colour.</p>"
+          }
+        },
+        "q4": {
+          "type": "qa",
+          "settings": {
+            "question": "Can you use my own stone or remodel an heirloom?",
+            "answer": "<p>Often, yes. We will assess the stone for chips and check the setting is viable before we accept it, and we will be honest if remodelling would risk a piece that ought to be left alone.</p>"
+          }
+        },
+        "q5": {
+          "type": "qa",
+          "settings": {
+            "question": "Natural or lab-grown?",
+            "answer": "<p>Both, and we will never pretend one is the other. A lab-grown stone typically lets you go one to two carats further for the same budget. A natural stone holds resale value that a lab-grown one does not. Neither answer is wrong.</p>"
+          }
+        },
+        "q6": {
+          "type": "qa",
+          "settings": {
+            "question": "Can I visit the atelier?",
+            "answer": "<p>Yes, by appointment, on Clerkenwell Green. Consultations are also held by video, and about a third of our commissions are made for clients we never meet in person.</p>"
+          }
+        },
+        "q7": {
+          "type": "qa",
+          "settings": {
+            "question": "What if I do not like the finished piece?",
+            "answer": "<p>It has not happened, because you approve the drawing, the wax and the stone. Bespoke commissions are not returnable, and we say so plainly before you pay a deposit.</p>"
+          }
+        }
       },
-      "block_order": ["q1", "q2", "q3", "q4", "q5", "q6", "q7"],
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5",
+        "q6",
+        "q7"
+      ],
       "settings": {
         "eyebrow": "Questions",
         "heading": "Before you commission",
@@ -126,11 +301,11 @@
         "eyebrow": "Commission",
         "heading": "Begin Your Bespoke Journey",
         "text": "<p>Tell us what you have in mind. We reply within two working days with an honest view of what is possible, what it will cost and how long it will take.</p>",
-        "reassurance": "No obligation and no deposit to begin, You will see drawings before you commit, Stones are shown loose with certificates",
-        "types": "Engagement ring, Wedding band, Eternity ring, Earrings, Necklace, Bracelet, Remodelling an heirloom, Something else",
-        "metals": "Undecided, 18k yellow gold, 18k white gold, 18k rose gold, 14k gold, Platinum",
-        "stones": "Undecided, Natural diamond, Lab-grown diamond, Sapphire, Emerald, Client's own stone",
-        "budgets": "Under £2,500, £2,500 – £5,000, £5,000 – £10,000, £10,000 – £25,000, Above £25,000, Prefer to discuss",
+        "reassurance": "No obligation and no deposit to begin|You will see drawings before you commit|Stones are shown loose, with certificates",
+        "types": "Engagement ring|Wedding band|Eternity ring|Earrings|Necklace|Bracelet|Remodelling an heirloom|Something else",
+        "metals": "Undecided|18k yellow gold|18k white gold|18k rose gold|14k gold|Platinum",
+        "stones": "Undecided|Natural diamond|Lab-grown diamond|Sapphire|Emerald|Client's own stone",
+        "budgets": "Under £2,500|£2,500 – £5,000|£5,000 – £10,000|£10,000 – £25,000|Above £25,000|Prefer to discuss",
         "submit_label": "Send enquiry",
         "success_message": "Thank you. Your enquiry is with the atelier — we reply within two working days.",
         "small_print": "We use your details only to answer this enquiry.",
@@ -139,5 +314,14 @@
       }
     }
   },
-  "order": ["hero", "intro", "process", "craft", "gallery", "benefits", "faq", "enquiry"]
+  "order": [
+    "hero",
+    "intro",
+    "process",
+    "craft",
+    "gallery",
+    "benefits",
+    "faq",
+    "enquiry"
+  ]
 }

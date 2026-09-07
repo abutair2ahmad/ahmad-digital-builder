@@ -1,0 +1,12 @@
+import { chromium } from 'playwright';
+import { serve } from './serve.js';
+const [page_, sel, w] = process.argv.slice(2);
+const server = await serve(4205);
+const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const p = await (await b.newContext({ viewport: { width: +w || 1440, height: 900 }, deviceScaleFactor: 3 })).newPage();
+await p.goto(`http://localhost:4205/${page_}.html`, { waitUntil: 'networkidle' });
+await p.waitForTimeout(600);
+const el = await p.$(sel);
+await el.screenshot({ path: 'review/zoom.png' });
+console.log('ok');
+await b.close(); server.close();

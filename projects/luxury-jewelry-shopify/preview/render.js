@@ -202,8 +202,8 @@ const PAGES = [
         performed: true, terms: 'oval',
         results_count: 4,
         results: [
-          Object.assign(Object.create(data.products[2]), { object_type: 'product' }),
-          Object.assign(Object.create(data.products[0]), { object_type: 'product' }),
+          { ...data.products[2], object_type: 'product' },
+          { ...data.products[0], object_type: 'product' },
           { object_type: 'article', title: article.title, url: article.url, content: article.content },
           { object_type: 'page', title: 'Ring size guide', url: '/pages/size-guide', content: data.pages['size-guide'].content }
         ]
@@ -249,6 +249,7 @@ async function build() {
       continue;
     }
     // Local font faces (Shopify serves these from its own CDN in production).
+    // Local woff2 copies keep the harness offline and the screenshots fast.
     html = html.replace('</head>', '  <link rel="stylesheet" href="/fonts/preview-fonts.css">\n  </head>');
     fs.writeFileSync(path.join(OUT, pageDef.out), html);
     process.stdout.write(`  ✓ ${pageDef.out.padEnd(22)} ${(html.length / 1024).toFixed(0)} KB\n`);

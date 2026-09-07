@@ -13,7 +13,10 @@ const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-119
 const ctx = await b.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1, isMobile: w < 500, hasTouch: w < 900 });
 const p = await ctx.newPage();
 await p.goto(`http://localhost:4200/${page_}.html`, { waitUntil: 'networkidle' });
-await p.evaluate(() => document.querySelectorAll('.reveal').forEach((e) => e.classList.add('is-in')));
+await p.evaluate(() => {
+  document.documentElement.style.scrollBehavior = 'auto';
+  document.querySelectorAll('.reveal').forEach((e) => e.classList.add('is-in'));
+});
 await p.waitForTimeout(250);
 
 if (slices > 0) {

@@ -16,7 +16,7 @@
     {%- if s.suggestions != blank -%}
       <div class="t-meta" style="display:flex;flex-wrap:wrap;gap:var(--s-4)">
         <span>{{ 'search.suggestions' | t }}:</span>
-        {%- assign sugg = s.suggestions | split: ',' -%}
+        {%- assign sugg = s.suggestions | split: '|' -%}
         {%- for item in sugg -%}
           <a class="link link--static" href="{{ routes.search_url }}?q={{ item | strip | url_encode }}">{{ item | strip }}</a>
         {%- endfor -%}
@@ -75,7 +75,7 @@
   "name": "Search",
   "tag": "div",
   "settings": [
-    { "type": "text", "id": "suggestions", "label": "Suggested searches", "info": "Comma separated.", "default": "Oval, Emerald cut, Eternity, 18k gold, Tennis bracelet" },
+    { "type": "text", "id": "suggestions", "label": "Suggested searches", "info": "Separate with |", "default": "Oval|Emerald cut|Eternity|18k gold|Tennis bracelet" },
     { "type": "range", "id": "per_page", "min": 12, "max": 48, "step": 4, "label": "Results per page", "default": 20 }
   ]
 }
