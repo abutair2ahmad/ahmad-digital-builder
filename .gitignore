@@ -21,3 +21,12 @@ __pycache__/
 .env*
 !.env.example
 *.save
+
+.env
+instagram-autopost/.env
+
+node_modules/
+**/node_modules/
+
+.claude/launch.json
+*.backup.json

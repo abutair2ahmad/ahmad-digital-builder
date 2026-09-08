@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>تقرير المنتجات الأورثوبيدية — السوق الإسرائيلي</title>
+<style>
+  :root{
+    --bg:#f5f7f9; --card:#ffffff; --ink:#131820; --muted:#5c6779; --faint:#8a95a6;
+    --line:#e2e7ee; --line-soft:#eef1f5;
+    --accent:#0f766e; --accent-ink:#ffffff; --accent-soft:#e6f4f1;
+    --gold:#b45309; --gold-soft:#fef3c7;
+    --good:#15803d; --good-soft:#dcfce7;
+    --warn:#b45309; --warn-soft:#fef3c7;
+    --bad:#b91c1c; --bad-soft:#fee2e2;
+    --shadow:0 1px 2px rgba(16,24,40,.05),0 10px 28px -14px rgba(16,24,40,.22);
+    --radius:14px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --bg:#0d1117; --card:#151b23; --ink:#e9eef5; --muted:#98a4b6; --faint:#6b7686;
+      --line:#232b37; --line-soft:#1b222c;
+      --accent:#2dd4bf; --accent-ink:#052a26; --accent-soft:#0f2d29;
+      --gold:#fbbf24; --gold-soft:#3a2c07;
+      --good:#4ade80; --good-soft:#0f2a17;
+      --warn:#fbbf24; --warn-soft:#332508;
+      --bad:#f87171; --bad-soft:#331414;
+      --shadow:0 1px 2px rgba(0,0,0,.5),0 10px 28px -14px rgba(0,0,0,.7);
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);line-height:1.75;
+    font-family:"Segoe UI","Noto Sans Arabic","Helvetica Neue",Tahoma,system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:1180px;margin:0 auto;padding:28px 18px 72px}
+  a{color:var(--accent)}
+  h1,h2,h3{letter-spacing:-.01em;line-height:1.35}
+  h2{font-size:clamp(19px,3vw,25px);margin:44px 0 16px;display:flex;align-items:center;gap:10px}
+  h2::before{content:"";width:4px;height:1.05em;background:var(--accent);border-radius:3px;flex:none}
+  .num{font-variant-numeric:tabular-nums;direction:ltr;display:inline-block;unicode-bidi:isolate}
+
+  /* header */
+  header{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:24px;box-shadow:var(--shadow)}
+  .eyebrow{color:var(--accent);font-weight:700;font-size:12.5px;letter-spacing:.06em;margin:0 0 6px}
+  h1{margin:0 0 10px;font-size:clamp(23px,4.5vw,36px)}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+  .chip{font-size:12.5px;background:var(--bg);border:1px solid var(--line);
+    border-radius:999px;padding:3px 12px;color:var(--muted)}
+  .chip.live{background:var(--accent-soft);border-color:transparent;color:var(--accent);font-weight:700}
+  .nav{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+  .nav a{font-size:13px;text-decoration:none;border:1px solid var(--line);
+    border-radius:9px;padding:5px 12px;color:var(--muted);background:var(--bg)}
+  .nav a:hover{border-color:var(--accent);color:var(--accent)}
+
+  .notice{margin-top:18px;background:var(--warn-soft);border:1px solid transparent;
+    border-radius:11px;padding:12px 14px;font-size:13.5px;color:var(--ink)}
+  .notice b{color:var(--warn)}
+  .est{display:inline-block;font-size:10.5px;font-weight:700;background:var(--warn-soft);
+    color:var(--warn);border-radius:5px;padding:0 6px;margin-inline-start:5px;
+    vertical-align:middle;white-space:nowrap}
+  .src{display:inline-block;font-size:10.5px;font-weight:700;background:var(--good-soft);
+    color:var(--good);border-radius:5px;padding:0 6px;margin-inline-start:5px;white-space:nowrap}
+
+  /* winner */
+  .winner{margin-top:26px;background:var(--card);border:2px solid var(--accent);
+    border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .winner::after{content:"";position:absolute;inset-block-start:-60px;inset-inline-start:-60px;
+    width:200px;height:200px;background:var(--accent);opacity:.07;border-radius:50%}
+  .winner-tag{display:inline-block;background:var(--accent);color:var(--accent-ink);
+    font-size:12px;font-weight:800;border-radius:7px;padding:3px 11px;margin-bottom:10px}
+  .winner h2{margin:0 0 4px;font-size:clamp(20px,3.4vw,28px)}
+  .winner h2::before{display:none}
+  .winner .he{color:var(--muted);font-size:14px;direction:rtl;margin:0 0 14px}
+  .winner ul{margin:0;padding-inline-start:20px}
+  .winner li{margin-bottom:7px}
+  .winner-grid{display:grid;gap:18px;grid-template-columns:1fr;position:relative;z-index:1}
+  @media(min-width:720px){.winner-grid{grid-template-columns:1fr 210px;align-items:start}}
+  .winner-score{background:var(--accent-soft);border-radius:12px;padding:16px;text-align:center}
+  .winner-score .big{font-size:44px;font-weight:800;color:var(--accent);line-height:1}
+  .winner-score .lbl{font-size:12.5px;color:var(--muted);margin-top:4px}
+  .winner-score dl{margin:14px 0 0;font-size:13px;text-align:start}
+  .winner-score dl div{display:flex;justify-content:space-between;gap:8px;
+    padding:3px 0;border-bottom:1px dashed var(--line)}
+  .winner-score dl div:last-child{border-bottom:0}
+  .winner-score dt{color:var(--muted)}
+  .winner-score dd{margin:0;font-weight:700}
+
+  /* table */
+  .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:var(--radius);
+    background:var(--card);box-shadow:var(--shadow);-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;min-width:860px;font-size:13.5px}
+  th,td{padding:11px 13px;text-align:start;border-bottom:1px solid var(--line-soft);vertical-align:top}
+  thead th{background:var(--bg);font-size:12.5px;color:var(--muted);font-weight:700;
+    position:sticky;top:0;z-index:2;cursor:pointer;user-select:none;white-space:nowrap;
+    border-bottom:1px solid var(--line)}
+  thead th:hover{color:var(--accent)}
+  thead th::after{content:"⇅";font-size:10px;opacity:.4;margin-inline-start:5px}
+  thead th.asc::after{content:"↑";opacity:1;color:var(--accent)}
+  thead th.desc::after{content:"↓";opacity:1;color:var(--accent)}
+  tbody tr:hover{background:var(--bg)}
+  tbody tr.is-winner{background:var(--accent-soft)}
+  tbody tr:last-child td{border-bottom:0}
+  td.name{font-weight:700;min-width:180px}
+  td.name small{display:block;font-weight:400;color:var(--muted);font-size:12px}
+  .score-pill{display:inline-block;font-weight:800;border-radius:8px;padding:2px 10px;
+    font-variant-numeric:tabular-nums;direction:ltr}
+  .s-hi{background:var(--good-soft);color:var(--good)}
+  .s-mid{background:var(--warn-soft);color:var(--warn)}
+  .s-lo{background:var(--bad-soft);color:var(--bad)}
+  .trend-up{color:var(--good);font-weight:700}
+  .trend-flat{color:var(--muted);font-weight:700}
+  .trend-down{color:var(--bad);font-weight:700}
+
+  /* product cards */
+  .cards{display:grid;gap:18px;grid-template-columns:1fr}
+  @media(min-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+  .pcard{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+  .pcard.is-winner{border-color:var(--accent);border-width:2px}
+  .pcard-img{background:var(--bg);border-bottom:1px solid var(--line);
+    height:170px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .pcard-img img{width:100%;height:100%;object-fit:contain;padding:12px}
+  .pcard-img .ph{color:var(--faint);font-size:13px;text-align:center;padding:16px}
+  .icon-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;height:100%;padding:14px}
+  .icon-wrap svg{width:96px;height:96px;flex:none}
+  .icon-wrap .cap{font-size:11px;color:var(--faint)}
+  .pcard-body{padding:18px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .pcard-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+  .pcard-head h3{margin:0;font-size:17.5px}
+  .pcard-head .he{display:block;color:var(--muted);font-size:12.5px;font-weight:400;margin-top:2px}
+  .rank{font-size:11.5px;color:var(--faint);font-weight:700}
+  .problem{margin:0;background:var(--bg);border-inline-start:3px solid var(--accent);
+    border-radius:0 9px 9px 0;padding:9px 12px;font-size:13.5px}
+  .kv{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 12px;font-size:13.5px}
+  .kv dt{color:var(--muted);white-space:nowrap}
+  .kv dd{margin:0}
+  .money{font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums}
+  .bars{display:grid;gap:6px;font-size:12px}
+  .bar{display:grid;grid-template-columns:78px 1fr 30px;gap:8px;align-items:center}
+  .bar span:first-child{color:var(--muted)}
+  .bar i{display:block;height:7px;background:var(--line);border-radius:99px;overflow:hidden}
+  .bar i b{display:block;height:100%;background:var(--accent);border-radius:99px}
+  .bar span:last-child{font-weight:700;font-variant-numeric:tabular-nums;direction:ltr;text-align:start}
+  .two{display:grid;gap:12px;grid-template-columns:1fr}
+  @media(min-width:520px){.two{grid-template-columns:1fr 1fr}}
+  .box{border-radius:10px;padding:10px 12px;font-size:13px}
+  .box h4{margin:0 0 6px;font-size:12.5px;letter-spacing:.03em}
+  .box ul{margin:0;padding-inline-start:17px}
+  .box li{margin-bottom:4px}
+  .box.good{background:var(--good-soft)} .box.good h4{color:var(--good)}
+  .box.risk{background:var(--bad-soft)} .box.risk h4{color:var(--bad)}
+  .angle{background:var(--gold-soft);border-radius:10px;padding:10px 12px;font-size:13.5px}
+  .angle h4{margin:0 0 5px;font-size:12.5px;color:var(--gold)}
+  .links{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:4px}
+  .links a{font-size:12px;text-decoration:none;border:1px solid var(--line);
+    border-radius:8px;padding:4px 10px;color:var(--muted);background:var(--bg);
+    max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .links a:hover{border-color:var(--accent);color:var(--accent)}
+  .links a::before{content:attr(data-kind);font-weight:800;color:var(--accent);
+    margin-inline-end:5px}
+
+  /* prev comparison */
+  .prev{display:grid;gap:10px;grid-template-columns:1fr}
+  @media(min-width:700px){.prev{grid-template-columns:repeat(2,1fr)}}
+  .prow{background:var(--card);border:1px solid var(--line);border-radius:11px;
+    padding:12px 14px;font-size:13.5px}
+  .prow b{display:block;margin-bottom:2px}
+  .status{font-size:11px;font-weight:800;border-radius:6px;padding:1px 8px;
+    margin-inline-start:6px;vertical-align:middle}
+  .st-new{background:var(--good-soft);color:var(--good)}
+  .st-kept{background:var(--accent-soft);color:var(--accent)}
+  .st-out{background:var(--bad-soft);color:var(--bad)}
+  .prow small{color:var(--muted);display:block;margin-top:3px}
+
+  .plain{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+    padding:18px 20px;box-shadow:var(--shadow)}
+  .plain ul{margin:0;padding-inline-start:20px}
+  .plain li{margin-bottom:6px;font-size:14px}
+  footer{margin-top:44px;text-align:center;color:var(--faint);font-size:12.5px;
+    border-top:1px solid var(--line);padding-top:18px}
+  footer a{color:var(--muted)}
+  @media print{
+    body{background:#fff} .nav,.notice{display:none}
+    .pcard,.winner,header,.tablewrap{box-shadow:none;break-inside:avoid}
+    .cards{grid-template-columns:1fr 1fr}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<script type="application/json" id="report-data">
+{
+ "month": "2026-08",
+ "month_label": "أغسطس 2026",
+ "generated": "2026-08-29",
+ "prev_month": null,
+ "winner": "طوق شدّ الرقبة القابل للنفخ",
+ "winner_slug": "inflatable-cervical-traction-collar",
+ "winner_why": [
+  "أقل منافسة إسرائيلية بين الخمسة: لا فئة له في زاب، والبائعون متاجر DTC صغيرة فقط — بينما دعامات الركبة وأحزمة الظهر تواجه 409 منتجاً منافساً في زاب وحده.",
+  "أعلى هامش محسوب (~37% بعد الشحن والرسوم وتكلفة الإعلان) مقابل 19% لحزام تصحيح الوضعية.",
+  "الطلب مُثبت لا مُفترض: منتج فيروسي على TikTok بمحتوى «قبل/بعد» جاهز، وله قائمة Best Sellers مستقلة على أمازون.",
+  "أقل مخاطرة تشغيلية: خفيف، لا يُكسر، بلا مقاسات ولا ألوان — يعني مخزوناً بسيطاً ومرتجعات أقل من أي منتج آخر في القائمة.",
+  "قيمة القطعة أقل بكثير من حد الإعفاء من المَع\"م ($75) فلا ضريبة استيراد على الطلبات الفردية."
+ ],
+ "winner_test": "اطلب 3 عيّنات من موردين مختلفين واختبر تسريب الهواء قبل أي شيء. ثم صوّر فيديو UGC عمودي واحد بالعبرية (30 ثانية، قبل/بعد) وشغّله على TikTok وReels بميزانية 700–1,000 ₪ على 7 أيام باستهداف إسرائيل 25–55. معيار النجاح: تكلفة اكتساب أقل من 80 ₪ عند سعر بيع 189 ₪. إن تجاوزت 110 ₪ أوقف واختبر زاوية إعلانية أخرى قبل ما تلغي المنتج.",
+ "products": [
+  {
+   "slug": "inflatable-cervical-traction-collar",
+   "name": "طوق شدّ الرقبة القابل للنفخ",
+   "name_he": "מתקן מתיחת צוואר מתנפח",
+   "score": 7.8,
+   "scores": {
+    "demand": 8,
+    "competition": 7,
+    "margin": 8,
+    "ease": 8
+   },
+   "image": "",
+   "icon": "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"32\" cy=\"14\" r=\"7\"/><path d=\"M25 21c0 4-3 5-3 5h20s-3-1-3-5\"/><rect x=\"16\" y=\"26\" width=\"32\" height=\"18\" rx=\"6\"/><path d=\"M16 31h32M16 39h32\"/><path d=\"M22 50l4 6M42 50l-4 6\"/></svg>",
+   "problem": "آلام وتيبّس الرقبة الناتجة عن الجلوس الطويل أمام الشاشة و«رقبة الموبايل» — بديل منزلي عن جلسة كايروبراكتيك تكلّف مئات الشواكل.",
+   "trend": "منتج فيروسي على TikTok بمحتوى قبل/بعد، ومئات آلاف المراجعات على Amazon؛ فئة Traction Equipment لها قائمة Best Sellers مستقلة.",
+   "trend_level": "صاعد",
+   "competition_short": "3–5 متاجر DTC فقط",
+   "competition": "المنافسة أقل بكثير من باقي الفئة: لا توجد فئة مستقلة له في زاب، والبائعون في إسرائيل متاجر DTC صغيرة (ShopCheap، Kenlyx، QuickRelief). الصيدليات الكبيرة لا تبيعه — أي أن المقارنة السعرية على المتصفّح صعبة، وهذا يحمي الهامش.",
+   "supplier_cost": "$4 – $7",
+   "sell_ils": "189 ₪",
+   "margin_ils": "≈ 70 ₪",
+   "margin_pct": "≈ 37%",
+   "shipping": "خفيف (~250 غم) ومطاطي غير قابل للكسر — يُشحن جواً بلا مشاكل، ~10–15 ₪ للقطعة. قيمة الشحنة الفردية أقل بكثير من حد الإعفاء ($75) فلا مَعْ\"م عند الاستيراد الشخصي.",
+   "audience": "25–55، موظفو هايتك ومكاتب في تل أبيب/هرتسليا/رعنانا، سائقون، طلاب — الرجال والنساء بالتساوي.",
+   "angle": "فيديو UGC عمودي: شخص أمام لابتوب يفرك رقبته → يلبس الطوق وينفخه → تعبير ارتياح، مع نص عبري «במקום 350₪ לכירופרקט». الزاوية: قبل/بعد + شهادة مستخدم. المنصة الأولى: TikTok/Reels، وإعادة استهداف على Meta.",
+   "strengths": [
+    "أعلى هامش بين الخمسة، وأقل تشبّع في السوق الإسرائيلي",
+    "دليل فيروسي جاهز — لا تحتاج تصنع الطلب من الصفر",
+    "خفيف ورخيص الشحن ولا يُكسر في الطريق",
+    "لا مقاسات ولا ألوان — مخزون بسيط ومرتجعات أقل"
+   ],
+   "risks": [
+    "خطر تنظيمي: أي ادعاء علاجي صريح قد يُصنّفه كجهاز طبي (רישום אמ\"ר) — سوّقه كمنتج راحة لا كعلاج",
+    "Meta تقيّد إعلانات الصحة وادعاءات «قبل/بعد» على الجسم — احتمال رفض إعلانات وارتفاع CPA",
+    "جودة متفاوتة بين الموردين (تسريب هواء) — اطلب عيّنة قبل أي كمية",
+    "مرتجعات محتملة من مستخدمين يتوقعون علاجاً فورياً"
+   ],
+   "sources": [
+    {
+     "kind": "منافس",
+     "label": "ShopCheap — طوق شد رقبة منفوخ (إسرائيل)",
+     "url": "https://shopcheap.co.il/product/cervical-neck-traction-devicerelief-for-chronic-neck-shoulder-alignment-paininflatable-neck-stretcher-collar-for-home-relief/"
+    },
+    {
+     "kind": "منافس",
+     "label": "Kenlyx Israel — Neck Relaxer",
+     "url": "https://kenlyx.com/products/neck-relaxer"
+    },
+    {
+     "kind": "منافس",
+     "label": "Kalteva — أجهزة شدّ الرقبة (تجهيزات علاج طبيعي)",
+     "url": "https://www.kalteva.co.il/traction-set"
+    },
+    {
+     "kind": "ترند",
+     "label": "TikTok — Cervical Traction Device Before & After",
+     "url": "https://www.tiktok.com/discover/cervical-traction-device-before-and-after"
+    },
+    {
+     "kind": "ترند",
+     "label": "Amazon Best Sellers — Traction Equipment",
+     "url": "https://www.amazon.com/Best-Sellers-Traction-Equipment/zgbs/hpc/3776611"
+    },
+    {
+     "kind": "مورّد",
+     "label": "AliExpress — بحث cervical traction collar",
+     "url": "https://www.aliexpress.com/w/wholesale-cervical-neck-traction-device.html"
+    }
+   ],
+   "estimated_fields": [
+    "supplier_cost",
+    "sell_ils",
+    "margin_ils",
+    "margin_pct"
+   ]
+  },
+  {
+   "slug": "silicone-heel-arch-insoles",
+   "name": "مدرسات سيليكون/جل للدوربن ودعم القوس (طقم زوجين)",
+   "name_he": "מדרסי סיליקון לדורבן ותמיכת קשת",
+   "score": 7.5,
+   "scores": {
+    "demand": 9,
+    "competition": 6,
+    "margin": 6,
+    "ease": 9
+   },
+   "image": "",
+   "icon": "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 46c-3-8-2-16 1-22 3-6 9-9 14-7 4 2 5 7 4 12-1 6-1 10 1 14 2 5-1 9-7 9-6 0-11-2-13-6z\"/><circle cx=\"41\" cy=\"15\" r=\"3\"/><circle cx=\"47\" cy=\"20\" r=\"2.6\"/><circle cx=\"50\" cy=\"27\" r=\"2.2\"/><path d=\"M18 50h26\" stroke-dasharray=\"3 4\"/></svg>",
+   "problem": "ألم الكعب (דורבן / التهاب اللفافة الأخمصية) — البديل المحلي هو مدرسات مفصّلة تكلّف 800–3,500 ₪ وتحتاج فحصاً في عيادة.",
+   "trend": "طلب ثابت ومرتفع طوال السنة لا موسمي؛ فئة Shoe Insoles و Plantar Fasciitis Braces لهما قائمتا Best Sellers مستقلتان على أمازون، والشريحة السعرية الأقوى $10–$20 تستوعب 38% من المعروض.",
+   "trend_level": "ثابت مرتفع",
+   "competition_short": "عالية — صيدليات + زاب",
+   "competition": "منافسة عالية في الطرف الرخيص: FEET LTD يبيع أكعاب سيليكون بـ 99 ₪، وفارما بلس وأريئيل أورثوبيديك وطبعلي كلهم في نفس الفئة، وزاب فيه فئة מדרסים كاملة. الفجوة الحقيقية ليست في السعر بل في المنتصف: بين 99 ₪ الرخيص و800 ₪ المفصّل لا يوجد تقريباً أحد.",
+   "supplier_cost": "$3 – $5 للطقم",
+   "sell_ils": "149 ₪ للطقم",
+   "margin_ils": "≈ 42 ₪",
+   "margin_pct": "≈ 28%",
+   "shipping": "الأخف في القائمة (~60 غم للزوج) — 5–8 ₪ للقطعة جواً، مسطّح ولا يُكسر. أرخص منتج شحناً بين الخمسة.",
+   "audience": "35–65، من يقفون طويلاً: ممرضون، معلّمون، طبّاخون، عمّال بناء، بائعو تجزئة + عدّاؤون هواة. تركيز جغرافي واسع خارج المركز.",
+   "angle": "زاوية «الفارق السعري» لا زاوية الألم: إعلان يقارن 800 ₪ لمدرس مفصّل مقابل 149 ₪، مع فيديو ضغط الإبهام على الكعب. الأقوى: شهادة ممرضة/معلّمة حقيقية بالعبرية. المنصة: Facebook (الجمهور 40+ أنشط هناك منه في TikTok).",
+   "strengths": [
+    "طلب ضخم ومستمر — مشكلة مزمنة لا موضة",
+    "أرخص منتج شحناً وأبسطه تخزيناً",
+    "فجوة سعرية حقيقية موثّقة بين 99 ₪ و800 ₪",
+    "معدل مرتجعات منخفض لأن السعر منخفض والتوقعات محدودة"
+   ],
+   "risks": [
+    "قيمة الطلب الواحدة منخفضة — تكلفة الإعلان تأكل الهامش ما لم تبع طقماً أو باقة",
+    "منافسة سعرية شرسة من الصيدليات وعلي إكسبرس المباشر إلى إسرائيل",
+    "المقاسات (S/M/L) تعقّد المخزون وترفع المرتجعات إن أخطأت في جدول المقاسات",
+    "سلعة نمطية — لا تمايز إلا بالعلامة والمحتوى"
+   ],
+   "sources": [
+    {
+     "kind": "منافس",
+     "label": "FEET LTD — أكعاب سيليكون للدوربن 99 ₪",
+     "url": "https://www.feet.co.il/products/%D7%A2%D7%A7%D7%91%D7%99-%D7%A1%D7%99%D7%9C%D7%99%D7%A7%D7%95%D7%9F-%D7%9C%D7%93%D7%95%D7%A8%D7%91%D7%9F-%D7%9C%D7%A0%D7%A2%D7%9C%D7%99%D7%99%D7%9D-%D7%90%D7%9C%D7%92%D7%A0%D7%98%D7%99%D7%95%D7%AA"
+    },
+    {
+     "kind": "منافس",
+     "label": "Zap — فئة מדרסים (مقارنة أسعار)",
+     "url": "https://www.zap.co.il/models.aspx?sog=s-footsupport"
+    },
+    {
+     "kind": "منافس",
+     "label": "Ygal — أسعار المدرسات المفصّلة 800–3,500 ₪",
+     "url": "https://www.ygal.co.il/%D7%9E%D7%97%D7%99%D7%A8%D7%99-%D7%9E%D7%93%D7%A8%D7%A1%D7%99%D7%9D-%D7%91%D7%94%D7%AA%D7%90%D7%9E%D7%94-%D7%90%D7%99%D7%A9%D7%99%D7%AA/"
+    },
+    {
+     "kind": "منافس",
+     "label": "Pharma Plus — مدرسات سيليكون للدوربن",
+     "url": "https://pharmaplus.co.il/orthopedics/orthopedics-feet/%D7%9B%D7%A3-%D7%94%D7%A8%D7%92%D7%9C-%D7%95%D7%94%D7%90%D7%A6%D7%91%D7%A2%D7%95%D7%AA/%D7%A2%D7%A7%D7%91-%D7%A1%D7%99%D7%9C%D7%99%D7%A7%D7%95%D7%9F/%D7%9E%D7%93%D7%A8%D7%A1%D7%99-%D7%A1%D7%99%D7%9C%D7%99%D7%A7%D7%95%D7%9F-%D7%9C%D7%93%D7%95%D7%A8%D7%91%D7%9F"
+    },
+    {
+     "kind": "ترند",
+     "label": "Amazon Best Sellers — Shoe Insoles",
+     "url": "https://www.amazon.com/Best-Sellers-Shoe-Insoles/zgbs/hpc/3780121"
+    },
+    {
+     "kind": "ترند",
+     "label": "ASINsight — الشريحة السعرية $10–20 تستوعب 38% من الفئة",
+     "url": "https://www.asinsight.com/report/US/planters-fasciitis-insoles"
+    }
+   ],
+   "estimated_fields": [
+    "supplier_cost",
+    "margin_ils",
+    "margin_pct"
+   ]
+  },
+  {
+   "slug": "knee-compression-brace",
+   "name": "تومك ركبة ضاغط بدعامات جانبية",
+   "name_he": "תומך ברך עם חיזוקים צדדיים",
+   "score": 7.0,
+   "scores": {
+    "demand": 8,
+    "competition": 5,
+    "margin": 6,
+    "ease": 9
+   },
+   "image": "",
+   "icon": "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M26 8v14c0 4-4 6-4 12s4 8 4 12v10\"/><path d=\"M40 8v14c0 4 4 6 4 12s-4 8-4 12v10\"/><rect x=\"18\" y=\"24\" width=\"28\" height=\"18\" rx=\"8\"/><path d=\"M18 30h28M18 36h28\"/></svg>",
+   "problem": "ألم وعدم استقرار الركبة عند المشي والرياضة وبعد الإصابات — دعم فوري بدون وصفة.",
+   "trend": "دعامات الركبة تستحوذ على ~35% من سوق دعامات OTC وهي الفئة الأسرع نمواً داخله، بفضل الدعم الجانبي وتقليل دوران الركبة.",
+   "trend_level": "صاعد",
+   "competition_short": "مرتفعة — 409 منتج في زاب",
+   "competition": "الأعلى تشبّعاً بين الخمسة: زاب يعرض 409 منتجاً في فئة ציוד אורטופדי وحدها، بأسعار من 95 ₪ إلى 908 ₪، ومتاجر راسخة مثل TevaGil وIvo وNZT بأكثر من 90 صنفاً لكل واحد. التمايز الوحيد الممكن: زاوية رياضية (كرة قدم/جري) بدل الزاوية الطبية.",
+   "supplier_cost": "$3 – $6 للزوج",
+   "sell_ils": "159 ₪ للزوج",
+   "margin_ils": "≈ 48 ₪",
+   "margin_pct": "≈ 30%",
+   "shipping": "~150 غم للزوج، نسيج مضغوط — 7–12 ₪ جواً، لا مشاكل جمركية.",
+   "audience": "شريحتان مختلفتان تماماً: 45–70 (خشونة مفاصل، مشي يومي) و20–40 (لاعبو كرة قدم هواة، صالات رياضية، جري). لا تخلطهما في نفس الإعلان.",
+   "angle": "استهدف الشريحة الرياضية أولاً — منافسة أقل وCPA أرخص من الشريحة الطبية: فيديو لاعب يركض ويوقف فجأة، ونص «תומך ברך שלא זז באמצע משחק». تجنّب كلمة «طبي».",
+   "strengths": [
+    "الفئة الأسرع نمواً داخل سوق الدعامات المتاحة بلا وصفة",
+    "شحن رخيص وتنفيذ بسيط جداً",
+    "يمكن بيعه بالزوج فيرتفع متوسط الطلب تلقائياً"
+   ],
+   "risks": [
+    "أعلى تشبّع بين الخمسة — 409 منتجاً منافساً في زاب وحده وحرب أسعار من 95 ₪",
+    "المقاسات إلزامية (S–XXL) وتزيد المرتجعات والمخزون العالق",
+    "العملاء يقارنون في زاب قبل الشراء، فالبيع بسعر أعلى يحتاج علامة أو عرضاً مميزاً"
+   ],
+   "sources": [
+    {
+     "kind": "منافس",
+     "label": "Zap — ציוד אורטופדי (409 منتجاً، 95–908 ₪)",
+     "url": "https://www.zap.co.il/models.aspx?sog=b-orthoped&db405609=1330914"
+    },
+    {
+     "kind": "منافس",
+     "label": "Azarim — دعامات ركبة وأحزمة ظهر",
+     "url": "https://azarim.org.il/en/product-category/medical-accessories/orthopaedic-aids/"
+    },
+    {
+     "kind": "منافس",
+     "label": "Medic Center Sport — دعامات أورثوبيدية",
+     "url": "https://www.medic-center-sport.co.il/"
+    },
+    {
+     "kind": "ترند",
+     "label": "Accio — دعامات الركبة 35% من سوق الدعامات",
+     "url": "https://www.accio.com/business/trend_medical_back_brace"
+    },
+    {
+     "kind": "مورّد",
+     "label": "AliExpress — knee brace compression sleeve",
+     "url": "https://www.aliexpress.com/w/wholesale-knee-brace-compression-sleeve.html"
+    }
+   ],
+   "estimated_fields": [
+    "supplier_cost",
+    "sell_ils",
+    "margin_ils",
+    "margin_pct"
+   ]
+  },
+  {
+   "slug": "lumbar-support-cushion-set",
+   "name": "طقم وسادة دعم أسفل الظهر + الرقبة (Memory Foam)",
+   "name_he": "סט כרית תמיכה לגב תחתון וצוואר",
+   "score": 6.5,
+   "scores": {
+    "demand": 8,
+    "competition": 6,
+    "margin": 6,
+    "ease": 6
+   },
+   "image": "",
+   "icon": "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><path d=\"M20 12h24a4 4 0 014 4v18a4 4 0 01-4 4H20a4 4 0 01-4-4V16a4 4 0 014-4z\"/><path d=\"M32 38v10M22 56l10-8 10 8\"/><path d=\"M24 20h16M24 27h16\"/></svg>",
+   "problem": "ألم أسفل الظهر والرقبة من الجلوس 8–10 ساعات على كرسي مكتب أو في السيارة — يصلح وضعية الجلوس بدون تغيير الكرسي.",
+   "trend": "طلب ثابت مدفوع ببنية سوق العمل الإسرائيلي (نسبة عالية من موظفي المكاتب والهايتك) واتساع العمل الهجين؛ الفئة موجودة في متاجر إسرائيلية متخصصة مثل ד״ר גב وספינאלי.",
+   "trend_level": "ثابت",
+   "competition_short": "متوسطة — 175 ₪ للطقم",
+   "competition": "متوسطة ومتمركزة: Dominator يبيع طقم وسادتي رقبة وظهر بـ 175 ₪، وד״ר גב وספינאלי وאורטופדלי يغطون الفئة الأعلى سعراً بعلامات تجارية معروفة. الفرصة في الشريحة 150–250 ₪ بتصميم أنيق يناسب مكتب هايتك.",
+   "supplier_cost": "$6 – $10 للطقم",
+   "sell_ils": "199 ₪ للطقم",
+   "margin_ils": "≈ 57 ₪",
+   "margin_pct": "≈ 29%",
+   "shipping": "أضعف نقطة: حجم كبير رغم الوزن الخفيف — الشحن الجوي يُحتسب بالوزن الحجمي، 25–40 ₪ للقطعة حتى مع ضغط مفرّغ. يستحق التفكير في شحن بحري وتخزين محلي إذا تجاوزت 100 قطعة/شهر.",
+   "audience": "28–50، موظفو مكاتب وهايتك وسائقون مهنيون؛ زاوية إضافية قوية: الشراء كهدية للموظفين من قِبل الشركات (B2B).",
+   "angle": "إعلان «قبل/بعد» للظهر على الكرسي وليس للمنتج نفسه: لقطة جانبية لظهر منحنٍ ثم مستقيم. زاوية موازية عالية القيمة: باقة هدايا للموظفين بالجملة للشركات — تلغي تكلفة الإعلان كلياً.",
+   "strengths": [
+    "متوسط طلب مرتفع (199 ₪) يمتص تكلفة الإعلان أفضل من باقي المنتجات",
+    "جمهور مركّز وسهل الاستهداف جغرافياً ومهنياً",
+    "قناة B2B (هدايا موظفين) بهامش أعلى وبدون منافسة سعرية"
+   ],
+   "risks": [
+    "الحجم يرفع تكلفة الشحن الجوي كثيراً ويقضم الهامش",
+    "منافسة من علامات إسرائيلية راسخة (ד״ר גב) لها ثقة سوقية",
+    "المنتج غير عاطفي — الفيديو الإعلاني أصعب من منتج فيه ألم فوري ظاهر"
+   ],
+   "sources": [
+    {
+     "kind": "منافس",
+     "label": "Dominator — طقم وسادتين أورثوبيديتين 175 ₪",
+     "url": "https://www.dominator.co.il/product/%D7%9B%D7%A8%D7%99%D7%95%D7%AA-%D7%96%D7%99%D7%9B%D7%A8%D7%95%D7%9F-%D7%9C%D7%A6%D7%95%D7%95%D7%90%D7%A8-%D7%95%D7%9C%D7%92%D7%91-%D7%AA%D7%97%D7%AA%D7%95%D7%9F"
+    },
+    {
+     "kind": "منافس",
+     "label": "ד״ר גב — وسائد أورثوبيدية",
+     "url": "https://www.dr-gav.co.il/sleep/sleeping-pillows"
+    },
+    {
+     "kind": "منافس",
+     "label": "Spinaly — وسائد جلوس أرغونومية",
+     "url": "https://www.spinaly.co.il/"
+    },
+    {
+     "kind": "منافس",
+     "label": "Orthopedly — وسائد أورثوبيدية للرقبة والظهر",
+     "url": "https://www.orthopedly.co.il/%D7%9B%D7%A8%D7%99%D7%95%D7%AA-%D7%90%D7%95%D7%A8%D7%98%D7%95%D7%A4%D7%93%D7%99%D7%95%D7%AA/"
+    },
+    {
+     "kind": "شحن",
+     "label": "DTFU — أسعار الشحن من الصين إلى إسرائيل 2026",
+     "url": "https://www.dtfulogistics.com/news/shipping-cost-from-china-to-israel/"
+    }
+   ],
+   "estimated_fields": [
+    "supplier_cost",
+    "sell_ils",
+    "margin_ils",
+    "margin_pct"
+   ]
+  },
+  {
+   "slug": "posture-corrector-belt",
+   "name": "حزام تصحيح الوضعية (Posture Corrector)",
+   "name_he": "מתקן יציבה / חגורת יציבה",
+   "score": 6.3,
+   "scores": {
+    "demand": 9,
+    "competition": 4,
+    "margin": 5,
+    "ease": 7
+   },
+   "image": "",
+   "icon": "<svg viewBox=\"0 0 64 64\" fill=\"none\" stroke=\"var(--accent)\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\" xmlns=\"http://www.w3.org/2000/svg\"><circle cx=\"32\" cy=\"13\" r=\"6\"/><path d=\"M32 19v22\"/><path d=\"M20 26h24\"/><path d=\"M32 41l-7 15M32 41l7 15\"/><path d=\"M22 24c4 6 16 6 20 0\" stroke-dasharray=\"3 3\"/></svg>",
+   "problem": "انحناء الأكتاف للأمام وألم أعلى الظهر من الجلوس أمام الشاشة — يشدّ الكتفين للخلف ويدرّب الوضعية.",
+   "trend": "أعلى طلب بحثي بين الخمسة: «Back Support Brace» بلغت ذروة 100 على مؤشر الاهتمام في أغسطس 2025، و«Adjustable Posture Corrector» في صعود مستمر منذ نوفمبر 2024. سوق تصحيح الوضعية مقدّر بـ1.4 مليار دولار في 2026 بنمو سنوي 8.4%.",
+   "trend_level": "صاعد",
+   "competition_short": "مشبّع عالمياً ومحلياً",
+   "competition": "الأكثر تشبّعاً على مستوى الدروبشيبينغ العالمي — يظهر في كل قوائم «أفضل منتجات 2026» وعلى كل منصات الدروبشيبينغ (Doba وغيرها)، وفي إسرائيل يتنافس مع أحزمة الظهر في زاب ابتداءً من 99 ₪. البيع هنا يعني الدخول في مزاد إعلاني مع آلاف المعلنين على نفس الجمهور.",
+   "supplier_cost": "$2.5 – $5",
+   "sell_ils": "139 ₪",
+   "margin_ils": "≈ 27 ₪",
+   "margin_pct": "≈ 19%",
+   "shipping": "~180 غم، نسيج وأشرطة — 7–12 ₪ جواً. الشحن ليس المشكلة، تكلفة الإعلان هي المشكلة.",
+   "audience": "20–45، موظفو مكاتب وطلاب ومراهقون (شراء الأهل)، ميل أعلى للنساء حسب بيانات البحث («Posture Corrector for Women» في صعود).",
+   "angle": "إن دخلته، لا تنافس على «تصحيح الوضعية» بل على مظهر الملابس: «חולצה נופלת אחרת כשהכתפיים אחורה» — زاوية جمالية بدل الطبية، تخرجك من مزاد الإعلانات الصحية المزدحم ومن قيود Meta.",
+   "strengths": [
+    "أعلى حجم طلب بحثي بين الخمسة وسوق نامٍ 8.4% سنوياً",
+    "أرخص سعر مورّد — يسمح بتجربة سريعة برأس مال صغير",
+    "زاوية «قبل/بعد» بصرية وسهلة الإنتاج"
+   ],
+   "risks": [
+    "أدنى هامش في القائمة (~19%) — أي ارتفاع في CPA يحوّله لخسارة",
+    "تشبّع عالمي ومحلي: منافسة إعلانية مع آلاف المعلنين ترفع CPA فوق المتوسط",
+    "Meta تقيّد إعلانات «قبل/بعد» على الجسم — نسبة رفض إعلانات مرتفعة",
+    "معدل مرتجعات مرتفع نسبياً: كثيرون يجدونه غير مريح للارتداء الطويل"
+   ],
+   "sources": [
+    {
+     "kind": "منافس",
+     "label": "Zap — חגורות גב من 99 ₪",
+     "url": "https://www.zap.co.il/models.aspx?sog=b-orthoped&db405609=1330914&db751930=751955"
+    },
+    {
+     "kind": "منافس",
+     "label": "מדי פארם — أحزمة ظهر أورثوبيدية",
+     "url": "https://medi-pharm.co.il/%D7%97%D7%92%D7%95%D7%A8%D7%AA-%D7%92%D7%91-%D7%90%D7%95%D7%A8%D7%98%D7%95%D7%A4%D7%93%D7%99%D7%94"
+    },
+    {
+     "kind": "ترند",
+     "label": "Accio — ذروة 100 لـ Back Support Brace في أغسطس 2025",
+     "url": "https://www.accio.com/business/posture-corrector-google-trends"
+    },
+    {
+     "kind": "ترند",
+     "label": "OpenPR — سوق تصحيح الوضعية 1.4 مليار$ في 2026، نمو 8.4%",
+     "url": "https://www.openpr.com/news/4452032/posture-corrector-market-2026-smart-braces-ergonomics"
+    },
+    {
+     "kind": "مورّد",
+     "label": "Doba — موردو أحزمة تصحيح الوضعية",
+     "url": "https://www.doba.com/dropshipping/back-posture-corrector.html"
+    },
+    {
+     "kind": "ترند",
+     "label": "ProductLair — قوائم أفضل منتجات الدروبشيبينغ 2026",
+     "url": "https://productlair.com/blog/100-best-dropshipping-products-2026"
+    }
+   ],
+   "estimated_fields": [
+    "supplier_cost",
+    "sell_ils",
+    "margin_ils",
+    "margin_pct"
+   ]
+  }
+ ],
+ "prev_comparison": [],
+ "rejected": [
+  {
+   "name": "مسدس التدليك (Massage Gun)",
+   "why": "زاب يعرض 129 موديلاً في الفئة، 11 منها تحت 100 ₪ و39 بين 100–200 ₪ — حرب أسعار محسومة. يضاف لها بطارية ليثيوم تفرض قيوداً على الشحن الجوي، ووزن يتجاوز حد الهامش المقبول."
+  },
+  {
+   "name": "المدرسات المفصّلة بالقياس (Custom Orthotics)",
+   "why": "تحتاج فحصاً سريرياً ومسحاً حاسوبياً في عيادة — نموذج خدمة لا نموذج تجارة إلكترونية، ولا يمكن تنفيذه دروبشيبينغ."
+  },
+  {
+   "name": "أجهزة TENS / EMS الكهربائية",
+   "why": "تمرير تيار كهربائي على الجسم يُدخلها في تعريف الجهاز الطبي ويستوجب تسجيلاً في وزارة الصحة (רישום אמ\"ר) — مخاطرة تنظيمية أكبر من العائد لمشروع في بدايته."
+  },
+  {
+   "name": "الكراسي والمراتب الأورثوبيدية",
+   "why": "الوزن والحجم يجعلان الشحن الجوي مستحيلاً اقتصادياً، والشحن البحري يتطلب رأس مال ومخزوناً محلياً — خارج نطاق الاختبار الشهري السريع."
+  }
+ ],
+ "method": [
+  "بحث بالإنجليزية والعبرية معاً — البحث الإنجليزي وحده لا يعكس المنافسة داخل إسرائيل، فأسماء المنتجات بالعبرية جزء إلزامي من البحث.",
+  "قياس المنافسة المحلية من زاب (zap.co.il) بعدد الموديلات ونطاق الأسعار الفعلي، ومن المتاجر الإسرائيلية المتخصصة مباشرة.",
+  "قياس الترند من قوائم Amazon Best Sellers وتقارير السوق وصفحات TikTok Discover، لا من الانطباع.",
+  "استُبعد كل منتج يتجاوز فيه مجموع (سعر المورّد + الشحن) 40% من سعر البيع الواقعي في إسرائيل، أو يحتاج تسجيلاً كجهاز طبي، أو يحمل بطارية ليثيوم كبيرة.",
+  "التقييم النهائي = متوسط أربعة محاور: الطلب، المنافسة (كلما قلّت زاد التقييم)، الهامش، سهولة التنفيذ."
+ ],
+ "assumptions": [
+  "سعر الصرف المستخدم: 1$ ≈ 3.00 ₪ (سعر أواخر أغسطس 2026 يدور حول 2.99–3.00).",
+  "أسعار الموردين تقديرية بنطاق وليست مقتبسة من صفحة منتج بعينها — أسعار AliExpress متغيّرة يومياً وحسب الكمية. تحقّق منها قبل أي طلب.",
+  "حد الإعفاء من المَع\"م للاستيراد الشخصي إلى إسرائيل: 75$ لقيمة البضاعة (لا يشمل الشحن والتأمين)، ساري من 2 يونيو 2026. فوقه تُطبّق مَع\"م 18%. كل المنتجات الخمسة أقل من هذا الحد للقطعة الواحدة.",
+  "رسوم بوابة الدفع محسوبة عند 3.5% من قيمة الطلب.",
+  "تكلفة اكتساب العميل مُقدّرة بـ 80 ₪ للطلب، مشتقّة من: وسيط CPC في إسرائيل 0.58$ ≈ 1.74 ₪ (بيانات يوليو 2025–يونيو 2026) × ~45 نقرة لكل عملية بيع عند معدل تحويل مفترض 2%. هذا أكثر رقم يستحق التحقق منه عملياً — تغيّره يقلب ترتيب المنتجات.",
+  "الشحن الجوي إلى تل أبيب: 5.00$–8.50$ للكيلو للشحن الجوي القياسي؛ تكاليف القطعة الواحدة مقدّرة على أساسه.",
+  "أرقام الربح لا تخصم تكاليف ثابتة (منصة، دومين، تصميم، وقتك) ولا ضريبة الدخل ولا معدل المرتجعات."
+ ],
+ "extra_sources": [
+  {
+   "kind": "ضرائب",
+   "label": "ICL Global — تحديث حد الإعفاء من المَع\"م للاستيراد الشخصي (75$، 2 يونيو 2026)",
+   "url": "https://www.iclglobal.com/news_update/vat-exemption-threshold-for-personal-imports-to-israel-updated/"
+  },
+  {
+   "kind": "ضرائب",
+   "label": "Ynetnews — إسرائيل ترفع حد الإعفاء من المَع\"م على الطلبات الأجنبية",
+   "url": "https://www.ynetnews.com/business/article/r1iu3almwe"
+  },
+  {
+   "kind": "شحن",
+   "label": "DTFU Logistics — تكلفة الشحن من الصين إلى إسرائيل 2026",
+   "url": "https://www.dtfulogistics.com/news/shipping-cost-from-china-to-israel/"
+  },
+  {
+   "kind": "شحن",
+   "label": "FreightAmigo — الرسوم الجمركية والضرائب على الشحن إلى إسرائيل",
+   "url": "https://www.freightamigo.com/en/blog/logistics/understanding-import-taxes-and-duties-a-comprehensive-guide-for-shipping-to-israel/"
+  },
+  {
+   "kind": "إعلانات",
+   "label": "SuperAds — وسيط CPC لإعلانات فيسبوك في إسرائيل",
+   "url": "https://www.superads.ai/facebook-ads-costs/cpc-cost-per-click/israel"
+  },
+  {
+   "kind": "إعلانات",
+   "label": "Lebesgue — معايير CPM لإعلانات فيسبوك حسب الدولة 2026",
+   "url": "https://lebesgue.io/facebook-ads/facebook-cpm-by-country"
+  },
+  {
+   "kind": "صرف",
+   "label": "Exchange-Rates.org — سجل سعر صرف الدولار/الشيكل 2026",
+   "url": "https://www.exchange-rates.org/exchange-rate-history/usd-ils-2026"
+  },
+  {
+   "kind": "سوق",
+   "label": "Grand View Research — تقرير سوق تصحيح الوضعية",
+   "url": "https://www.grandviewresearch.com/industry-analysis/posture-correction-market-report"
+  }
+ ]
+}
+</script>
+
+<header>
+  <p class="eyebrow">بحث شهري · Israel Orthopedic Product Hunter</p>
+  <h1 id="h-title">تقرير المنتجات الأورثوبيدية — السوق الإسرائيلي</h1>
+  <div class="meta" id="h-meta"></div>
+  <nav class="nav">
+    <a href="#winner">المنتج الفائز</a>
+    <a href="#table">جدول المقارنة</a>
+    <a href="#cards">التحليل المفصّل</a>
+    <a href="#prev">مقارنة بالشهر السابق</a>
+    <a href="#method">المنهجية والمصادر</a>
+    <a href="index.html">كل التقارير</a>
+  </nav>
+  <div class="notice">
+    <b>عن دقة الأرقام:</b> كل رقم يحمل شارة <span class="src">مصدر</span> مأخوذ من رابط منشور في التقرير.
+    كل رقم يحمل شارة <span class="est">تقدير</span> هو حساب تقريبي وليس رقماً موثّقاً — تحقّق منه قبل أي قرار شراء.
+  </div>
+</header>
+
+<section id="winner"></section>
+
+<h2 id="table">جدول مقارنة المنتجات الخمسة</h2>
+<div class="tablewrap">
+  <table id="cmp">
+    <thead><tr>
+      <th data-k="name">المنتج</th>
+      <th data-k="trend_level">الترند</th>
+      <th data-k="competition">المنافسة في إسرائيل</th>
+      <th data-k="supplier_cost">سعر المورّد</th>
+      <th data-k="sell_ils">سعر البيع</th>
+      <th data-k="margin_ils">الربح/قطعة</th>
+      <th data-k="margin_pct">الهامش</th>
+      <th data-k="score">التقييم</th>
+    </tr></thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<h2 id="cards">بطاقات التحليل المفصّل</h2>
+<div class="cards" id="pcards"></div>
+
+<h2 id="prev">مقارنة بالشهر السابق</h2>
+<div id="prevbox"></div>
+
+<h2 id="rejected-h">منتجات فُحصت واستُبعدت</h2>
+<div class="plain" id="rejected"></div>
+
+<h2 id="method">المنهجية والافتراضات</h2>
+<div class="plain" id="methodbox"></div>
+
+<h2 id="allsrc">كل المصادر</h2>
+<div class="plain" id="srcbox"></div>
+
+<footer>
+  <p>أُنشئ آلياً بواسطة skill «Israel Orthopedic Product Hunter» · <a href="index.html">أرشيف كل التقارير</a></p>
+  <p>هذا التقرير بحث تجاري وليس استشارة طبية أو استثمارية.</p>
+</footer>
+</div>
+
+<script>
+(function () {
+  var D = JSON.parse(document.getElementById('report-data').textContent);
+  var esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  };
+  var isEst = function (p, f) {
+    return (p.estimated_fields || []).indexOf(f) > -1
+      ? ' <span class="est">تقدير</span>' : ' <span class="src">مصدر</span>';
+  };
+  var scoreCls = function (v) { return v >= 8 ? 's-hi' : v >= 6.5 ? 's-mid' : 's-lo'; };
+  var trendCls = function (t) {
+    return /صاعد|ارتفاع/.test(t) ? 'trend-up' : /هابط|تراجع/.test(t) ? 'trend-down' : 'trend-flat';
+  };
+  var host = function (u) {
+    try { return new URL(u).hostname.replace(/^www\./, ''); } catch (e) { return u; }
+  };
+
+  document.title = 'تقرير أورثوبيديك ' + D.month + ' — السوق الإسرائيلي';
+  document.getElementById('h-title').textContent =
+    'أفضل 5 منتجات Orthopedic للبيع أونلاين في إسرائيل — ' + D.month_label;
+  document.getElementById('h-meta').innerHTML =
+    '<span class="chip live">' + esc(D.month) + '</span>' +
+    '<span class="chip">تاريخ البحث: <span class="num">' + esc(D.generated) + '</span></span>' +
+    '<span class="chip">' + D.products.length + ' منتجات مُحلّلة</span>' +
+    '<span class="chip">' + (D.prev_month ? 'مقارنة مع ' + esc(D.prev_month) : 'أول تقرير في السلسلة') + '</span>';
+
+  /* winner */
+  var w = D.products.filter(function (p) { return p.slug === D.winner_slug; })[0] || D.products[0];
+  document.getElementById('winner').innerHTML =
+    '<div class="winner"><div class="winner-grid"><div>' +
+      '<span class="winner-tag">أفضل منتج للاختبار هذا الشهر</span>' +
+      '<h2>' + esc(w.name) + '</h2>' +
+      '<p class="he">' + esc(w.name_he) + '</p>' +
+      '<ul>' + (D.winner_why || []).map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' +
+      (D.winner_test ? '<div class="angle" style="margin-top:12px"><h4>أول خطوة اختبار</h4>' +
+        esc(D.winner_test) + '</div>' : '') +
+    '</div><div class="winner-score">' +
+      '<div class="big num">' + esc(Number(w.score).toFixed(1)) + '</div><div class="lbl">من 10</div>' +
+      '<dl>' + Object.keys(w.scores || {}).map(function (k) {
+        var lbl = { demand: 'الطلب', competition: 'المنافسة', margin: 'الهامش', ease: 'سهولة التنفيذ' }[k] || k;
+        return '<div><dt>' + lbl + '</dt><dd class="num">' + esc(w.scores[k]) + '/10</dd></div>';
+      }).join('') + '</dl>' +
+    '</div></div></div>';
+
+  /* table */
+  var tb = document.querySelector('#cmp tbody');
+  var render = function (rows) {
+    tb.innerHTML = rows.map(function (p) {
+      return '<tr' + (p.slug === D.winner_slug ? ' class="is-winner"' : '') + '>' +
+        '<td class="name"><a href="#p-' + esc(p.slug) + '" style="text-decoration:none;color:inherit">' +
+          esc(p.name) + '</a><small>' + esc(p.name_he) + '</small></td>' +
+        '<td class="' + trendCls(p.trend_level) + '">' + esc(p.trend_level) + '</td>' +
+        '<td>' + esc(p.competition_short || p.competition) + '</td>' +
+        '<td class="num">' + esc(p.supplier_cost) + '</td>' +
+        '<td class="money num">' + esc(p.sell_ils) + '</td>' +
+        '<td class="num">' + esc(p.margin_ils) + '</td>' +
+        '<td class="num">' + esc(p.margin_pct) + '</td>' +
+        '<td><span class="score-pill num ' + scoreCls(p.score) + '">' + esc(Number(p.score).toFixed(1)) + '</span></td>' +
+      '</tr>';
+    }).join('');
+  };
+  var sorted = D.products.slice().sort(function (a, b) { return b.score - a.score; });
+  render(sorted);
+
+  var dir = {};
+  Array.prototype.forEach.call(document.querySelectorAll('#cmp thead th'), function (th) {
+    th.addEventListener('click', function () {
+      var k = th.dataset.k;
+      dir[k] = dir[k] === 'asc' ? 'desc' : 'asc';
+      var sign = dir[k] === 'asc' ? 1 : -1;
+      sorted.sort(function (a, b) {
+        var x = a[k], y = b[k];
+        if (typeof x === 'number' && typeof y === 'number') return (x - y) * sign;
+        return String(x).localeCompare(String(y), 'ar') * sign;
+      });
+      Array.prototype.forEach.call(document.querySelectorAll('#cmp thead th'), function (o) {
+        o.classList.remove('asc', 'desc');
+      });
+      th.classList.add(dir[k]);
+      render(sorted);
+    });
+  });
+
+  /* product cards */
+  document.getElementById('pcards').innerHTML = sorted.map(function (p, i) {
+    var img = p.image
+      ? '<img src="' + esc(p.image) + '" alt="' + esc(p.name) + '" loading="lazy" ' +
+        'onerror="this.parentNode.classList.add(\'is-fallback\');' +
+        'this.parentNode.innerHTML=' + JSON.stringify(p.icon || '<span class="ph">لا تتوفر صورة موثوقة المصدر</span>')
+          .replace(/"/g, '&quot;') + '">'
+      : (p.icon
+          ? '<div class="icon-wrap">' + p.icon + '<span class="cap">رسم توضيحي للفئة — لا صورة مورّد</span></div>'
+          : '<span class="ph">لا تتوفر صورة موثوقة المصدر</span>');
+    var bars = Object.keys(p.scores || {}).map(function (k) {
+      var lbl = { demand: 'الطلب', competition: 'المنافسة', margin: 'الهامش', ease: 'سهولة التنفيذ' }[k] || k;
+      return '<div class="bar"><span>' + lbl + '</span><i><b style="width:' +
+        (p.scores[k] * 10) + '%"></b></i><span>' + p.scores[k] + '</span></div>';
+    }).join('');
+    return '<article class="pcard' + (p.slug === D.winner_slug ? ' is-winner' : '') +
+      '" id="p-' + esc(p.slug) + '">' +
+      '<div class="pcard-img">' + img + '</div><div class="pcard-body">' +
+      '<div class="pcard-head"><h3>' + esc(p.name) +
+        '<span class="he">' + esc(p.name_he) + '</span></h3>' +
+        '<div style="text-align:center"><span class="score-pill num ' + scoreCls(p.score) + '">' +
+        esc(Number(p.score).toFixed(1)) + '</span><div class="rank">#' + (i + 1) + '</div></div></div>' +
+      '<p class="problem"><b>يحل مشكلة:</b> ' + esc(p.problem) + '</p>' +
+      '<dl class="kv">' +
+        '<dt>الترند</dt><dd><span class="' + trendCls(p.trend_level) + '">' + esc(p.trend_level) +
+          '</span> — ' + esc(p.trend) + '</dd>' +
+        '<dt>المنافسة</dt><dd>' + esc(p.competition) + '</dd>' +
+        '<dt>سعر المورّد</dt><dd class="num">' + esc(p.supplier_cost) + isEst(p, 'supplier_cost') + '</dd>' +
+        '<dt>سعر البيع المقترح</dt><dd class="money num">' + esc(p.sell_ils) + isEst(p, 'sell_ils') + '</dd>' +
+        '<dt>الربح/قطعة</dt><dd class="num">' + esc(p.margin_ils) + ' (' + esc(p.margin_pct) + ')' +
+          isEst(p, 'margin_ils') + '</dd>' +
+        '<dt>الشحن</dt><dd>' + esc(p.shipping) + '</dd>' +
+        '<dt>الجمهور</dt><dd>' + esc(p.audience) + '</dd>' +
+      '</dl>' +
+      '<div class="bars">' + bars + '</div>' +
+      '<div class="angle"><h4>أفضل زاوية تسويقية</h4>' + esc(p.angle) + '</div>' +
+      '<div class="two">' +
+        '<div class="box good"><h4>نقاط القوة</h4><ul>' +
+          (p.strengths || []).map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') +
+        '</ul></div>' +
+        '<div class="box risk"><h4>المخاطر</h4><ul>' +
+          (p.risks || []).map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') +
+        '</ul></div>' +
+      '</div>' +
+      '<div class="links">' + (p.sources || []).map(function (s) {
+        return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener" data-kind="' +
+          esc(s.kind) + '">' + esc(s.label || host(s.url)) + '</a>';
+      }).join('') + '</div>' +
+      '</div></article>';
+  }).join('');
+
+  /* previous month */
+  var pb = document.getElementById('prevbox');
+  if (!D.prev_comparison || !D.prev_comparison.length) {
+    pb.className = 'plain';
+    pb.innerHTML = '<p style="margin:0">' + (D.prev_month
+      ? 'لم تُسجَّل مقارنة تفصيلية مع ' + esc(D.prev_month) + '.'
+      : 'هذا أول تقرير في السلسلة — لا يوجد شهر سابق للمقارنة. التقرير القادم سيقارن بهذا التقرير آلياً.') +
+      '</p>';
+  } else {
+    pb.className = 'prev';
+    var cls = { 'جديد': 'st-new', 'مُبقى': 'st-kept', 'خرج': 'st-out' };
+    pb.innerHTML = D.prev_comparison.map(function (r) {
+      return '<div class="prow"><b>' + esc(r.name) +
+        '<span class="status ' + (cls[r.status] || 'st-new') + '">' + esc(r.status) + '</span></b>' +
+        '<small>' + esc(r.note) + '</small></div>';
+    }).join('');
+  }
+
+  /* rejected */
+  var rj = document.getElementById('rejected');
+  if (!D.rejected || !D.rejected.length) {
+    document.getElementById('rejected-h').style.display = 'none';
+    rj.style.display = 'none';
+  } else {
+    rj.innerHTML = '<ul>' + D.rejected.map(function (r) {
+      return '<li><b>' + esc(r.name) + '</b> — ' + esc(r.why) + '</li>';
+    }).join('') + '</ul>';
+  }
+
+  /* method */
+  document.getElementById('methodbox').innerHTML =
+    '<h3 style="margin:0 0 8px;font-size:15px">كيف بُني هذا التقرير</h3><ul>' +
+    (D.method || []).map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') +
+    '</ul><h3 style="margin:16px 0 8px;font-size:15px">افتراضات الحساب</h3><ul>' +
+    (D.assumptions || []).map(function (m) { return '<li>' + esc(m) + '</li>'; }).join('') + '</ul>';
+
+  /* all sources */
+  var seen = {}, all = [];
+  D.products.forEach(function (p) {
+    (p.sources || []).forEach(function (s) {
+      if (!seen[s.url]) { seen[s.url] = 1; all.push(s); }
+    });
+  });
+  (D.extra_sources || []).forEach(function (s) {
+    if (!seen[s.url]) { seen[s.url] = 1; all.push(s); }
+  });
+  document.getElementById('srcbox').innerHTML = '<ul>' + all.map(function (s) {
+    return '<li><span class="src">' + esc(s.kind) + '</span> <a href="' + esc(s.url) +
+      '" target="_blank" rel="noopener">' + esc(s.label || host(s.url)) + '</a> — <span dir="ltr" ' +
+      'style="font-size:12px;color:var(--muted)">' + esc(host(s.url)) + '</span></li>';
+  }).join('') + '</ul>';
+})();
+</script>
+</body>
+</html>

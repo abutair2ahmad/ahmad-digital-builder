@@ -1,9 +1,9 @@
-{
+	{
   "brand": "bynexora",
   "display_name": "Nexora",
   "handle": "@bynexora.co",
-  "language": "en",
-  "direction": "ltr",
+  "language": "ar",
+  "direction": "rtl",
   "site": "bynexora.co",
   "voice": "Direct, senior, commercially minded. Speaks to business owners about revenue and friction, not about design trends.",
   "palette": {
