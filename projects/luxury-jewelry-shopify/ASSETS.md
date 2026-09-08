@@ -75,21 +75,44 @@ the piece on roughly a third of the frame — at the exact filenames, ratios and
 long edges in the table, so every layout, crop, `srcset` and art-directed
 mobile swap is exercised against a real subject rather than a blank field.
 
-They are not the photography this manifest specifies. The AI-generated
-photographs were produced to this brief but are delivered from a CDN
-(`*.cloudfront.net`) that the build environment's egress policy denies at the
-proxy (403 on CONNECT), so they cannot be pulled into the repository from here.
-Nothing in the theme needs to change when they arrive.
+They are not the photography this manifest specifies. Replacing them is a
+two-step job, and `tools/photos.json` is the record of exactly where each of
+the 35 slots stands:
 
-To finish the imagery, do any one of these — no Liquid changes either way:
+- **22 slots have a photograph already generated** in the Higgsfield account.
+  `tools/photos.json` holds each one's generation id and CDN URL.
+- **13 slots have never been generated.** They carry a `prompt` written to the
+  art direction above instead — nine "worn" alternates (a hand, an ear, a
+  wrist, a collarbone), the front view of the Marlowe emerald-cut, the
+  solitaire setting macro, and the four journal stills.
 
+### Why the 22 are not in the repository yet
+
+The images are served from `d8j0ntlcm91z4.cloudfront.net`. The egress policy
+on the environment that built this refuses the CONNECT to that host with a
+403, so they cannot be pulled in from there. The allowlist in that session
+permitted GitHub and the package registries only. This is a network-policy
+limit, not a problem with the theme or the images: nothing in the theme needs
+to change when they arrive.
+
+### Finishing the imagery
+
+Any one of these works, with no Liquid changes either way:
+
+- **Run `node tools/fetch-photos.mjs`** from an environment whose egress policy
+  allows the CDN host. It downloads every slot that has a generation, centre
+  crops it to the slot's ratio, resizes to its long edge and writes the JPEG
+  under the exact filename in the table. It downloads before it writes, so a
+  blocked host leaves `theme/assets/` untouched rather than half replaced.
+  Then generate the remaining 13 from their prompts, record each id and url in
+  `tools/photos.json`, and re-run. Finally `tools/package.sh` to rebuild the ZIP.
+  (Run `npm --prefix preview install` once first — the encode step uses
+  Playwright.)
 - **Upload in the Shopify theme editor.** Every slot is an `image_picker`
   setting, and a merchant upload takes precedence over the bundled asset. This
   is the production path and needs no repository access.
-- **Drop JPEGs into `theme/assets/`** using the filenames in the table above,
-  then re-run `tools/package.sh` to rebuild the ZIP.
-- **Allow `*.cloudfront.net`** in the environment's network policy and re-run
-  the fetch, which writes to the same filenames.
+- **Drop JPEGs into `theme/assets/`** by hand using the filenames in the table,
+  then re-run `tools/package.sh`.
 
 `preview/make-media.js` regenerates the illustrations (subjects are drawn by
 `preview/lib/draw.js`); `preview/svg2jpg.mjs` rasterises them to

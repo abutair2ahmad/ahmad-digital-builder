@@ -1,0 +1,287 @@
+{
+  "_comment": "Maps every image slot in ASSETS.md to its Higgsfield source. 'generation' is an image that already exists in the Higgsfield account; 'prompt' is the brief to (re)generate it. tools/fetch-photos.mjs reads this file, downloads each url, crops to ratio, resizes to longEdge and writes theme/assets/<asset>.",
+  "cdnHost": "d8j0ntlcm91z4.cloudfront.net",
+  "model": "text2image_soul_v2",
+  "styleId": "3db34ab5-3439-4317-9e03-08dc30852e69",
+  "slots": [
+    {
+      "asset": "cavelier-hero.jpg",
+      "ratio": [3, 2],
+      "longEdge": 2000,
+      "generation": "fbc06cf1-e9e9-4584-a1d3-232e8ef2fe15",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105418_fbc06cf1-e9e9-4584-a1d3-232e8ef2fe15.png"
+    },
+    {
+      "asset": "cavelier-hero-mobile.jpg",
+      "ratio": [3, 4],
+      "longEdge": 1100,
+      "generation": "f4044bf3-9193-41fc-9236-612932f604db",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_f4044bf3-9193-41fc-9236-612932f604db.png"
+    },
+    {
+      "asset": "cavelier-collection-engagement.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "a9aea6d5-3c72-498e-91c9-85767ea21e7e",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105418_a9aea6d5-3c72-498e-91c9-85767ea21e7e.png"
+    },
+    {
+      "asset": "cavelier-collection-wedding.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "b87f3a78-bf63-4cdd-92d0-1230e236bbde",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_b87f3a78-bf63-4cdd-92d0-1230e236bbde.png"
+    },
+    {
+      "asset": "cavelier-collection-fine.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "46a95d88-135f-4ae6-a2be-a34de7c79bea",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_46a95d88-135f-4ae6-a2be-a34de7c79bea.png"
+    },
+    {
+      "asset": "cavelier-collection-diamonds.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "53d8f0d5-52c9-40e9-b06a-9b2a6680554a",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_53d8f0d5-52c9-40e9-b06a-9b2a6680554a.png"
+    },
+    {
+      "asset": "cavelier-collection-rings.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "890b7b2b-d110-4fba-ae01-04df2e6835cd",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_890b7b2b-d110-4fba-ae01-04df2e6835cd.png"
+    },
+    {
+      "asset": "cavelier-collection-bespoke.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1100,
+      "generation": "fc49d687-9676-45c9-ada9-b2620b1438f6",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_fc49d687-9676-45c9-ada9-b2620b1438f6.png"
+    },
+    {
+      "asset": "cavelier-product-solitaire.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "31cabb2e-fc4e-482f-95e3-b604b11af5e8",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_31cabb2e-fc4e-482f-95e3-b604b11af5e8.png"
+    },
+    {
+      "asset": "cavelier-product-emerald-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": "7737d867-81ea-49b0-a1ef-b5191bfd0fda",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_7737d867-81ea-49b0-a1ef-b5191bfd0fda.png"
+    },
+    {
+      "asset": "cavelier-product-oval.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "14e8633c-917f-4772-922c-6a29ccd9c820",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_14e8633c-917f-4772-922c-6a29ccd9c820.png"
+    },
+    {
+      "asset": "cavelier-product-eternity.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "2a0c0216-8ad9-40e5-a9c0-ec5f408b6f21",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_2a0c0216-8ad9-40e5-a9c0-ec5f408b6f21.png"
+    },
+    {
+      "asset": "cavelier-product-sculptural.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "3e2e276c-c264-470a-ace5-974b62a87b8e",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_3e2e276c-c264-470a-ace5-974b62a87b8e.png"
+    },
+    {
+      "asset": "cavelier-product-studs.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "b2d80feb-4f18-4a80-8151-3d338d59e4ed",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_b2d80feb-4f18-4a80-8151-3d338d59e4ed.png"
+    },
+    {
+      "asset": "cavelier-product-tennis.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "7cf3d7f2-6446-4564-862a-7e267ed7e858",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_7cf3d7f2-6446-4564-862a-7e267ed7e858.png"
+    },
+    {
+      "asset": "cavelier-product-necklace.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": "6569b4da-bacd-4579-92a5-2be48ca1f29b",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_6569b4da-bacd-4579-92a5-2be48ca1f29b.png"
+    },
+    {
+      "asset": "cavelier-atelier.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1300,
+      "generation": "86a01363-bb50-4ec7-a771-e76184fbfb60",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105418_86a01363-bb50-4ec7-a771-e76184fbfb60.png"
+    },
+    {
+      "asset": "cavelier-atelier-wide.jpg",
+      "ratio": [16, 9],
+      "longEdge": 1900,
+      "generation": "e0478ff0-a441-4444-811f-0f6a83b18644",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_214838_e0478ff0-a441-4444-811f-0f6a83b18644.png"
+    },
+    {
+      "asset": "cavelier-materials.jpg",
+      "ratio": [3, 2],
+      "longEdge": 1600,
+      "generation": "03c0cb44-8507-4b6f-8ef3-8a1a736ae6aa",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_03c0cb44-8507-4b6f-8ef3-8a1a736ae6aa.png"
+    },
+    {
+      "asset": "cavelier-campaign.jpg",
+      "ratio": [16, 9],
+      "longEdge": 1900,
+      "generation": "66d0ddb2-3914-4ac8-b20a-dde0c592ecd9",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105418_66d0ddb2-3914-4ac8-b20a-dde0c592ecd9.png"
+    },
+    {
+      "asset": "cavelier-founder.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1300,
+      "generation": "1322aac1-54a4-430c-be50-fa8c8b17288e",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_1322aac1-54a4-430c-be50-fa8c8b17288e.png"
+    },
+    {
+      "asset": "cavelier-bespoke-hero.jpg",
+      "ratio": [16, 9],
+      "longEdge": 1800,
+      "generation": "3270a925-3396-40e5-8f4f-a0c5a136f5a1",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105417_3270a925-3396-40e5-8f4f-a0c5a136f5a1.png"
+    },
+
+    {
+      "asset": "cavelier-product-solitaire-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A woman's hand at rest on folded ivory linen, anatomically correct five slender fingers, short bare natural nails, wearing a single slender 18k yellow gold solitaire ring with a round brilliant diamond. Hand low in the frame, generous empty warm bone-coloured space above. Medium format digital, 100mm macro, f/5.6. Soft diffused north-window light through a scrim, delicate soft-edged shadow. Muted warm-neutral colour grade, low saturation, film-like, no orange cast. Natural unretouched skin texture. Photoreal gold and crisp diamond facets. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-solitaire-detail.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Extreme macro fine jewellery photograph, vertical. A tight detail of the four-claw setting and cut-down gallery of an 18k yellow gold solitaire engagement ring, the round brilliant diamond filling the upper frame, the openwork gallery and claw tips crisply resolved, on warm bone paper. Medium format digital, 100mm macro, f/11, focus stacked. Soft diffused north light, delicate shadow. Muted warm-neutral colour grade, low saturation, film-like. Photoreal polished gold and realistic diamond fire, no rainbow overload. Minimal, gallery-like. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-emerald.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery product photograph, vertical. A single platinum engagement ring with a large emerald-cut diamond and two tapered baguette side stones, standing upright and very slightly angled, centred low in the frame on warm bone paper, generous empty space above. Medium format digital, 100mm macro, f/8, focus stacked. One soft diffused north-window light, one delicate soft-edged shadow. Muted warm-neutral colour grade, low saturation, film-like, no HDR. Photoreal platinum and clean step-cut facets, no rainbow flare. Impeccably clean, minimal, gallery-like. No text, no logos, no watermark, no props."
+    },
+    {
+      "asset": "cavelier-product-oval-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A woman's hand in soft window light, anatomically correct five slender fingers, short bare natural nails, wearing a single 18k rose gold oval-cut diamond solitaire set north to south. Hand relaxed against a warm bone-coloured ground, generous empty space. Medium format digital, 100mm macro, f/5.6. Soft diffused north light, gentle falloff. Muted warm-neutral colour grade, low saturation, film-like, restrained rose tone, no pink cast. Natural unretouched skin texture. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-eternity-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery product photograph, vertical. A platinum half-eternity band castle set with small round brilliant diamonds, stacked directly against a plain slender platinum wedding band, the two rings standing upright together and slightly angled on warm bone paper, generous empty space above. Medium format digital, 100mm macro, f/8. Soft diffused north light, delicate shadow. Muted warm-neutral colour grade, low saturation, film-like. Photoreal brushed and polished platinum, evenly matched stones. Minimal, gallery-like. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-sculptural-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A woman's hand at rest, anatomically correct five slender fingers, short bare natural nails, wearing a single sculptural 18k yellow gold band with no stones, the metal swelling at the top and tapering underneath. Hand low in the frame on a warm bone-coloured ground, generous empty space above. Medium format digital, 100mm macro, f/5.6. Soft diffused north-window light, delicate shadow. Muted warm-neutral colour grade, low saturation, film-like, no orange cast. Natural unretouched skin texture. Photoreal hand-polished gold. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-studs-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A close crop of a woman's ear and jawline, hair tucked back, wearing a single 18k yellow gold diamond stud earring in a three-claw martini setting. Cropped so no full face is visible. Soft diffused window light, gentle falloff, warm bone-coloured background with generous empty space. Medium format digital, 100mm, f/2.8. Natural unretouched skin with fine texture, no makeup shine. Muted warm-neutral colour grade, low saturation, film-like. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-tennis-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A woman's wrist and forearm at rest, anatomically correct hand, wearing an 18k white gold tennis bracelet of evenly matched round brilliant diamonds sitting naturally against the wrist bone. Warm bone-coloured ground, generous empty space above. Medium format digital, 100mm macro, f/4. Soft diffused north-window light, delicate shadow, realistic diamond fire without rainbow overload. Muted warm-neutral colour grade, low saturation, film-like. Natural unretouched skin texture. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-product-necklace-alt.jpg",
+      "ratio": [4, 5],
+      "longEdge": 1000,
+      "generation": null,
+      "url": null,
+      "size": [1536, 2048],
+      "prompt": "Fine jewellery editorial photograph, vertical. A woman's neck and collarbone wearing a very fine 1.1mm 18k yellow gold cable chain necklace, cropped from jaw to upper chest so no face is visible. Soft diffused window light, gentle falloff, warm bone-coloured background, generous empty space. Medium format digital, 100mm, f/2.8. Natural unretouched skin with fine texture, no makeup shine. Muted warm-neutral colour grade, low saturation, film-like, no orange cast. Photoreal fine gold links. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-journal-1.jpg",
+      "ratio": [3, 2],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [2016, 1344],
+      "prompt": "Editorial still life, overhead. A hand-drawn graphite ring design sketch on translucent tracing paper with a single loose round brilliant diamond resting beside it on a warm bone paper surface, generous empty space. Medium format digital, f/8, single soft diffused north light, delicate shadows. Muted warm-neutral colour grade, low saturation, film-like. No text, no legible writing, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-journal-2.jpg",
+      "ratio": [3, 2],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [2016, 1344],
+      "prompt": "Editorial still life, overhead macro. A small arrangement of loose natural diamonds of several different cuts — round brilliant, emerald, oval, pear and marquise — spaced apart on a matte bone-grey surface, restrained asymmetric composition with wide empty space. Medium format digital, 100mm macro, f/8. Soft diffused north light, delicate refracted sparkle, realistic diamond fire, no rainbow overload. Muted warm-neutral colour grade, low saturation, film-like. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-journal-3.jpg",
+      "ratio": [3, 2],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [2016, 1344],
+      "prompt": "Editorial still life, overhead. Loose coils of raw 18k yellow gold wire in two gauges resting on a warm bone plaster surface, arranged off-centre with generous empty space. Medium format digital, 100mm macro, f/8. Single soft diffused north light, delicate soft shadows. Muted warm-neutral colour grade, low saturation, film-like, no orange cast. Photoreal drawn gold wire texture. Minimal, gallery-like. No text, no logos, no watermark."
+    },
+    {
+      "asset": "cavelier-journal-4.jpg",
+      "ratio": [3, 2],
+      "longEdge": 1200,
+      "generation": null,
+      "url": null,
+      "size": [2016, 1344],
+      "prompt": "Editorial still life, overhead. A soft natural-bristle jewellery cleaning brush laid beside a plain 18k yellow gold ring on a bone-coloured cotton cloth with soft folds, generous empty space. Medium format digital, 100mm macro, f/8. Single soft diffused north light, delicate shadows. Muted warm-neutral colour grade, low saturation, film-like. Photoreal cloth weave, wood and gold. Calm and domestic, gallery-like restraint. No text, no logos, no watermark."
+    }
+  ],
+  "spares": [
+    {
+      "generation": "86d658bd-fafb-4e9c-a860-1ec6a1a3d7e7",
+      "url": "https://d8j0ntlcm91z4.cloudfront.net/user_3IDzyw8ssVu4CwkPAr9u4to05WF/hf_20260907_105418_86d658bd-fafb-4e9c-a860-1ec6a1a3d7e7.png",
+      "note": "Platinum solitaire on an alabaster plinth, 3:2. An unused alternate hero/still-life frame."
+    }
+  ]
+}
