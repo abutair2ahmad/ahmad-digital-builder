@@ -1,6 +1,6 @@
 {
   "brand": "bynexora",
-  "language": "en",
+  "language": "ar",
   "disclaimer": "Concept work is labelled as concept. No client names, results or testimonials are used unless supplied and verified.",
   "ideas": [
     {
@@ -34,7 +34,7 @@
       "layout": "tips",
       "image": {
         "kicker": "SPEED",
-        "headline": "Why your site feels slow",
+        "headline": "ليش موقعك بطيء؟",
         "items": [
           "Uncompressed hero images",
           "Five font weights",
@@ -43,7 +43,7 @@
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "A slow site is usually three files, not bad hosting.",
+        "hook": "الموقع البطيء غالبًا مشكلته بثلاث ملفات، مش بالاستضافة.",
         "body": "The usual suspects:\n\n• A hero image exported straight from Canva at 4MB. Compress it — you will not see the difference, your visitors will.\n• Loading five weights of a font when the design uses two.\n• A chat widget that loads before your actual content does.\n\nFix those three and most sites feel instantly faster. No migration required."
       },
       "tags": [
