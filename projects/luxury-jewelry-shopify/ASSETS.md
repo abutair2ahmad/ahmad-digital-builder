@@ -69,22 +69,40 @@ no black velvet.
 
 ## Status of the shipped files
 
-The 35 images above were generated to this art direction and staged, but this
-session's network policy blocks the CDN they are delivered from
-(`*.cloudfront.net` → 403 at the egress proxy), so they could not be pulled into
-the repository. What ships instead are **stand-ins**: warm-neutral tone fields
-generated locally at the exact filenames, ratios and dimensions in the table
-above, so every layout, crop and `srcset` is exercised correctly.
+**These 35 files are rendered illustrations, not photographs.** They are drawn
+to the art direction above — bone ground, one soft window source, muted metal,
+the piece on roughly a third of the frame — at the exact filenames, ratios and
+long edges in the table, so every layout, crop, `srcset` and art-directed
+mobile swap is exercised against a real subject rather than a blank field.
 
-To finish the imagery, either:
+They are not the photography this manifest specifies. The AI-generated
+photographs were produced to this brief but are delivered from a CDN
+(`*.cloudfront.net`) that the build environment's egress policy denies at the
+proxy (403 on CONNECT), so they cannot be pulled into the repository from here.
+Nothing in the theme needs to change when they arrive.
 
-- allow `*.cloudfront.net` in the environment's network policy and re-run the
-  fetch, or
-- drop your own JPEGs into `theme/assets/` using the filenames above, or
-- upload them in the Shopify theme editor, which takes precedence over the
-  bundled assets anyway.
+To finish the imagery, do any one of these — no Liquid changes either way:
 
-`preview/make-media.js` regenerates the stand-ins.
+- **Upload in the Shopify theme editor.** Every slot is an `image_picker`
+  setting, and a merchant upload takes precedence over the bundled asset. This
+  is the production path and needs no repository access.
+- **Drop JPEGs into `theme/assets/`** using the filenames in the table above,
+  then re-run `tools/package.sh` to rebuild the ZIP.
+- **Allow `*.cloudfront.net`** in the environment's network policy and re-run
+  the fetch, which writes to the same filenames.
+
+`preview/make-media.js` regenerates the illustrations (subjects are drawn by
+`preview/lib/draw.js`); `preview/svg2jpg.mjs` rasterises them to
+`theme/assets/` at the manifest dimensions.
+
+Two notes on what the illustrations do and do not show:
+
+- The alt text in the table stays as written. It describes the photograph the
+  slot is specified for, which is what a merchant will upload and what a
+  screen-reader user should hear — not the placeholder currently in the file.
+- Slots whose brief calls for a hand, an ear or a wrist are drawn as an
+  alternate view of the piece instead. A vector hand reads worse than no hand,
+  and these are stand-ins.
 
 ## Optimisation rules the theme follows
 

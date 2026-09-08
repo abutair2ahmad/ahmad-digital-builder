@@ -172,9 +172,13 @@ without touching CSS, and every colour and font is a theme setting.
 
 ## Known limitations
 
-- **Imagery.** The 35 photographs were generated to the brief but could not be
-  pulled into this environment (see ASSETS.md); the shipped files are correctly
-  named, sized and alt-texted stand-ins.
+- **Imagery.** The 35 shipped files are rendered illustrations drawn to the art
+  direction, not photographs. The photographs were generated to the brief but
+  are served from a CDN this environment's egress policy denies, so they could
+  not be pulled in (see ASSETS.md). Each file carries the manifest's exact
+  filename, ratio and long edge, so a real JPEG — or a merchant upload in the
+  theme editor, which wins over the bundled asset — replaces it one for one
+  with no Liquid changes.
 - **Not installed on a live store.** The only Shopify store connected to this
   session is a production storefront, so nothing was pushed to it. The theme has
   been validated structurally and rendered end-to-end locally, but it has not

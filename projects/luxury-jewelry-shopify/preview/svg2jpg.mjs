@@ -7,7 +7,7 @@ import path from 'node:path';
 const OUT = path.join('..', 'theme', 'assets');
 fs.mkdirSync(OUT, { recursive: true });
 const files = fs.readdirSync('media').filter((f) => f.endsWith('.svg'));
-const b = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
+const b = await chromium.launch({ executablePath: process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome' });
 let total = 0;
 for (const f of files) {
   const svg = fs.readFileSync(path.join('media', f), 'utf8');
@@ -17,7 +17,7 @@ for (const f of files) {
   const p = await ctx.newPage();
   await p.setContent(`<style>html,body{margin:0;padding:0}svg{display:block}</style>${svg}`);
   const name = f.replace(/\.svg$/, '.jpg');
-  await p.screenshot({ path: path.join(OUT, name), type: 'jpeg', quality: 72 });
+  await p.screenshot({ path: path.join(OUT, name), type: 'jpeg', quality: 82 });
   total += fs.statSync(path.join(OUT, name)).size;
   await ctx.close();
 }

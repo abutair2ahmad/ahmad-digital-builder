@@ -1,26 +1,476 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" width="1900" height="1069" viewBox="0 0 1900 1069" role="img">
   <defs>
-    <linearGradient id="g" x1="0" y1="0" x2="0.6" y2="1">
-      <stop offset="0" stop-color="#E4DCD0"/>
-      <stop offset="1" stop-color="#CDC2B2"/>
+    <linearGradient id="ground" x1="0.1" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#F5F1E9"/><stop offset="1" stop-color="#E3DBCE"/>
     </linearGradient>
-    <radialGradient id="l" cx="65%" cy="51%" r="62%">
-      <stop offset="0" stop-color="#FFFDF9" stop-opacity="0.85"/>
-      <stop offset="0.55" stop-color="#FFFDF9" stop-opacity="0.18"/>
-      <stop offset="1" stop-color="#FFFDF9" stop-opacity="0"/>
+    <radialGradient id="window" cx="24%" cy="22%" r="70%">
+      <stop offset="0" stop-color="#FFFDF8" stop-opacity="0.9"/>
+      <stop offset="0.5" stop-color="#FFFDF8" stop-opacity="0.22"/>
+      <stop offset="1" stop-color="#FFFDF8" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="s" cx="35%" cy="85%" r="52%">
-      <stop offset="0" stop-color="#6E6355" stop-opacity="0.22"/>
-      <stop offset="1" stop-color="#6E6355" stop-opacity="0"/>
+    <radialGradient id="vignette" cx="50%" cy="46%" r="72%">
+      <stop offset="0.55" stop-color="#6E6353" stop-opacity="0"/>
+      <stop offset="1" stop-color="#6E6353" stop-opacity="0.2"/>
     </radialGradient>
-    <filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
-  </defs>
-  <rect width="1600" height="900" fill="url(#g)"/>
-  <rect width="1600" height="900" fill="url(#s)"/>
-  <rect width="1600" height="900" fill="url(#l)"/>
-  <g transform="rotate(7 800 468)" opacity="0.5">
-    <ellipse cx="800" cy="468" rx="272" ry="272" fill="none" stroke="#8B8175" stroke-opacity="0.45" stroke-width="9.6"/>
-    <ellipse cx="800" cy="468" rx="272" ry="272" fill="none" stroke="#FFFDF9" stroke-opacity="0.5" stroke-width="3.2" transform="translate(0 -6.4)"/>
+    
+    <linearGradient id="m-gold" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#F0E3C0"/><stop offset="0.26" stop-color="#C9AA6C"/>
+      <stop offset="0.55" stop-color="#96793E"/><stop offset="0.78" stop-color="#C9AA6C"/>
+      <stop offset="1" stop-color="#6E5827"/>
+    </linearGradient>
+    <linearGradient id="m-rose" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#F0D5C6"/><stop offset="0.26" stop-color="#C99C89"/>
+      <stop offset="0.55" stop-color="#966B58"/><stop offset="0.78" stop-color="#C99C89"/>
+      <stop offset="1" stop-color="#6E4C3C"/>
+    </linearGradient>
+    <linearGradient id="m-platinum" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#F6F7F9"/><stop offset="0.26" stop-color="#C6C9CD"/>
+      <stop offset="0.55" stop-color="#93969B"/><stop offset="0.78" stop-color="#C6C9CD"/>
+      <stop offset="1" stop-color="#6F7276"/>
+    </linearGradient>
+    <linearGradient id="m-white" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#F7F8FA"/><stop offset="0.26" stop-color="#CBCDD1"/>
+      <stop offset="0.55" stop-color="#989BA0"/><stop offset="0.78" stop-color="#CBCDD1"/>
+      <stop offset="1" stop-color="#74777C"/>
+    </linearGradient>
+    <linearGradient id="m-graphite" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#C6C4BF"/><stop offset="0.26" stop-color="#8E8B85"/>
+      <stop offset="0.55" stop-color="#63615C"/><stop offset="0.78" stop-color="#8E8B85"/>
+      <stop offset="1" stop-color="#454340"/>
+    </linearGradient>
+    <linearGradient id="m-wax" x1="0.12" y1="0" x2="0.88" y2="1">
+      <stop offset="0" stop-color="#EDE4E2"/><stop offset="0.26" stop-color="#CDBFBD"/>
+      <stop offset="0.55" stop-color="#A2938F"/><stop offset="0.78" stop-color="#CDBFBD"/>
+      <stop offset="1" stop-color="#7E716D"/>
+    </linearGradient>
+    <linearGradient id="stone-cool" x1="0.15" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#DCE4EA"/><stop offset="1" stop-color="#C6D0D8"/>
+    </linearGradient>
+    <linearGradient id="table-cool" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#FAFCFD"/><stop offset="1" stop-color="#DCE4EA"/>
+    </linearGradient>
+    <linearGradient id="stone-warm" x1="0.15" y1="0" x2="0.8" y2="1">
+      <stop offset="0" stop-color="#E4E1DA"/><stop offset="1" stop-color="#CFCBC1"/>
+    </linearGradient>
+    <linearGradient id="table-warm" x1="0" y1="0" x2="0.7" y2="1">
+      <stop offset="0" stop-color="#FDFCF9"/><stop offset="1" stop-color="#E4E1DA"/>
+    </linearGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="12.828"/></filter>
+    <filter id="softer" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="33.3528"/></filter>
+    <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="3" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/></filter>
+  
+  <linearGradient id="benchtop" x1="0" y1="0" x2="0.2" y2="1">
+    <stop offset="0" stop-color="#D6C4A6"/><stop offset="0.5" stop-color="#C7B294"/><stop offset="1" stop-color="#B29B7C"/>
+  </linearGradient></defs>
+  <rect width="1900" height="1069" fill="url(#ground)"/>
+  <ellipse cx="95" cy="757.2820320504159" rx="287.36885154433554" ry="155.48215123318136"
+             fill="#FFFDF6" opacity="0.22445148695260286" filter="url(#softer)" transform="rotate(-14 95 757.2820320504159)"/>
+            <ellipse cx="209" cy="821.4220320504159" rx="209" ry="53.45"
+             fill="#7E7463" opacity="0.09" filter="url(#softer)"/><ellipse cx="513" cy="733.2811218107864" rx="396.5055332127959" ry="164.7492772062961"
+             fill="#FFFDF6" opacity="0.20834509235806764" filter="url(#softer)" transform="rotate(-7 513 733.2811218107864)"/>
+            <ellipse cx="627" cy="797.4211218107864" rx="209" ry="53.45"
+             fill="#7E7463" opacity="0.09" filter="url(#softer)"/><ellipse cx="931" cy="868.5234237328173" rx="415.10776642709976" ry="167.75402407499496"
+             fill="#FFFDF6" opacity="0.25118428186513486" filter="url(#softer)" transform="rotate(0 931 868.5234237328173)"/>
+            <ellipse cx="1045" cy="932.6634237328173" rx="209" ry="53.45"
+             fill="#7E7463" opacity="0.09" filter="url(#softer)"/><ellipse cx="1349.0000000000002" cy="798.6909163908662" rx="415.2454576399178" ry="127.75024536272512"
+             fill="#FFFDF6" opacity="0.20958646546117962" filter="url(#softer)" transform="rotate(7 1349.0000000000002 798.6909163908662)"/>
+            <ellipse cx="1463.0000000000002" cy="862.8309163908662" rx="209" ry="53.45"
+             fill="#7E7463" opacity="0.09" filter="url(#softer)"/><ellipse cx="1767" cy="708.8981305496395" rx="283.8861239813269" ry="145.0485174898198"
+             fill="#FFFDF6" opacity="0.2592036626394838" filter="url(#softer)" transform="rotate(14 1767 708.8981305496395)"/>
+            <ellipse cx="1881" cy="773.0381305496395" rx="209" ry="53.45"
+             fill="#7E7463" opacity="0.09" filter="url(#softer)"/>
+  <rect width="1900" height="1069" fill="url(#window)"/>
+  <ellipse cx="433.673" cy="128.28" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(0 433.673 128.28)"/><ellipse cx="427.477076" cy="122.96920800000001" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(0 433.673 128.28)"/><ellipse cx="440.60356375838927" cy="137.40325123871992" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.77753728576665 440.60356375838927 137.40325123871992)"/><ellipse cx="447.53412751677854" cy="146.5224468247727" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(52.765265134138964 447.53412751677854 146.5224468247727)"/><ellipse cx="441.33820351677855" cy="141.2116548247727" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(52.765265134138964 447.53412751677854 146.5224468247727)"/><ellipse cx="454.4646912751678" cy="155.63353290839217" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.74070552570645 454.4646912751678 155.63353290839217)"/><ellipse cx="461.3952550335571" cy="164.73245924481267" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(52.703827822970084 461.3952550335571 164.73245924481267)"/><ellipse cx="455.1993310335571" cy="159.42166724481268" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(52.703827822970084 461.3952550335571 164.73245924481267)"/><ellipse cx="468.3258187919463" cy="173.8151809947659" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.654586001884915 468.3258187919463 173.8151809947659)"/><ellipse cx="475.25638255033556" cy="182.87766052257516" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(52.59291857068637 475.25638255033556 182.87766052257516)"/><ellipse cx="469.06045855033557" cy="177.56686852257516" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(52.59291857068637 475.25638255033556 182.87766052257516)"/><ellipse cx="482.1869463087248" cy="191.91586919104662" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.51874846197371 482.1869463087248 191.91586919104662)"/><ellipse cx="489.1175100671141" cy="200.9257891523613" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(52.43198289833366 489.1175100671141 200.9257891523613)"/><ellipse cx="482.9215860671141" cy="195.6149971523613" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(52.43198289833366 489.1175100671141 200.9257891523613)"/><ellipse cx="496.04807382550337" cy="209.90341513416985" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.3325132318842 496.04807382550337 209.90341513416985)"/><ellipse cx="502.97863758389263" cy="218.84475622009776" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(52.220214758226824 502.97863758389263 218.84475622009776)"/><ellipse cx="496.78271358389264" cy="213.53396422009777" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(52.220214758226824 502.97863758389263 218.84475622009776)"/><ellipse cx="509.9092013422819" cy="227.74583762386828" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(52.09494650541775 509.9092013422819 227.74583762386828)"/><ellipse cx="516.8397651006711" cy="236.6027024562551" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(51.95655099872375 516.8397651006711 236.6027024562551)"/><ellipse cx="510.6438411006711" cy="231.2919104562551" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(51.95655099872375 516.8397651006711 236.6027024562551)"/><ellipse cx="523.7703288590604" cy="245.4114134840789" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(51.8048540020974 523.7703288590604 245.4114134840789)"/><ellipse cx="530.7008926174497" cy="254.1680548804663" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(51.639664237525466 530.7008926174497 254.1680548804663)"/><ellipse cx="524.5049686174497" cy="248.8572628804663" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(51.639664237525466 530.7008926174497 254.1680548804663)"/><ellipse cx="537.631456375839" cy="262.86873396559224" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(51.46077308362402 537.631456375839 262.86873396559224)"/><ellipse cx="544.5620201342282" cy="271.50958293713353" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(51.26795425518155 544.5620201342282 271.50958293713353)"/><ellipse cx="538.3660961342282" cy="266.19879093713354" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(51.26795425518155 544.5620201342282 271.50958293713353)"/><ellipse cx="551.4925838926174" cy="280.0867605896623" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(51.06096346562865 551.4925838926174 280.0867605896623)"/><ellipse cx="558.4231476510067" cy="288.5964540222166" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(50.83953807486801 558.4231476510067 288.5964540222166)"/><ellipse cx="552.2272236510067" cy="283.2856620222166" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(50.83953807486801 558.4231476510067 288.5964540222166)"/><ellipse cx="565.353711409396" cy="297.0348803332889" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(50.60339672530015 565.353711409396 297.0348803332889)"/><ellipse cx="572.2842751677853" cy="305.39828830247757" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(50.35223896943109 572.2842751677853 305.39828830247757)"/><ellipse cx="566.0883511677853" cy="300.0874963024776" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(50.35223896943109 572.2842751677853 305.39828830247757)"/><ellipse cx="579.2148389261745" cy="313.6829600580558" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(50.08574489306239 579.2148389261745 313.6829600580558)"/><ellipse cx="586.1454026845638" cy="321.8852127297155" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(49.803574738749475 586.1454026845638 321.8852127297155)"/><ellipse cx="579.9494786845638" cy="316.5744207297155" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(49.803574738749475 586.1454026845638 321.8852127297155)"/><ellipse cx="593.075966442953" cy="330.0014000857509" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(49.505368535026335 593.075966442953 330.0014000857509)"/><ellipse cx="600.0065302013422" cy="338.02791415395615" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(49.190745737812655 600.0065302013422 338.02791415395615)"/><ellipse cx="593.8106062013422" cy="332.71712215395615" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(49.190745737812655 600.0065302013422 338.02791415395615)"/><ellipse cx="606.9370939597316" cy="345.96118682551383" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(48.85930489147663 606.9370939597316 345.96118682551383)"/><ellipse cx="613.8676577181208" cy="353.797691441163" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(48.51062331820293 613.8676577181208 353.797691441163)"/><ellipse cx="607.6717337181208" cy="348.486899441163" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(48.51062331820293 613.8676577181208 353.797691441163)"/><ellipse cx="620.7982214765101" cy="361.5339443589419" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(48.14425684567312 620.7982214765101 361.5339443589419)"/><ellipse cx="627.7287852348993" cy="369.1665065028061" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(47.75973958458607 627.7287852348993 369.1665065028061)"/><ellipse cx="621.5328612348993" cy="363.8557145028061" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(47.75973958458607 627.7287852348993 369.1665065028061)"/><ellipse cx="634.6593489932886" cy="376.6919848914373" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(47.35658376923991 634.6593489932886 376.6919848914373)"/><ellipse cx="641.5899127516778" cy="384.10703414655984" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(46.934279676315036 641.5899127516778 384.10703414655984)"/><ellipse cx="635.3939887516779" cy="378.79624214655985" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(46.934279676315036 641.5899127516778 384.10703414655984)"/><ellipse cx="648.5204765100672" cy="391.40835798009596" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(46.49229563908252 648.5204765100672 391.40835798009596)"/><ellipse cx="655.4510402684564" cy="398.5927106594986" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(46.03007817664442 655.4510402684564 398.5927106594986)"/><ellipse cx="649.2551162684564" cy="393.2819186594986" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(46.03007817664442 655.4510402684564 398.5927106594986)"/><ellipse cx="662.3816040268457" cy="405.6568984506107" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(45.54705226031171 662.3816040268457 405.6568984506107)"/><ellipse cx="669.3121677852349" cy="412.59778103740814" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(45.04262174206951 669.3121677852349 412.59778103740814)"/><ellipse cx="663.1162437852349" cy="407.28698903740815" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(45.04262174206951 669.3121677852349 412.59778103740814)"/><ellipse cx="676.2427315436241" cy="419.41227291799714" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(44.51616997304302 676.2427315436241 419.41227291799714)"/><ellipse cx="683.1732953020135" cy="426.09734477624374" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(43.96706064312368 683.1732953020135 426.09734477624374)"/><ellipse cx="676.9773713020135" cy="420.78655277624375" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(43.96706064312368 683.1732953020135 426.09734477624374)"/><ellipse cx="690.1038590604028" cy="432.65002482842715" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(43.39463887628335 690.1038590604028 432.65002482842715)"/><ellipse cx="697.034422818792" cy="439.0674001443174" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(42.79823261962581 697.034422818792 439.0674001443174)"/><ellipse cx="690.838498818792" cy="433.7566081443174" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(42.79823261962581 697.034422818792 439.0674001443174)"/><ellipse cx="703.9649865771812" cy="445.34661794208955" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(42.17715436782154 703.9649865771812 445.34661794208955)"/><ellipse cx="710.8955503355705" cy="451.4848868565009" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(41.53070326814424 710.8955503355705 451.4848868565009)"/><ellipse cx="704.6996263355705" cy="446.1740948565009" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(41.53070326814424 710.8955503355705 451.4848868565009)"/><ellipse cx="717.8261140939597" cy="457.4794781797649" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(40.858167654718656 717.8261140939597 457.4794781797649)"/><ellipse cx="724.756677852349" cy="463.3277270745715" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(40.158828063753305 724.756677852349 463.3277270745715)"/><ellipse cx="718.560753852349" cy="458.0169350745715" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(40.158828063753305 724.756677852349 463.3277270745715)"/><ellipse cx="731.6872416107383" cy="469.0270337587152" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(39.431960784168595 731.6872416107383 469.0270337587152)"/><ellipse cx="738.6178053691276" cy="474.5748646608024" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(38.67684199990296 738.6178053691276 474.5748646608024)"/><ellipse cx="732.4218813691276" cy="469.2640726608024" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(38.67684199990296 738.6178053691276 474.5748646608024)"/><ellipse cx="745.5483691275167" cy="479.96875354652616" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(37.892752581102556 745.5483691275167 479.96875354652616)"/><ellipse cx="752.478932885906" cy="485.20630261500685" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(37.07898358086085 752.478932885906 485.20630261500685)"/><ellipse cx="746.283008885906" cy="479.89551061500686" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(37.07898358086085 752.478932885906 485.20630261500685)"/><ellipse cx="759.4094966442954" cy="490.28518356471113" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(36.23484249192497 759.4094966442954 490.28518356471113)"/><ellipse cx="766.3400604026846" cy="495.2031386284756" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(35.35966031319501 766.3400604026846 495.2031386284756)"/><ellipse cx="760.1441364026846" cy="489.8923466284756" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(35.35966031319501 766.3400604026846 495.2031386284756)"/><ellipse cx="773.2706241610739" cy="499.9579815771756" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(34.45279946860242 773.2706241610739 499.9579815771756)"/><ellipse cx="780.2011879194631" cy="504.54759869159136" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(33.513662610274345 780.2011879194631 504.54759869159136)"/><ellipse cx="774.0052639194631" cy="499.23680669159137" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(33.513662610274345 780.2011879194631 504.54759869159136)"/><ellipse cx="787.1317516778524" cy="508.9699497020425" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(32.54170232342837 787.1317516778524 508.9699497020425)"/><ellipse cx="794.0623154362415" cy="513.2230686953693" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(31.536431731467808 794.0623154362415 513.2230686953693)"/><ellipse cx="787.8663914362415" cy="507.9122766953693" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(31.536431731467808 794.0623154362415 513.2230686953693)"/><ellipse cx="800.9928791946309" cy="517.3050649888601" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(30.497435975911415 800.9928791946309 517.3050649888601)"/><ellipse cx="807.9234429530202" cy="521.2141239707365" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(29.424384516639524 807.9234429530202 521.2141239707365)"/><ellipse cx="801.7275189530202" cy="515.9033319707365" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(29.424384516639524 807.9234429530202 521.2141239707365)"/><ellipse cx="814.8540067114095" cy="524.9485079068214" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(28.317044163225482 814.8540067114095 524.9485079068214)"/><ellipse cx="821.7845704697987" cy="528.5065567130313" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(27.17529270817204 821.7845704697987 528.5065567130313)"/><ellipse cx="815.5886464697987" cy="523.1957647130313" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(27.17529270817204 821.7845704697987 528.5065567130313)"/><ellipse cx="828.7151342281879" cy="531.8866886933508" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(25.999132987799175 828.7151342281879 531.8866886933508)"/><ellipse cx="835.6456979865773" cy="535.0874012429605" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(24.788707147520253 835.6456979865773 535.0874012429605)"/><ellipse cx="829.4497739865773" cy="529.7766092429605" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(24.788707147520253 835.6456979865773 535.0874012429605)"/><ellipse cx="842.5762617449664" cy="538.1072715162047" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(23.54431083660697 842.5762617449664 538.1072715162047)"/><ellipse cx="849.5068255033557" cy="540.9449570591046" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(22.26640700537339 849.5068255033557 540.9449570591046)"/><ellipse cx="843.3109015033557" cy="535.6341650591046" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(22.26640700537339 849.5068255033557 540.9449570591046)"/><ellipse cx="856.437389261745" cy="543.5991964061321" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(20.955638927775816 856.437389261745 543.5991964061321)"/><ellipse cx="863.3679530201343" cy="546.0688096409825" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(19.612842027969418 863.3679530201343 546.0688096409825)"/><ellipse cx="857.1720290201343" cy="540.7580176409825" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(19.612842027969418 863.3679530201343 546.0688096409825)"/><ellipse cx="870.2985167785235" cy="548.3526989210952" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(18.239054054408474 870.2985167785235 548.3526989210952)"/><ellipse cx="877.2290805369128" cy="550.4498489656885" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(16.835523123640566 877.2290805369128 550.4498489656885)"/><ellipse cx="871.0331565369128" cy="545.1390569656885" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(16.835523123640566 877.2290805369128 550.4498489656885)"/><ellipse cx="884.1596442953021" cy="552.3593275070923" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(15.403713152610207 884.1596442953021 552.3593275070923)"/><ellipse cx="891.0902080536913" cy="554.0802857051802" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(13.945306216710057 891.0902080536913 554.0802857051802)"/><ellipse cx="884.8942840536913" cy="548.7694937051803" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(13.945306216710057 891.0902080536913 554.0802857051802)"/><ellipse cx="898.0207718120806" cy="555.6119585247113" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(12.462201414408923 898.0207718120806 555.6119585247113)"/><ellipse cx="904.9513355704698" cy="556.9536650754206" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(10.956509890141936 904.9513355704698 556.9536650754206)"/><ellipse cx="898.7554115704698" cy="551.6428730754207" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(10.956509890141936 904.9513355704698 556.9536650754206)"/><ellipse cx="911.8818993288592" cy="558.1048089147012" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(9.430545764995207 911.8818993288592 558.1048089147012)"/><ellipse cx="918.8124630872483" cy="559.0648783127475" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(7.886812848440313 918.8124630872483 559.0648783127475)"/><ellipse cx="912.6165390872483" cy="553.7540863127475" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(7.886812848440313 918.8124630872483 559.0648783127475)"/><ellipse cx="925.7430268456376" cy="559.8334464800402" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(6.327987148894277 925.7430268456376 559.8334464800402)"/><ellipse cx="932.6735906040269" cy="560.4101717570699" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(4.756895360365591 932.6735906040269 560.4101717570699)"/><ellipse cx="926.4776666040269" cy="555.0993797570699" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(4.756895360365591 932.6735906040269 560.4101717570699)"/><ellipse cx="939.6041543624161" cy="560.7947977662201" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(3.1764896676901313 939.6041543624161 560.7947977662201)"/><ellipse cx="946.5347181208055" cy="560.9871535257369" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(1.5898193739708504 946.5347181208055 560.9871535257369)"/><ellipse cx="940.3387941208055" cy="555.6763615257369" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(1.5898193739708504 946.5347181208055 560.9871535257369)"/><ellipse cx="953.4652818791947" cy="560.9871535257369" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(0 953.4652818791947 560.9871535257369)"/><ellipse cx="960.395845637584" cy="560.7947977662201" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-1.5898193739708504 960.395845637584 560.7947977662201)"/><ellipse cx="954.199921637584" cy="555.4840057662201" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-1.5898193739708504 960.395845637584 560.7947977662201)"/><ellipse cx="967.3264093959732" cy="560.4101717570699" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-3.1764896676901313 967.3264093959732 560.4101717570699)"/><ellipse cx="974.2569731543625" cy="559.8334464800402" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-4.756895360365591 974.2569731543625 559.8334464800402)"/><ellipse cx="968.0610491543625" cy="554.5226544800402" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-4.756895360365591 974.2569731543625 559.8334464800402)"/><ellipse cx="981.1875369127517" cy="559.0648783127476" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-6.327987148893451 981.1875369127517 559.0648783127476)"/><ellipse cx="988.1181006711411" cy="558.1048089147012" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-7.886812848440979 988.1181006711411 558.1048089147012)"/><ellipse cx="981.9221766711411" cy="552.7940169147012" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-7.886812848440979 988.1181006711411 558.1048089147012)"/><ellipse cx="995.0486644295303" cy="556.9536650754206" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-9.43054576499536 995.0486644295303 556.9536650754206)"/><ellipse cx="1001.9792281879195" cy="555.6119585247113" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-10.956509890141936 1001.9792281879195 555.6119585247113)"/><ellipse cx="995.7833041879195" cy="550.3011665247113" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-10.956509890141936 1001.9792281879195 555.6119585247113)"/><ellipse cx="1008.9097919463087" cy="554.0802857051802" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-12.462201414409122 1008.9097919463087 554.0802857051802)"/><ellipse cx="1015.840355704698" cy="552.3593275070923" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-13.945306216709838 1015.840355704698 552.3593275070923)"/><ellipse cx="1009.644431704698" cy="547.0485355070923" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-13.945306216709838 1015.840355704698 552.3593275070923)"/><ellipse cx="1022.7709194630872" cy="550.4498489656885" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-15.403713152610448 1022.7709194630872 550.4498489656885)"/><ellipse cx="1029.7014832214766" cy="548.3526989210953" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-16.835523123639447 1029.7014832214766 548.3526989210953)"/><ellipse cx="1023.5055592214766" cy="543.0419069210953" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-16.835523123639447 1029.7014832214766 548.3526989210953)"/><ellipse cx="1036.632046979866" cy="546.0688096409825" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-18.23905405440904 1036.632046979866 546.0688096409825)"/><ellipse cx="1043.562610738255" cy="543.599196406132" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-19.612842027970846 1043.562610738255 543.599196406132)"/><ellipse cx="1037.3666867382549" cy="538.288404406132" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-19.612842027970846 1043.562610738255 543.599196406132)"/><ellipse cx="1050.4931744966443" cy="540.9449570591046" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-20.95563892777499 1050.4931744966443 540.9449570591046)"/><ellipse cx="1057.4237382550336" cy="538.1072715162048" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-22.26640700537259 1057.4237382550336 538.1072715162048)"/><ellipse cx="1051.2278142550335" cy="532.7964795162048" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-22.26640700537259 1057.4237382550336 538.1072715162048)"/><ellipse cx="1064.354302013423" cy="535.0874012429605" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-23.54431083660707 1064.354302013423 535.0874012429605)"/><ellipse cx="1071.2848657718123" cy="531.8866886933508" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-24.788707147520253 1071.2848657718123 531.8866886933508)"/><ellipse cx="1065.0889417718122" cy="526.5758966933508" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-24.788707147520253 1071.2848657718123 531.8866886933508)"/><ellipse cx="1078.2154295302014" cy="528.5065567130314" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-25.999132987798784 1078.2154295302014 528.5065567130314)"/><ellipse cx="1085.1459932885907" cy="524.9485079068214" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-27.1752927081724 1085.1459932885907 524.9485079068214)"/><ellipse cx="1078.9500692885906" cy="519.6377159068214" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-27.1752927081724 1085.1459932885907 524.9485079068214)"/><ellipse cx="1092.0765570469798" cy="521.2141239707366" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-28.317044163225546 1092.0765570469798 521.2141239707366)"/><ellipse cx="1099.0071208053691" cy="517.3050649888601" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-29.424384516640234 1099.0071208053691 517.3050649888601)"/><ellipse cx="1092.811196805369" cy="511.9942729888601" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-29.424384516640234 1099.0071208053691 517.3050649888601)"/><ellipse cx="1105.9376845637585" cy="513.2230686953694" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-30.497435975910715 1105.9376845637585 513.2230686953694)"/><ellipse cx="1112.8682483221478" cy="508.9699497020425" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-31.53643173146766 1112.8682483221478 508.9699497020425)"/><ellipse cx="1106.6723243221477" cy="503.65915770204253" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-31.53643173146766 1112.8682483221478 508.9699497020425)"/><ellipse cx="1119.7988120805371" cy="504.5475986915915" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-32.54170232342771 1119.7988120805371 504.5475986915915)"/><ellipse cx="1126.7293758389262" cy="499.9579815771756" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-33.51366261027543 1126.7293758389262 499.9579815771756)"/><ellipse cx="1120.533451838926" cy="494.6471895771756" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-33.51366261027543 1126.7293758389262 499.9579815771756)"/><ellipse cx="1133.6599395973153" cy="495.2031386284756" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-34.4527994686033 1133.6599395973153 495.2031386284756)"/><ellipse cx="1140.5905033557046" cy="490.28518356471125" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-35.35966031319394 1140.5905033557046 490.28518356471125)"/><ellipse cx="1134.3945793557045" cy="484.97439156471125" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-35.35966031319394 1140.5905033557046 490.28518356471125)"/><ellipse cx="1147.521067114094" cy="485.20630261500685" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-36.23484249192558 1147.521067114094 485.20630261500685)"/><ellipse cx="1154.4516308724833" cy="479.9687535465263" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-37.07898358086025 1154.4516308724833 479.9687535465263)"/><ellipse cx="1148.2557068724832" cy="474.6579615465263" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-37.07898358086025 1154.4516308724833 479.9687535465263)"/><ellipse cx="1161.3821946308726" cy="474.5748646608024" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-37.892752581102236 1161.3821946308726 474.5748646608024)"/><ellipse cx="1168.312758389262" cy="469.0270337587152" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-38.67684199990296 1168.312758389262 469.0270337587152)"/><ellipse cx="1162.1168343892618" cy="463.7162417587152" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-38.67684199990296 1168.312758389262 469.0270337587152)"/><ellipse cx="1175.243322147651" cy="463.3277270745716" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-39.43196078416896 1175.243322147651 463.3277270745716)"/><ellipse cx="1182.1738859060401" cy="457.4794781797649" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-40.15882806375432 1182.1738859060401 457.4794781797649)"/><ellipse cx="1175.97796190604" cy="452.1686861797649" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-40.15882806375432 1182.1738859060401 457.4794781797649)"/><ellipse cx="1189.1044496644297" cy="451.4848868565009" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-40.85816765471726 1189.1044496644297 451.4848868565009)"/><ellipse cx="1196.0350134228188" cy="445.34661794208955" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-41.53070326814517 1196.0350134228188 445.34661794208955)"/><ellipse cx="1189.8390894228187" cy="440.03582594208956" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-41.53070326814517 1196.0350134228188 445.34661794208955)"/><ellipse cx="1202.9655771812081" cy="439.0674001443174" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-42.17715436782107 1202.9655771812081 439.0674001443174)"/><ellipse cx="1209.8961409395974" cy="432.65002482842726" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-42.79823261962483 1209.8961409395974 432.65002482842726)"/><ellipse cx="1203.7002169395973" cy="427.33923282842727" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-42.79823261962483 1209.8961409395974 432.65002482842726)"/><ellipse cx="1216.8267046979868" cy="426.09734477624374" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-43.39463887628385 1216.8267046979868 426.09734477624374)"/><ellipse cx="1223.7572684563759" cy="419.41227291799714" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-43.967060643124626 1223.7572684563759 419.41227291799714)"/><ellipse cx="1217.5613444563758" cy="414.10148091799715" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-43.967060643124626 1223.7572684563759 419.41227291799714)"/><ellipse cx="1230.687832214765" cy="412.59778103740825" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-44.51616997304301 1230.687832214765 412.59778103740825)"/><ellipse cx="1237.6183959731543" cy="405.6568984506107" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-45.04262174206951 1237.6183959731543 405.6568984506107)"/><ellipse cx="1231.4224719731542" cy="400.3461064506107" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-45.04262174206951 1237.6183959731543 405.6568984506107)"/><ellipse cx="1244.5489597315436" cy="398.5927106594987" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-45.54705226031125 1244.5489597315436 398.5927106594987)"/><ellipse cx="1251.479523489933" cy="391.40835798009596" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-46.0300781766444 1251.479523489933 391.40835798009596)"/><ellipse cx="1245.2835994899328" cy="386.09756598009596" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-46.0300781766444 1251.479523489933 391.40835798009596)"/><ellipse cx="1258.4100872483223" cy="384.10703414655995" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-46.49229563908207 1258.4100872483223 384.10703414655995)"/><ellipse cx="1265.3406510067116" cy="376.6919848914374" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-46.93427967631456 1265.3406510067116 376.6919848914374)"/><ellipse cx="1259.1447270067115" cy="371.3811928914374" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-46.93427967631456 1265.3406510067116 376.6919848914374)"/><ellipse cx="1272.271214765101" cy="369.1665065028061" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-47.356583769240345 1272.271214765101 369.1665065028061)"/><ellipse cx="1279.20177852349" cy="361.5339443589419" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-47.75973958458655 1279.20177852349 361.5339443589419)"/><ellipse cx="1273.00585452349" cy="356.2231523589419" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-47.75973958458655 1279.20177852349 361.5339443589419)"/><ellipse cx="1286.1323422818793" cy="353.79769144116295" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-48.14425684567333 1286.1323422818793 353.79769144116295)"/><ellipse cx="1293.0629060402684" cy="345.96118682551383" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-48.510623318203194 1293.0629060402684 345.96118682551383)"/><ellipse cx="1286.8669820402683" cy="340.65039482551384" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-48.510623318203194 1293.0629060402684 345.96118682551383)"/><ellipse cx="1299.9934697986578" cy="338.0279141539562" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-48.859304891476434 1299.9934697986578 338.0279141539562)"/><ellipse cx="1306.924033557047" cy="330.001400085751" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-49.190745737811994 1306.924033557047 330.001400085751)"/><ellipse cx="1300.728109557047" cy="324.690608085751" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-49.190745737811994 1306.924033557047 330.001400085751)"/><ellipse cx="1313.8545973154364" cy="321.88521272971553" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-49.50536853502607 1313.8545973154364 321.88521272971553)"/><ellipse cx="1320.7851610738255" cy="313.68296005805587" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-49.803574738750406 1320.7851610738255 313.68296005805587)"/><ellipse cx="1314.5892370738254" cy="308.3721680580559" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-49.803574738750406 1320.7851610738255 313.68296005805587)"/><ellipse cx="1327.7157248322146" cy="305.3982883024777" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-50.08574489306266 1327.7157248322146 305.3982883024777)"/><ellipse cx="1334.646288590604" cy="297.0348803332889" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-50.352238969431006 1334.646288590604 297.0348803332889)"/><ellipse cx="1328.4503645906038" cy="291.72408833328893" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-50.352238969431006 1334.646288590604 297.0348803332889)"/><ellipse cx="1341.5768523489933" cy="288.5964540222168" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-50.60339672529959 1341.5768523489933 288.5964540222168)"/><ellipse cx="1348.5074161073826" cy="280.08676058966216" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-50.83953807486895 1348.5074161073826 280.08676058966216)"/><ellipse cx="1342.3114921073825" cy="274.77596858966217" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-50.83953807486895 1348.5074161073826 280.08676058966216)"/><ellipse cx="1355.437979865772" cy="271.5095829371336" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-51.060963465627644 1355.437979865772 271.5095829371336)"/><ellipse cx="1362.3685436241612" cy="262.86873396559224" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-51.26795425518128 1362.3685436241612 262.86873396559224)"/><ellipse cx="1356.1726196241611" cy="257.55794196559225" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-51.26795425518128 1362.3685436241612 262.86873396559224)"/><ellipse cx="1369.2991073825506" cy="254.16805488046623" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-51.4607730836242 1369.2991073825506 254.16805488046623)"/><ellipse cx="1376.2296711409397" cy="245.411413484079" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-51.639664237525466 1376.2296711409397 245.411413484079)"/><ellipse cx="1370.0337471409396" cy="240.100621484079" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-51.639664237525466 1376.2296711409397 245.411413484079)"/><ellipse cx="1383.160234899329" cy="236.60270245625514" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-51.80485400209748 1383.160234899329 236.60270245625514)"/><ellipse cx="1390.090798657718" cy="227.74583762386825" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-51.956550998724474 1390.090798657718 227.74583762386825)"/><ellipse cx="1383.894874657718" cy="222.43504562386826" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-51.956550998724474 1390.090798657718 227.74583762386825)"/><ellipse cx="1397.0213624161074" cy="218.84475622009785" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.09494650541718 1397.0213624161074 218.84475622009785)"/><ellipse cx="1403.9519261744967" cy="209.90341513416988" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-52.22021475822678 1403.9519261744967 209.90341513416988)"/><ellipse cx="1397.7560021744966" cy="204.59262313416988" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-52.22021475822678 1403.9519261744967 209.90341513416988)"/><ellipse cx="1410.882489932886" cy="200.92578915236146" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.33251323188353 1410.882489932886 200.92578915236146)"/><ellipse cx="1417.8130536912752" cy="191.91586919104674" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-52.43198289833451 1417.8130536912752 191.91586919104674)"/><ellipse cx="1411.617129691275" cy="186.60507719104675" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-52.43198289833451 1417.8130536912752 191.91586919104674)"/><ellipse cx="1424.7436174496643" cy="182.87766052257518" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.51874846197466 1424.7436174496643 182.87766052257518)"/><ellipse cx="1431.6741812080538" cy="173.8151809947659" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-52.59291857068532 1431.6741812080538 173.8151809947659)"/><ellipse cx="1425.4782572080537" cy="168.50438899476592" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-52.59291857068532 1431.6741812080538 173.8151809947659)"/><ellipse cx="1438.604744966443" cy="164.73245924481256" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.654586001885704 1438.604744966443 164.73245924481256)"/><ellipse cx="1445.5353087248322" cy="155.6335329083922" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-52.70382782296942 1445.5353087248322 155.6335329083922)"/><ellipse cx="1439.3393847248321" cy="150.3227409083922" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-52.70382782296942 1445.5353087248322 155.6335329083922)"/><ellipse cx="1452.4658724832216" cy="146.52244682477266" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.7407055257064 1452.4658724832216 146.52244682477266)"/><ellipse cx="1459.396436241611" cy="137.40325123872003" rx="22.1283" ry="12.834413999999999"
+             fill="none" stroke="#C9AA6C" stroke-width="7.966188"
+             transform="rotate(-52.76526513413831 1459.396436241611 137.40325123872003)"/><ellipse cx="1453.2005122416108" cy="132.09245923872004" rx="6.63849" ry="2.876679"
+                    fill="#F0E3C0" opacity="0.65" transform="rotate(-52.76526513413831 1459.396436241611 137.40325123872003)"/><ellipse cx="1466.327" cy="128.28000000000006" rx="22.1283" ry="6.63849"
+             fill="none" stroke="#96793E" stroke-width="7.966188"
+             transform="rotate(-52.77753728576751 1466.327 128.28000000000006)"/>
+      <ellipse cx="969.6696" cy="659.3592000000001" rx="59.0088" ry="19.6696" fill="#6B6153" opacity="0.16" filter="url(#soft)"/>
+      
+  <g>
+    <circle cx="950" cy="610.1852" r="44.2566" fill="url(#stone-cool)"/>
+    <polygon points="989.6611339109828,626.6133795650246 966.4281795650246,649.8463339109828 957.1132323889797,627.3580621057864 967.1728621057864,617.2984323889797" fill="#6E8798" opacity="0.300"/><line x1="989.6611339109828" y1="626.6133795650246" x2="967.1728621057864" y2="617.2984323889797" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="966.4281795650246,649.8463339109828 933.5718204349754,649.8463339109828 942.8867676110203,627.3580621057864 957.1132323889797,627.3580621057864" fill="#6E8798" opacity="0.230"/><line x1="966.4281795650246" y1="649.8463339109828" x2="957.1132323889797" y2="627.3580621057864" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="933.5718204349754,649.8463339109828 910.3388660890172,626.6133795650246 932.8271378942136,617.2984323889797 942.8867676110203,627.3580621057864" fill="#FFFFFF" opacity="0.160"/><line x1="933.5718204349754" y1="649.8463339109828" x2="942.8867676110203" y2="627.3580621057864" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="910.3388660890172,626.6133795650246 910.3388660890172,593.7570204349754 932.8271378942136,603.0719676110203 932.8271378942136,617.2984323889797" fill="#FFFFFF" opacity="0.514"/><line x1="910.3388660890172" y1="626.6133795650246" x2="932.8271378942136" y2="617.2984323889797" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="910.3388660890172,593.7570204349754 933.5718204349754,570.5240660890172 942.8867676110203,593.0123378942136 932.8271378942136,603.0719676110203" fill="#FFFFFF" opacity="0.660"/><line x1="910.3388660890172" y1="593.7570204349754" x2="932.8271378942136" y2="603.0719676110203" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="933.5718204349754,570.5240660890172 966.4281795650246,570.5240660890172 957.1132323889797,593.0123378942136 942.8867676110203,593.0123378942136" fill="#FFFFFF" opacity="0.514"/><line x1="933.5718204349754" y1="570.5240660890172" x2="942.8867676110203" y2="593.0123378942136" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="966.4281795650246,570.5240660890172 989.6611339109828,593.7570204349754 967.1728621057864,603.0719676110203 957.1132323889797,593.0123378942136" fill="#6E8798" opacity="0.060"/><line x1="966.4281795650246" y1="570.5240660890172" x2="957.1132323889797" y2="593.0123378942136" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/><polygon points="989.6611339109828,593.7570204349754 989.6611339109828,626.6133795650246 967.1728621057864,617.2984323889797 967.1728621057864,603.0719676110203" fill="#6E8798" opacity="0.230"/><line x1="989.6611339109828" y1="593.7570204349754" x2="967.1728621057864" y2="603.0719676110203" stroke="#5E7284" stroke-opacity="0.45" stroke-width="0.7081056"/>
+    <polygon points="967.1728621057864,617.2984323889797 957.1132323889797,627.3580621057864 942.8867676110203,627.3580621057864 932.8271378942136,617.2984323889797 932.8271378942136,603.0719676110203 942.8867676110203,593.0123378942136 957.1132323889797,593.0123378942136 967.1728621057864,603.0719676110203" fill="url(#table-cool)"/>
+    <polygon points="967.1728621057864,617.2984323889797 957.1132323889797,627.3580621057864 942.8867676110203,627.3580621057864 932.8271378942136,617.2984323889797 932.8271378942136,603.0719676110203 942.8867676110203,593.0123378942136 957.1132323889797,593.0123378942136 967.1728621057864,603.0719676110203" fill="none" stroke="#5E7284" stroke-opacity="0.55" stroke-width="0.8497267199999999"/>
+    <circle cx="950" cy="610.1852" r="42.928902" fill="none" stroke="#526676" stroke-opacity="0.5" stroke-width="0.7081056"/>
+    <circle cx="950" cy="610.1852" r="44.2566" fill="none" stroke="#63788A" stroke-opacity="0.6" stroke-width="1.1329689600000001"/>
+    <path d="M 929.641964 588.0569 l 13.27698 7.081056" stroke="#FFFFFF" stroke-opacity="0.95"
+          stroke-width="1.6994534399999999" stroke-linecap="round"/>
   </g>
-  <rect width="1600" height="900" filter="url(#n)" opacity="0.045"/>
+  <rect width="1900" height="1069" fill="url(#vignette)"/>
+  <rect width="1900" height="1069" filter="url(#grain)" opacity="0.05" style="mix-blend-mode:overlay"/>
 </svg>
