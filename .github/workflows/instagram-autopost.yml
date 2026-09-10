@@ -60,9 +60,9 @@ jobs:
         run: |
           cd instagram-autopost
           if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.live }}" = "true" ]; then
-            ./bin/igpost due --live --env ../.env
+            ./bin/igpost --env ../.env due --live
           else
-            ./bin/igpost due --env ../.env
+            ./bin/igpost --env ../.env due
           fi
 
       - name: Remove credentials before anything else runs
