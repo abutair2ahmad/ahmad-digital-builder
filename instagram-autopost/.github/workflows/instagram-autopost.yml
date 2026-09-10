@@ -32,6 +32,8 @@ jobs:
       - name: Create env
         run: |
           cat > ../.env <<EOF
+          INSTAGRAM_MOVEWELL_IG_ID=${{ secrets.INSTAGRAM_MOVEWELL_IG_ID }}
+          INSTAGRAM_MOVEWELL_TOKEN=${{ secrets.INSTAGRAM_MOVEWELL_TOKEN }}
           INSTAGRAM_BYNEXORA_IG_ID=${{ secrets.INSTAGRAM_BYNEXORA_IG_ID }}
           INSTAGRAM_BYNEXORA_TOKEN=${{ secrets.INSTAGRAM_BYNEXORA_TOKEN }}
           IG_PUBLISH_ENABLED=true
