@@ -36,10 +36,8 @@ jobs:
         # Chrome ships with the runner; the Hebrew and Latin faces do not.
         run: |
           sudo apt-get update -qq
-
-sudo apt-get install -y -qq fonts-noto-core fonts-inter || \
-sudo apt-get install -y -qq fonts-noto-core
-          
+          sudo apt-get install -y -qq fonts-noto-core fonts-inter || \
+            sudo apt-get install -y -qq fonts-noto-core
 
       - name: Write .env from secrets
         run: |
@@ -49,7 +47,7 @@ sudo apt-get install -y -qq fonts-noto-core
           INSTAGRAM_BYNEXORA_IG_ID=${{ secrets.INSTAGRAM_BYNEXORA_IG_ID }}
           INSTAGRAM_BYNEXORA_TOKEN=${{ secrets.INSTAGRAM_BYNEXORA_TOKEN }}
           INSTAGRAM_GRAPH_HOST=${{ secrets.INSTAGRAM_GRAPH_HOST }}
-          IG_PUBLISH_ENABLED=${{ vars.IG_PUBLISH_ENABLED }}
+          IG_PUBLISH_ENABLED=true
           IMAGE_HOST=r2
           R2_ACCOUNT_ID=${{ secrets.R2_ACCOUNT_ID }}
           R2_ACCESS_KEY_ID=${{ secrets.R2_ACCESS_KEY_ID }}
