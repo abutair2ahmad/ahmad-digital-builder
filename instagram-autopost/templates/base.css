@@ -29,8 +29,18 @@ body {
   overflow: hidden;
 }
 
-.stage > * { flex: 0 0 auto; }          /* natural height; auto-fit shrinks type instead */
+.stage > * {
+  flex: 0 0 auto;
+  min-width: 0;
+}                                      /* natural height; auto-fit shrinks type instead */
 .stage > .spacer, .stage > .split, .stage > .cols, .stage > .slab, .stage > .fill { flex: 1 1 auto; }
+
+/* RTL text can otherwise keep a flex item at its unwrapped min-content width. */
+[dir="rtl"] [data-fit] {
+  min-width: 0;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
 
 /* Full-bleed layouts centre their message in the space between kicker and footer,
    rather than stacking at the top and leaving a dead half-frame underneath. */
@@ -99,7 +109,7 @@ body {
   background: var(--accent); color: var(--accent-ink);
   display: grid; place-items: center; font-size: 34px; font-weight: 700;
 }
-.tip__t { font-size: 40px; font-weight: 600; line-height: 1.25; }
+.tip__t { min-width: 0; font-size: 40px; font-weight: 600; line-height: 1.25; }
 
 /* ---- problem -> solution: a split frame ---- */
 .split { display: flex; flex-direction: column; gap: 24px; margin-top: 48px; flex: 1 1 auto; }
@@ -110,7 +120,7 @@ body {
 .split__half--bad { background: var(--surface); border: var(--stroke) solid var(--line); }
 .split__half--good { background: var(--accent); color: var(--accent-ink); }
 .split__label { font-size: 26px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .75; }
-.split__text { font-size: 52px; font-weight: 600; line-height: 1.22; }
+.split__text { min-width: 0; font-size: 52px; font-weight: 600; line-height: 1.22; }
 
 /* ---- compare: two columns ---- */
 .cols { display: flex; gap: 26px; margin-top: 52px; flex: 1 1 auto; }

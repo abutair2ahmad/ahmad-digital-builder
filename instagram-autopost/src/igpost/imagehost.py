@@ -20,6 +20,7 @@ import hashlib
 import hmac
 import os
 import shutil
+import time
 import urllib.error
 import urllib.request
 
@@ -47,7 +48,7 @@ def _signing_key(secret, date_stamp, region=REGION, service=SERVICE):
     return _sign(key, "aws4_request")
 
 
-def put_r2(env, key, body, content_type="image/png", timeout=60):
+def put_r2(env, key, body, content_type="image/png", timeout=60, attempts=3):
     """PUT one object into an R2 bucket with a SigV4 signature. Returns the public URL."""
     required = ("R2_ACCOUNT_ID", "R2_ACCESS_KEY_ID", "R2_SECRET_ACCESS_KEY",
                 "R2_BUCKET", "R2_PUBLIC_BASE_URL")
@@ -88,15 +89,19 @@ def put_r2(env, key, body, content_type="image/png", timeout=60):
                  "x-amz-date": amz_date, "Content-Type": content_type,
                  "Content-Length": str(len(body))},
     )
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            if response.status not in (200, 201):
-                raise ImageHostError("R2 returned HTTP %s" % response.status)
-    except urllib.error.HTTPError as exc:
-        # Body may echo the request; only the status is safe to surface.
-        raise ImageHostError("R2 upload rejected with HTTP %s" % exc.code)
-    except urllib.error.URLError as exc:
-        raise ImageHostError("R2 upload could not connect: %s" % type(exc.reason).__name__)
+    for attempt in range(attempts):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                if response.status not in (200, 201):
+                    raise ImageHostError("R2 returned HTTP %s" % response.status)
+                break
+        except urllib.error.HTTPError as exc:
+            # Body may echo the request; only the status is safe to surface.
+            raise ImageHostError("R2 upload rejected with HTTP %s" % exc.code)
+        except urllib.error.URLError as exc:
+            if attempt == attempts - 1:
+                raise ImageHostError("R2 upload could not connect: %s" % type(exc.reason).__name__)
+            time.sleep(2 ** attempt)
 
     return "%s/%s" % (env["R2_PUBLIC_BASE_URL"].rstrip("/"), key.lstrip("/"))
 
