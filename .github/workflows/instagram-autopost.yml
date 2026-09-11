@@ -19,6 +19,25 @@ on:
         description: "Publish for real (otherwise dry run)"
         type: boolean
         default: false
+      brand:
+        description: "Brand for a targeted retry"
+        type: choice
+        options:
+          - movewell
+          - bynexora
+        default: movewell
+      date:
+        description: "Date for a targeted retry (YYYY-MM-DD)"
+        type: string
+        required: false
+      slot:
+        description: "Slot for a targeted retry"
+        type: choice
+        options:
+          - "10:00"
+          - "15:00"
+          - "20:30"
+        default: "10:00"
 
 concurrency:
   group: instagram-autopost      # never two publishing runs at once
@@ -59,7 +78,9 @@ jobs:
       - name: Run whatever is due
         run: |
           cd instagram-autopost
-          if [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.live }}" = "true" ]; then
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ -n "${{ inputs.date }}" ]; then
+            ./bin/igpost --env ../.env run --brand "${{ inputs.brand }}" --date "${{ inputs.date }}" --slot "${{ inputs.slot }}" --live
+          elif [ "${{ github.event_name }}" = "schedule" ] || [ "${{ inputs.live }}" = "true" ]; then
             ./bin/igpost --env ../.env due --live
           else
             ./bin/igpost --env ../.env due
