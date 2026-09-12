@@ -118,15 +118,20 @@ def put_local(env, key, source_path):
     return "%s/%s" % (base.rstrip("/"), key.lstrip("/"))
 
 
-def upload(env, key, source_path):
-    """Upload via the configured backend. Returns (url, backend)."""
+def upload(env, key, source_path, content_type="image/png"):
+    """Upload via the configured backend. Returns (url, backend).
+
+    `content_type` defaults to the feed's own image/png so every existing call
+    site (runner.py) is unaffected; a caller uploading a video passes
+    "video/mp4" explicitly (see bin/igstory).
+    """
     backend = (env.get("IMAGE_HOST") or "r2").strip().lower()
     if backend == "local":
         return put_local(env, key, source_path), "local"
     if backend == "r2":
         with open(source_path, "rb") as handle:
             body = handle.read()
-        return put_r2(env, key, body), "r2"
+        return put_r2(env, key, body, content_type=content_type), "r2"
     raise ImageHostError("unknown IMAGE_HOST %r (expected 'r2' or 'local')" % backend)
 
 

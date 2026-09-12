@@ -5,57 +5,56 @@
   "language": "ar",
   "direction": "rtl",
   "site": "bynexora.co",
-  "voice": "Direct, senior, commercially minded. Speaks to business owners about revenue and friction, not about design trends.",
+  "voice": "Confident, senior digital studio. Speaks through real, shipped work — ORIVA, NACRE — not abstract promises about design trends. Direct about what's a live client project versus a portfolio build; never invents a client or a result.",
   "palette": {
-    "bg": "#0A0A0F",
-    "surface": "#14141E",
-    "ink": "#F5F4FA",
-    "muted": "#9C9AB4",
-    "accent": "#7C6CFF",
-    "accent_ink": "#0A0A0F",
-    "accent_soft": "#1E1B3A",
-    "sand": "#2A2740",
-    "line": "#282738"
+    "bg": "#0E1211",
+    "surface": "#161B19",
+    "ink": "#ECEAE3",
+    "muted": "#A0A9A4",
+    "accent": "#7FCBAC",
+    "accent_ink": "#0E1211",
+    "accent_soft": "#182521",
+    "line": "#262D2A"
   },
   "type": {
-    "family": "\"Inter\", -apple-system, system-ui, \"Helvetica Neue\", Arial, sans-serif",
-    "display_weight": 700,
+    "family": "\"IBM Plex Sans Arabic\", -apple-system, system-ui, \"Segoe UI\", sans-serif",
+    "display_weight": 600,
     "body_weight": 400,
-    "tracking": "-0.03em"
+    "tracking": "-0.02em"
   },
   "shape": {
-    "radius": 8,
-    "radius_pill": 8,
+    "radius": 14,
+    "radius_pill": 999,
     "stroke": 1
   },
   "logo_text": "NEXORA",
   "footer_text": "bynexora.co",
   "cta_pool": [
-    "DM “SITE” for a free 10-minute audit",
-    "Link in bio → see the work",
-    "Save this before your next redesign",
-    "Booking 2 projects this month — DM to check fit"
+    "أرسل كلمة «موقع» لفحص مجاني لمدة 10 دقائق",
+    "الرابط في النبذة ← شاهد الأعمال",
+    "احفظ هذا المنشور قبل إعادة تصميم موقعك",
+    "موعدان متاحان هذا الشهر — أرسل رسالة لنتحقق من الملاءمة"
   ],
   "hashtag_pools": {
     "core": [
       "#nexora",
-      "#webdesign",
-      "#smallbusinesswebsite"
+      "#تصميم_مواقع",
+      "#مواقع_الأعمال"
     ],
     "topic": [
-      "#shopify",
-      "#ecommercedesign",
-      "#bookingsystem",
-      "#uxdesign",
-      "#landingpage",
-      "#businessautomation",
-      "#branding",
-      "#conversionrate"
+      "#شوبيفاي",
+      "#متاجر_إلكترونية",
+      "#نظام_حجز",
+      "#تجربة_المستخدم",
+      "#صفحة_هبوط",
+      "#أتمتة_الأعمال",
+      "#هوية_بصرية",
+      "#تحسين_التحويل"
     ],
     "market": [
-      "#smallbusinessowner",
-      "#freelancewebdesigner",
-      "#websitedesigner"
+      "#أصحاب_المشاريع",
+      "#مصمم_مواقع",
+      "#تصميم_رقمي"
     ]
   },
   "claim_guard": {

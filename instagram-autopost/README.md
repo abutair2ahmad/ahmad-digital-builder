@@ -24,9 +24,11 @@ never publishes a partially-correct image.
     bin/igpost render --date 2026-09-05  render all six posts, publish nothing
     bin/igpost run --brand movewell --slot 10:00          dry run
     bin/igpost run --brand movewell --slot 10:00 --live   publishes
-    bin/igpost due  [--live]             run whatever is due right now
+    bin/igpost due  [--live] [--brand B] run whatever is due right now (default: all brands)
     bin/igpost history --brand movewell  the ledger
     bin/igpost verify                    read-only identity + quota check
+    bin/igstory publish --brand movewell --media-type STORIES --video out/story.mp4
+    bin/igstory publish --brand bynexora --media-type REELS --video out/reel.mp4 --caption "..."
 
 ## Layout
 
@@ -86,6 +88,14 @@ recovered by the next one, inside the 90-minute catch-up window.
   Each slot is scheduled at both of its possible UTC times and the runner discards
   the half that is not really due. The workflow commits the ledger back, which is
   what keeps idempotency working across stateless runs.
+
+## Video publishing
+
+`bin/igstory publish` uploads an MP4 to the configured public host, creates the
+appropriate `STORIES` or `REELS` container, waits for Meta processing, and
+publishes it once. It records the container before publishing and uses a video
+hash in `state/<brand>/stories.jsonl` to prevent duplicate publishes. Reels may
+include `--caption`; Stories do not support captions through this API path.
 
 ## Host requirements
 

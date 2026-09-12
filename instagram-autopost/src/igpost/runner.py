@@ -65,7 +65,8 @@ def run_slot(root, brand, date_str, slot, env_path=".env", dry_run=None, verbose
     paths = _paths(root)
     key = history.post_key(brand, date_str, slot)
     env = read_env(env_path)
-    secrets = [v for k, v in env.items() if "TOKEN" in k or "SECRET" in k or "KEY" in k]
+    secrets = [v for k, v in env.items()
+               if "TOKEN" in k or "SECRET" in k or "KEY" in k or k.endswith("_IG_ID")]
 
     if dry_run is None:
         dry_run = (env.get("IG_PUBLISH_ENABLED", "").strip().lower() not in TRUE_VALUES)
@@ -108,6 +109,12 @@ def run_slot(root, brand, date_str, slot, env_path=".env", dry_run=None, verbose
             emit("skipped: %s" % exc)
             record(history.SKIPPED, reason=str(exc), stage="caption", idea_id=idea["id"], topic=idea.get("topic"))
             return {"key": key, "action": "skipped", "reason": str(exc), "published": False}
+            if brand_cfg.get("language") == "ar" and any("A" <= char <= "Z" or "a" <= char <= "z"
+                                      for char in post["text"]):
+                reason = "Arabic account caption contains Latin text"
+                emit("skipped: %s" % reason)
+                record(history.SKIPPED, reason=reason, stage="language", idea_id=idea["id"], topic=idea.get("topic"))
+                return {"key": key, "action": "skipped", "reason": reason, "published": False}
 
         # ---- render ---------------------------------------------------------
         stem = "%s-%s" % (slot.replace(":", ""), idea["id"])

@@ -130,3 +130,67 @@ def publish_container(account, brand, container_id, host=DEFAULT_HOST, version=D
     if not media_id:
         raise PublishError("Instagram returned no media id for container %s" % container_id)
     return str(media_id)
+
+
+# ---------------------------------------------------------------------------
+# Stories. Additive only — nothing above this line is changed, and the feed
+# path (create_container/publish_container for media_type=IMAGE) never calls
+# into any of this. A Story has no caption via the Graph API, so this is a
+# narrower request than the feed's.
+
+def describe_story_container_request(account, brand, video_url, host=DEFAULT_HOST, version=DEFAULT_VERSION):
+    """The exact request a Story container-create call would send — built, never sent.
+
+    Lets the pipeline be verified end-to-end (endpoint, method, every param) with
+    zero network access and zero risk of publishing, by construction rather than
+    by a --dry-run flag someone could forget.
+    """
+    account.assert_owns(brand)
+    return {
+        "method": "POST",
+        "url": "%s://%s/%s/%s/media" % (GRAPH_SCHEME, host, version, account.ig_id),
+        "params": {
+            "media_type": "STORIES",
+            "video_url": video_url,
+            "access_token": "<%s>" % account.tag,
+        },
+    }
+
+
+def create_story_container(account, brand, video_url, host=DEFAULT_HOST, version=DEFAULT_VERSION):
+    """Step 1 for a video Story."""
+    return create_video_container(account, brand, "STORIES", video_url,
+                                  host=host, version=version)
+
+
+def create_reel_container(account, brand, video_url, caption, host=DEFAULT_HOST, version=DEFAULT_VERSION):
+    """Step 1 for a Reel. Meta fetches the public HTTPS video URL."""
+    return create_video_container(account, brand, "REELS", video_url, caption=caption,
+                                  host=host, version=version)
+
+
+def create_video_container(account, brand, media_type, video_url, caption=None,
+                           host=DEFAULT_HOST, version=DEFAULT_VERSION):
+    """Create a video container for the isolated account lane."""
+    account.assert_owns(brand)
+    if media_type not in ("STORIES", "REELS"):
+        raise PublishError("unsupported video media type %s" % media_type)
+    params = {"media_type": media_type, "video_url": video_url}
+    if caption and media_type == "REELS":
+        params["caption"] = caption
+    data = _post(host, version, "%s/media" % account.ig_id, params, account.token)
+    container_id = data.get("id")
+    if not container_id:
+        raise PublishError("Instagram returned no video container id")
+    return str(container_id)
+
+
+def publish_video_container(account, brand, container_id, host=DEFAULT_HOST, version=DEFAULT_VERSION):
+    """Step 2 for a Reel or Story. Returns the published media id."""
+    account.assert_owns(brand)
+    data = _post(host, version, "%s/media_publish" % account.ig_id,
+                 {"creation_id": container_id}, account.token)
+    media_id = data.get("id")
+    if not media_id:
+        raise PublishError("Instagram returned no media id for video container %s" % container_id)
+    return str(media_id)

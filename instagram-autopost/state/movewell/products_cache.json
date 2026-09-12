@@ -1,0 +1,266 @@
+{
+  "fetched_at": "2026-09-08T15:16:07+00:00",
+  "note": "snapshot fetched live via the connected Shopify MCP integration (get-shop-info + search_products, status:active) on 2026-09-08; set SHOPIFY_ADMIN_API_TOKEN in .env for bin/igstory to fetch live on its own",
+  "products": [
+    {
+      "id": "gid://shopify/Product/8482169389226",
+      "sku": "MW-PIL-001",
+      "title": "ContourPro™ כרית צווארית ארגונומית מספוג זיכרון",
+      "handle": "contourpro™-ergonomic-memory-foam-cervical-pillow",
+      "price": "249.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/71EN342Gz2L._AC_SL1500_4010bda6-c11d-4ad1-9e4d-acd34b13ef4e.jpg?v=1784136882",
+      "benefit": "התעוררו רעננים תיהנו מנוחות טובה יותר בכל לילה עם כרית צווארית ארגונומית מספוג זיכרון.…"
+    },
+    {
+      "id": "gid://shopify/Product/8483165601962",
+      "sku": "MW-PIL-002",
+      "title": "ErgoTravel™ כרית תמיכה לצוואר בצורת U",
+      "handle": "ergotravel™-u-shaped-neck-support-pillow",
+      "price": "110.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/01_lifestyle_hero_342a8457-4086-45ff-8665-fe64259a2389.png?v=1784136654",
+      "benefit": "לטייל בנוחות תיהנו מנוחות משופרת בכל מקום שאליו המסע שלכם לוקח אתכם עם כרית התמיכה לצוואר…"
+    },
+    {
+      "id": "gid://shopify/Product/8483242770602",
+      "sku": "MW-MSG-001",
+      "title": "ThermaNeck™ כרית עיסוי צווארית מחוממת",
+      "handle": "thermaneck™-heated-cervical-massage-pillow",
+      "price": "210.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/neck_massager_11_8d2e25d5-2846-4454-928b-2baa42ae6f4f.png?v=1784136201",
+      "benefit": "לטייל בנוחות תיהנו מנוחות טובה יותר בכל מקום שאליו המסע שלכם לוקח אתכם עם כרית התמיכה…"
+    },
+    {
+      "id": "gid://shopify/Product/8483288776874",
+      "sku": "MW-MSG-002",
+      "title": "מכשיר עיסוי לרגליים",
+      "handle": "leg-massager",
+      "price": "240.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/main-image-1_1.jpg?v=1784136488",
+      "benefit": "הרפו את הרגליים בכל זמן ובכל מקום העניקו לרגליים עייפות את הנוחות שמגיעה להן עם מכשיר…"
+    },
+    {
+      "id": "gid://shopify/Product/8488515109034",
+      "sku": "MW-MSG-003",
+      "title": "מעסה חכם לקרסול ולשורש כף היד עם חימום ורטט",
+      "handle": "מעסה-חכם-לקרסול-ולשורש-כף-היד-עם-חימום-ורטט",
+      "price": "180.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/image_1.png?v=1784215963",
+      "benefit": "תיאור המוצר העניקו לעצמכם הקלה מיידית עם מכשיר עיסוי חכם המשלב חימום ורטט להפחתת כאבים,…"
+    },
+    {
+      "id": "gid://shopify/Product/8488567275690",
+      "sku": "MW-MSG-004",
+      "title": "מעסה צוואר מחמם",
+      "handle": "מעסה-צוואר-מחמם",
+      "price": "299.9",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_01.png?v=1784216890",
+      "benefit": "תיאור המוצר: הקלו על כאבי שרירים ומתחים עם מכשיר עיסוי שיאצו לצוואר ולכתפיים. כולל ראשי…"
+    },
+    {
+      "id": "gid://shopify/Product/8488604336298",
+      "sku": "MW-MSG-005",
+      "title": "מעסה צוואר חכם",
+      "handle": "מעסה-צוואר-חכם",
+      "price": "189.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/main-image-1_76c7e429-5762-4dc2-a21f-07f50aeaa449.jpg?v=1784217476",
+      "benefit": "תיאור המוצר שחררו את המתח והכאבים בצוואר בכל זמן ובכל מקום. מעסה הצוואר הנייד מספק עיסוי…"
+    },
+    {
+      "id": "gid://shopify/Product/8488609775786",
+      "sku": "MW-MSG-006",
+      "title": "מעסה צוואר וכתפיים עם חימום",
+      "handle": "מעסה-צוואר-וכתפיים-עם-חימום",
+      "price": "289.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/bionic_hebrew_1.png?v=1784217800",
+      "benefit": "תיאור המוצר העניקו לעצמכם עיסוי עמוק ומרגיע בכל יום. מעסה הצוואר והכתפיים משלב לישת…"
+    },
+    {
+      "id": "gid://shopify/Product/8488650014890",
+      "sku": "MW-TRV-001",
+      "title": "ערסל לרגליים לנסיעות",
+      "handle": "ערסל-לרגליים-לנסיעות",
+      "price": "249.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/travel_footrest_he_1.png?v=1784218461",
+      "benefit": "תיאור המוצר: הפכו כל נסיעה לנוחה יותר עם ערסל רגליים מתנפח. מתחבר בקלות למגש במטוס או…"
+    },
+    {
+      "id": "gid://shopify/Product/8488664301738",
+      "sku": "MW-PIL-003",
+      "title": "כרית מושב אורטופדית מזיכרון עם תמיכה לגב התחתון",
+      "handle": "כרית-מושב-אורטופדית-מזיכרון-עם-תמיכה-לגב-התחתון",
+      "price": "355.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/image_1_e0e0196d-b591-4a51-859c-4808d218aaab.png?v=1784218951",
+      "benefit": "תיאור המוצר: שדרגו את חוויית הישיבה שלכם עם כרית מושב ארגונומית העשויה מקצף זיכרון…"
+    },
+    {
+      "id": "gid://shopify/Product/8488708210858",
+      "sku": "MW-SHO-001",
+      "title": "נעלי הליכה אורתופדיות לגברים – נושמות, קלות ונוחות לטיולים ולשימוש יומיומי",
+      "handle": "נעלי-הליכה-אורתופדיות-לגברים-נושמות-קלות-ונוחות-לטיולים-ולשימוש-יומיומי",
+      "price": "230.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/shoe_01.png?v=1784219320",
+      "benefit": "תיאור מוצר העניקו לרגליים שלכם את הנוחות והתמיכה שהן ראויות להן. נעלי ההליכה האורתופדיות…"
+    },
+    {
+      "id": "gid://shopify/Product/8488721907882",
+      "sku": "MW-PIL-004",
+      "title": "כרית צוואר מקררת בצורת U לנסיעות",
+      "handle": "כרית-צוואר-מקררת-בצורת-u-לנסיעות",
+      "price": "230.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/Panel_1.png?v=1784219843",
+      "benefit": "תיאור המוצר הפכו כל נסיעה לחוויה נוחה יותר עם כרית הצוואר הארגונומית בצורת U. הכרית עשויה…"
+    },
+    {
+      "id": "gid://shopify/Product/8491181047978",
+      "sku": "MW-FIT-001",
+      "title": "לוח שכיבות סמיכה מקצועי",
+      "handle": "לוח-שכיבות-סמיכה-מקצועי",
+      "price": "280.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/image_1_4eb75a4b-752c-4401-b885-61529e6f98b5.png?v=1784290814",
+      "benefit": "תיאור המוצר שדרגו את האימונים שלכם עם PowerPush Pro – לוח שכיבות סמיכה מתקפל ורב־תכליתי,…"
+    },
+    {
+      "id": "gid://shopify/Product/8491204739242",
+      "sku": "MW-FIT-002",
+      "title": "ווי הרמה מקצועיים עם רצועות תמיכה מרופדות לשורש כף היד",
+      "handle": "ווי-הרמה-מקצועיים-עם-רצועות-תמיכה-מרופדות-לשורש-כף-היד",
+      "price": "149.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_1_b3e00f4f-1e2c-473a-85a9-b8c3c88641f2.png?v=1784291630",
+      "benefit": "תיאור המוצר: שדרגו את אימוני הכוח שלכם עם ווי הרמה מקצועיים המיועדים להפחית את העומס על…"
+    },
+    {
+      "id": "gid://shopify/Product/8491218206890",
+      "sku": "MW-FIT-003",
+      "title": "סט גומיות התנגדות למתח – סיוע לעליות מתח ואימוני כוח",
+      "handle": "סט-גומיות-התנגדות-למתח-סיוע-לעליות-מתח-ואימוני-כוח",
+      "price": "189.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_1_50aba971-1e4a-43bd-abb2-76ce6f9ef63e.png?v=1784292112",
+      "benefit": "תיאור המוצר שפרו את הכוח והביצועים שלכם עם סט גומיות ההתנגדות לאימוני מתח. הגומיות מספקות…"
+    },
+    {
+      "id": "gid://shopify/Product/8491287806122",
+      "sku": "MW-FIT-004",
+      "title": "סט גומיות התנגדות לאימוני כושר – עם רצועות קרסול לאימון ביתי",
+      "handle": "סט-גומיות-התנגדות-לאימוני-כושר-עם-רצועות-קרסול-לאימון-ביתי",
+      "price": "90.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_2_0c7c6be3-adb0-4824-91c6-26ed680e482f.png?v=1784294518",
+      "benefit": "תיאור המוצר שדרגו את האימונים שלכם עם סט גומיות ההתנגדות המקצועי, המיועד לאימוני כוח,…"
+    },
+    {
+      "id": "gid://shopify/Product/8491303501994",
+      "sku": "MW-FIT-005",
+      "title": "סט גומיות כושר עם דוושות – מכשיר אימון רב־תכליתי לבית",
+      "handle": "סט-גומיות-כושר-עם-דוושות-מכשיר-אימון-רב-תכליתי-לבית",
+      "price": "129.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_7_f2b98e88-7967-4f2c-a196-c8f07da5c323.png?v=1784295051",
+      "benefit": "תיאור המוצר הפכו כל מקום לחדר כושר עם סט גומיות הכושר בעל 4 צינורות ההתנגדות. המכשיר…"
+    },
+    {
+      "id": "gid://shopify/Product/8493386465450",
+      "sku": "MW-FIT-006",
+      "title": "PelviFit Pro – מאמן חכם לרצפת האגן והירכיים",
+      "handle": "pelvifit-pro-מאמן-חכם-לרצפת-האגן-והירכיים",
+      "price": "149.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/image_2_6b040f51-b248-4919-8cf3-ec9aeb6fffa9.png?v=1784362455",
+      "benefit": "PelviFit Pro – אימון חכם ונוח בבית מכשיר אימון מתכוונן המיועד לחיזוק שרירי רצפת האגן,…"
+    },
+    {
+      "id": "gid://shopify/Product/8493395247274",
+      "sku": "MW-FIT-007",
+      "title": "סט עיסוי 5 ב-1 – רולר קצף, מקל עיסוי וכדור עיסוי לשחרור שרירים עמוק",
+      "handle": "סט-עיסוי-5-ב-1-רולר-קצף-מקל-עיסוי-וכדור-עיסוי-לשחרור-שרירים-עמוק-לפילאטיס-יוגה-ואימוני-גוף-מלא",
+      "price": "389.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/massage_set_1.png?v=1784362964",
+      "benefit": "תיאור המוצר שדרגו את שגרת ההתאוששות והאימונים שלכם עם סט עיסוי 5 ב-1 – ערכה מושלמת לשחרור…"
+    },
+    {
+      "id": "gid://shopify/Product/8493409108138",
+      "sku": "MW-BLT-001",
+      "title": "מתקן יציבה מתכוונן לגב ולכתפיים",
+      "handle": "מתקן-יציבה-מתכוונן-לגב-ולכתפיים",
+      "price": "279.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_3_6593bf97-aeea-4652-b641-b21b86bdd7dc.png?v=1784363740",
+      "benefit": "מתקן יציבה אורטופדי מתכוונן לגב ולכתפיים שפרו את היציבה והעניקו לגב תמיכה נוספת במהלך…"
+    },
+    {
+      "id": "gid://shopify/Product/8493416120490",
+      "sku": "MW-BLT-002",
+      "title": "חגורת תמיכה פרימיום לגב התחתון",
+      "handle": "חגורת-תמיכה-פרימיום-לגב-התחתון",
+      "price": "340.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/neenca_hebrew_1.png?v=1784364546",
+      "benefit": "חגורת תמיכה אורטופדית למותניים ולגב התחתון העניקו לגב התחתון שלכם את התמיכה שהוא צריך…"
+    },
+    {
+      "id": "gid://shopify/Product/8493417660586",
+      "sku": "MW-BLT-003",
+      "title": "חגורת תמיכה מתנפחת אורטופדית לגב התחתון",
+      "handle": "חגורת-תמיכה-מתנפחת-אורטופדית-לגב-התחתון",
+      "price": "209.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/inflatable_belt_hebrew_1.png?v=1784365371",
+      "benefit": "תיאור המוצר העניקו לגב התחתון תמיכה מתקדמת ונוחות מרבית עם חגורת התמיכה המתנפחת. כרית…"
+    },
+    {
+      "id": "gid://shopify/Product/8493431488682",
+      "sku": "MW-BLT-004",
+      "title": "חגורת תמיכה מתכווננת להריון לבטן ולגב",
+      "handle": "חגורת-תמיכה-מתכווננת-להריון-לבטן-ולגב",
+      "price": "149.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_1_2ab83f4d-cd94-4855-819e-8f25b6d19043.png?v=1784367868",
+      "benefit": "תיאור המוצר העניקי לעצמך תמיכה ונוחות לאורך כל תקופת ההריון. חגורת התמיכה המתכווננת…"
+    },
+    {
+      "id": "gid://shopify/Product/8493432144042",
+      "sku": "MW-BLT-005",
+      "title": "מתקן יציבה חכם – ניטור בזמן אמת לתיקון היציבה למבוגרים ולילדים",
+      "handle": "מתקן-יציבה-חכם-ניטור-בזמן-אמת-לתיקון-היציבה-למבוגרים-ולילדים",
+      "price": "199.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_1_82f3cfe2-26fe-4292-94f5-3eaadd489125.png?v=1784368371",
+      "benefit": "תיאור המוצר: שפרו את היציבה שלכם בצורה חכמה ונוחה עם מתקן היציבה החכם המנטר את תנוחת הגוף…"
+    },
+    {
+      "id": "gid://shopify/Product/8493550567594",
+      "sku": "MW-BLT-006",
+      "title": "תומך צוואר, ראש וחזה מתכוונן עם מסגרת אלומיניום אורתופדית",
+      "handle": "תומך-צוואר-ראש-וחזה-מתכוונן-עם-מסגרת-אלומיניום-אורתופדית",
+      "price": "480.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/panel_1_423702fe-0d8b-442d-9c55-a2cae13a4141.png?v=1784373984",
+      "benefit": "תיאור מוצר שמרו על יציבות ותמיכה מרבית במהלך תהליך השיקום עם סד אורתופדי מתכוונן לצוואר,…"
+    },
+    {
+      "id": "gid://shopify/Product/8593306845354",
+      "sku": "MW-PIL-005",
+      "title": "OrthoNest™ – כרית תמיכה ארגונומית לגב ולישיבה",
+      "handle": "orthonest™-כרית-תמיכה-ארגונומית-לגב-ולישיבה",
+      "price": "399.0",
+      "currency": "ILS",
+      "image_url": "https://cdn.shopify.com/s/files/1/0716/8907/6906/files/OrthoNest_01_42a3679e-33e9-48f4-ae22-d95bd733436e.png?v=1786301128",
+      "benefit": "הגיע הזמן לשבת אחרת. כמה שעות ביום אתם מבלים בישיבה? בעבודה, ברכב, מול המחשב או בבית —…"
+    }
+  ]
+}

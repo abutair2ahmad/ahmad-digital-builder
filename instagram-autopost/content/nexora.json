@@ -57,19 +57,19 @@
       "category": "educational",
       "layout": "statement",
       "image": {
-        "kicker": "ECOMMERCE",
-        "headline": "Your product page is your salesperson",
-        "sub": "It has to answer the objection before it is asked",
+        "kicker": "التجارة الإلكترونية",
+        "headline": "صفحة المنتج هي مندوب مبيعاتك",
+        "sub": "يجب أن تجيب عن الاعتراض قبل أن يُطرح",
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "People do not abandon carts because of price. They abandon because of unanswered questions.",
-        "body": "The questions a product page has to answer without being asked:\n\n• How long is shipping, and what does it cost?\n• What happens if it does not fit?\n• How big is this actually?\n• Is this the right one for me, or the other one?\n\nEvery one you leave unanswered is a reason to close the tab.\n\nGo look at your own product page and count how many it answers."
+        "hook": "لا يترك الناس سلة الشراء بسبب السعر فقط، بل بسبب الأسئلة التي لم تجد إجابة.",
+        "body": "هذه الأسئلة يجب أن تجيب عنها صفحة المنتج قبل أن يطرحها العميل:\n\n• كم يستغرق الشحن؟ وما تكلفته؟\n• ماذا يحدث إذا لم يكن المقاس مناسبًا؟\n• ما الحجم الحقيقي للمنتج؟\n• هل هذا المنتج مناسب لي أم أحتاج الخيار الآخر؟\n\nكل سؤال بلا إجابة هو سبب لإغلاق الصفحة.\n\nافتح صفحة منتجك الآن، واحسب كم سؤالًا تجيب عنه."
       },
       "tags": [
-        "#ecommercedesign",
-        "#shopify",
-        "#conversionrate"
+        "#تجارة_إلكترونية",
+        "#شوبيفاي",
+        "#تحسين_التحويل"
       ],
       "topic": "ecommerce"
     },
@@ -78,18 +78,18 @@
       "category": "educational",
       "layout": "tips",
       "image": {
-        "kicker": "HOMEPAGE",
-        "headline": "What the top of your site must say",
+        "kicker": "الصفحة الرئيسية",
+        "headline": "ما الذي يجب أن يقوله الجزء العلوي من موقعك؟",
         "items": [
-          "What you do",
-          "Who it is for",
-          "One clear next step"
+          "ماذا تقدم",
+          "لمن تقدمه",
+          "خطوة تالية واضحة"
         ],
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "A visitor decides in a few seconds whether you are relevant to them.",
-        "body": "Before any scrolling, your homepage has to answer three things:\n\n① What do you actually do — in plain words, not \"we craft experiences\".\n② Who is it for — the more specific, the more it pulls the right people in.\n③ What is the one next step — book, browse, or call. One, not five.\n\nIf a stranger cannot answer all three from the top of your page, that is the first thing to fix."
+        "hook": "يقرر الزائر خلال ثوانٍ قليلة إن كان موقعك مناسبًا له.",
+        "body": "قبل أن يبدأ الزائر بالتمرير، يجب أن تجيب الصفحة الرئيسية عن ثلاثة أسئلة:\n\n① ماذا تقدم فعلًا؟ بكلمات واضحة، وليس بعبارات عامة مثل «نصنع تجارب استثنائية».\n② لمن تقدم هذه الخدمة؟ كلما كنت أكثر تحديدًا، جذبت الأشخاص المناسبين.\n③ ما الخطوة التالية؟ احجز أو تصفح أو تواصل. خطوة واحدة، لا خمس خطوات.\n\nإذا لم يستطع شخص جديد فهم الإجابات الثلاث من أعلى الصفحة، فهذا أول ما يجب إصلاحه."
       },
       "tags": [
         "#webdesign",
@@ -103,30 +103,30 @@
       "category": "educational",
       "layout": "compare",
       "image": {
-        "kicker": "FORMS",
-        "headline": "Contact form vs booking",
-        "left_title": "CONTACT FORM",
+        "kicker": "النماذج",
+        "headline": "نموذج تواصل أم حجز مباشر؟",
+        "left_title": "نموذج تواصل",
         "left_items": [
-          "You reply later",
-          "They wait",
-          "Half go elsewhere"
+          "ترد لاحقًا",
+          "العميل ينتظر",
+          "نصفهم يذهب لمكان آخر"
         ],
-        "right_title": "BOOKING",
+        "right_title": "حجز مباشر",
         "right_items": [
-          "Slot is taken now",
-          "Confirmed instantly",
-          "Shows in your calendar"
+          "يُحجز الموعد الآن",
+          "تأكيد فوري",
+          "يظهر في تقويمك"
         ],
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "A contact form asks people to wait. A booking page lets them finish.",
-        "body": "With a contact form, the sequence is: they write, you reply, they reply, maybe you agree a time.\n\nFour steps, and every one of them is a chance to lose the person.\n\nWith booking: they pick a slot, it lands in your calendar, both sides get a confirmation. One step.\n\nIf you sell time — treatments, consultations, sessions, repairs — this is usually the single highest-impact change on your whole site."
+        "hook": "نموذج التواصل يطلب من العميل الانتظار، أما الحجز فيتيح له إنهاء الخطوة فورًا.",
+        "body": "مع نموذج التواصل: يكتب العميل، ترد عليه، يجيب، ثم تحاولان الاتفاق على موعد.\n\nأربع خطوات، وكل خطوة منها فرصة لخسارة العميل.\n\nمع الحجز: يختار الموعد، يظهر في تقويمك، ويحصل الطرفان على تأكيد. خطوة واحدة.\n\nإذا كنت تبيع وقتك — جلسات أو استشارات أو إصلاحات — فهذا غالبًا أعلى تغيير تأثيرًا في موقعك."
       },
       "tags": [
-        "#bookingsystem",
-        "#businessautomation",
-        "#smallbusinessowner"
+        "#نظام_حجز",
+        "#أتمتة_الأعمال",
+        "#أصحاب_المشاريع"
       ],
       "topic": "booking"
     },
@@ -135,18 +135,18 @@
       "category": "educational",
       "layout": "tips",
       "image": {
-        "kicker": "AUTOMATION",
-        "headline": "Three jobs to stop doing by hand",
+        "kicker": "الأتمتة",
+        "headline": "ثلاث مهام توقف عن تنفيذها يدويًا",
         "items": [
-          "Appointment reminders",
-          "Review requests",
-          "Invoice follow-ups"
+          "تذكير بالمواعيد",
+          "طلب التقييمات",
+          "متابعة الفواتير"
         ],
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "Most small businesses automate the wrong thing first.",
-        "body": "Start with the tasks you already do every week, badly, because you are busy:\n\n• Appointment reminders — the cheapest way to cut no-shows.\n• Review requests, sent automatically a few days after the job.\n• Invoice follow-ups, so you stop chasing payment manually.\n\nNone of these need AI. They need to be set up once.\n\nWhich of the three costs you the most right now?"
+        "hook": "تبدأ معظم المشاريع الصغيرة بأتمتة المهمة الخطأ.",
+        "body": "ابدأ بالمهام التي تنفذها كل أسبوع بشكل مرهق لأنك مشغول:\n\n• تذكير بالمواعيد، وهي أرخص طريقة لتقليل حالات عدم الحضور.\n• طلب التقييم تلقائيًا بعد أيام قليلة من انتهاء الخدمة.\n• متابعة الفواتير حتى لا تلاحق الدفعات يدويًا.\n\nلا تحتاج أي من هذه المهام إلى ذكاء اصطناعي؛ تحتاج إلى إعداد واحد فقط.\n\nأي مهمة من الثلاث تستهلك وقتك أكثر الآن؟"
       },
       "tags": [
         "#businessautomation",
@@ -179,14 +179,14 @@
       "category": "problem_solution",
       "layout": "problem_solution",
       "image": {
-        "kicker": "PROBLEM → FIX",
-        "problem": "Traffic is fine. Nobody buys.",
-        "solution": "Fix the checkout, not the homepage",
+        "kicker": "المشكلة ← الحل",
+        "problem": "الزيارات موجودة، لكن لا أحد يشتري",
+        "solution": "أصلح الدفع، لا الصفحة الرئيسية",
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "When sales are flat, everyone redesigns the homepage. The money is usually leaking further down.",
-        "body": "Check the boring end of the funnel first:\n\n• Is there a guest checkout, or are you forcing account creation?\n• Is shipping cost visible before the final step?\n• How many taps from cart to paid?\n• Does it actually work on a phone, on mobile data?\n\nA homepage redesign is visible. A checkout fix is profitable.\n\nDo the second one first."
+        "hook": "عندما تتوقف المبيعات، يعيد الجميع تصميم الصفحة الرئيسية. لكن التسرب غالبًا يحدث في خطوة أبعد.",
+        "body": "افحص نهاية المسار أولًا:\n\n• هل يستطيع العميل الدفع كزائر، أم تجبره على إنشاء حساب؟\n• هل تظهر تكلفة الشحن قبل الخطوة الأخيرة؟\n• كم نقرة تفصل السلة عن الدفع؟\n• هل يعمل الدفع فعلًا على الهاتف وباستخدام بيانات الهاتف؟\n\nإعادة تصميم الصفحة الرئيسية تبدو واضحة. إصلاح الدفع يحقق أثرًا مباشرًا.\n\nابدأ بالثاني."
       },
       "tags": [
         "#ecommercedesign",
@@ -318,18 +318,18 @@
       "category": "faq",
       "layout": "faq",
       "image": {
-        "kicker": "FAQ",
-        "question": "How long does a website take?",
-        "answer": "Most take 2–4 weeks. Content is the bottleneck.",
+        "kicker": "أسئلة شائعة",
+        "question": "كم يستغرق بناء الموقع؟",
+        "answer": "غالبًا من أسبوعين إلى أربعة. المحتوى هو العامل الأبطأ.",
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "\"How long will it take?\" — the honest answer is: it depends on you more than on me.",
-        "body": "A typical small business site is 2–4 weeks of build.\n\nWhat actually causes delays is almost never the design. It is waiting on text, photos, product details and logins.\n\nSo the fastest projects are the ones where that material is gathered before we start.\n\nIf you want a realistic timeline for your specific project, DM me what you have and I will tell you."
+        "hook": "«كم سيستغرق؟» الإجابة الصادقة: يعتمد عليك أكثر مما يعتمد عليّ.",
+        "body": "يستغرق بناء موقع أعمال صغير عادةً من أسبوعين إلى أربعة أسابيع.\n\nالتأخير لا يكون بسبب التصميم غالبًا، بل بسبب انتظار النصوص والصور وتفاصيل المنتجات وبيانات الدخول.\n\nلذلك تنتهي المشاريع الأسرع عندما تُجمع هذه المواد قبل أن نبدأ.\n\nأرسل ما لديك، وسأعطيك مدة واقعية لمشروعك."
       },
       "tags": [
-        "#webdesign",
-        "#smallbusinessowner"
+        "#تصميم_مواقع",
+        "#أصحاب_المشاريع"
       ],
       "topic": "process"
     },
@@ -338,14 +338,14 @@
       "category": "faq",
       "layout": "faq",
       "image": {
-        "kicker": "FAQ",
-        "question": "Do I own the website?",
-        "answer": "Yes. Domain, hosting and accounts in your name.",
+        "kicker": "أسئلة شائعة",
+        "question": "هل أملك الموقع؟",
+        "answer": "نعم. النطاق والاستضافة والحسابات باسمك.",
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "Ask this before you hire anyone: whose name is the domain in?",
-        "body": "You should own:\n\n• The domain, registered to you.\n• The hosting or platform account, in your name.\n• Your content and images.\n\nIf a website can be switched off because of a disagreement with whoever built it, it was never really yours.\n\nThis is a fair question to ask any designer, including me."
+        "hook": "اسأل هذا السؤال قبل التعاقد: باسم من سُجّل النطاق؟",
+        "body": "يجب أن تملك:\n\n• النطاق، مسجلًا باسمك.\n• حساب الاستضافة أو المنصة، باسمك.\n• المحتوى والصور الخاصة بك.\n\nإذا كان يمكن إيقاف موقعك بسبب خلاف مع من بناه، فلم يكن ملكك فعلًا.\n\nهذا سؤال عادل تطرحه على أي مصمم، وأنا منهم."
       },
       "tags": [
         "#smallbusinessowner",
@@ -358,14 +358,14 @@
       "category": "faq",
       "layout": "faq",
       "image": {
-        "kicker": "FAQ",
-        "question": "What do you need from me to start?",
-        "answer": "Your services, your prices, and how you want to be contacted.",
+        "kicker": "أسئلة شائعة",
+        "question": "ما الذي تحتاجه مني للبدء؟",
+        "answer": "خدماتك وأسعارك والطريقة التي تريد أن يتواصل بها العملاء.",
         "footnote": "bynexora.co"
       },
       "caption": {
-        "hook": "You do not need a brief, a moodboard or a plan to start a conversation.",
-        "body": "To quote properly I need three things:\n\n① What you sell, in your own words.\n② Roughly what it costs.\n③ How you want people to reach you — book, call, or message.\n\nThat is enough for a real answer instead of a vague one.\n\nPhotos, text and logos can come later."
+        "hook": "لا تحتاج إلى ملف متطلبات أو لوحة إلهام أو خطة لبدء الحديث.",
+        "body": "لأعطيك عرضًا مناسبًا أحتاج إلى ثلاثة أشياء:\n\n① ماذا تبيع، بكلماتك أنت.\n② كم تبلغ التكلفة تقريبًا.\n③ كيف تريد أن يتواصل الناس معك — حجز أو اتصال أو رسالة.\n\nهذا يكفي لإجابة حقيقية بدل كلام عام.\n\nيمكن إرسال الصور والنصوص والشعارات لاحقًا."
       },
       "tags": [
         "#smallbusinessowner",
@@ -378,30 +378,30 @@
       "category": "portfolio",
       "layout": "compare",
       "image": {
-        "kicker": "CONCEPT STUDY",
-        "headline": "Same content, restructured",
-        "left_title": "BEFORE",
+        "kicker": "دراسة مفاهيمية",
+        "headline": "المحتوى نفسه، بترتيب أفضل",
+        "left_title": "قبل",
         "left_items": [
-          "Slogan, no offer",
-          "Prices hidden",
-          "Six competing buttons"
+          "شعار بلا عرض واضح",
+          "الأسعار مخفية",
+          "ستة أزرار متنافسة"
         ],
-        "right_title": "AFTER",
+        "right_title": "بعد",
         "right_items": [
-          "Plain what and who",
-          "Price range shown",
-          "One clear action"
+          "ماذا تقدم ولمن، بوضوح",
+          "إظهار نطاق السعر",
+          "إجراء واحد واضح"
         ],
         "footnote": "Concept — bynexora.co"
       },
       "caption": {
-        "hook": "A concept study on a page structure I see constantly.",
-        "body": "Nothing here is a new colour palette. It is the same content in a different order.\n\nBefore: a slogan that could belong to any business, pricing hidden behind \"contact us\", and six buttons competing for the same click.\n\nAfter: what it is and who it is for in plain words, a starting price, and one action.\n\nThis is a concept study, not client work — shown to make the structure visible.\n\nWhat would you change?"
+        "hook": "دراسة مفاهيمية لترتيب صفحة أراه كثيرًا في مواقع الأعمال.",
+        "body": "لا توجد هنا لوحة ألوان جديدة؛ بل المحتوى نفسه بترتيب مختلف.\n\nقبل: شعار يمكن أن يخص أي نشاط، أسعار مخفية خلف «تواصل معنا»، وستة أزرار تتنافس على النقرة نفسها.\n\nبعد: ماذا تقدم ولمن، بلغة واضحة، سعر بداية، وإجراء واحد.\n\nهذه دراسة مفاهيمية وليست عملًا لعميل؛ هدفها جعل بنية الصفحة مرئية.\n\nما الذي ستغيّره؟"
       },
       "tags": [
-        "#webdesign",
-        "#uxdesign",
-        "#landingpage"
+        "#تصميم_مواقع",
+        "#تجربة_المستخدم",
+        "#صفحة_هبوط"
       ],
       "topic": "homepage"
     },
@@ -471,6 +471,67 @@
         "#smallbusinessowner"
       ],
       "topic": "offer"
+    },
+    {
+      "id": "nx-pj-01",
+      "category": "portfolio",
+      "layout": "project",
+      "image": {
+        "kicker": "PORTFOLIO",
+        "headline": "لوحة تحكم تجاوب على 3 أسئلة قبل ما تسأل",
+        "sub": "اليوم؟ الأسبوع الجاي؟ وإيه اللي محتاج متابعة؟",
+        "chrome_url": "nacre.clinic / dashboard",
+        "screenshot": "bynexora/nacre-dashboard-desktop.png",
+        "screenshot_size": "4107px auto",
+        "screenshot_focus": "-2053px -699px",
+        "tag": "NACRE — لوحة الاستقبال · Portfolio build",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "لوحة تحكم حقيقية تجاوب على 3 أسئلة قبل ما تسأل: اليوم؟ الأسبوع الجاي؟ إيه اللي محتاج متابعة؟",
+        "body": "هذه لوحة مواعيد عيادة NACRE الحقيقية — مشروع ضمن معرض الأعمال، وليست مشروع عميل مباشر — وتعرض ما يحتاجه موظف الاستقبال بالضبط دون زحام.\n\nثلاثة أرقام أمامك دائمًا:\n• مواعيد اليوم\n• ما سيحدث هذا الأسبوع\n• ما يحتاج إلى اتصال هاتفي\n\nكل شيء آخر يبعد نقرة واحدة، ولا يظهر على الشاشة افتراضيًا."
+      },
+      "tags": [
+        "#لوحات_تحكم",
+        "#أنظمة_إدارية",
+        "#أنظمة_الأعمال"
+      ],
+      "topic": "dashboard"
+    },
+    {
+      "id": "nx-pj-02",
+      "category": "portfolio",
+      "layout": "project",
+      "image": {
+        "kicker": "TRANSPARENCY",
+        "headline": "ما هو حقيقي، وما هو تجريبي.",
+        "sub": "كل عمل ضمن أعمالنا يوضّح ذلك — على الموقع نفسه.",
+        "chrome_url": "nacre.clinic / case-study",
+        "screenshot": "bynexora/nacre-case-desktop.png",
+        "screenshot_size": "1514px auto",
+        "screenshot_focus": "-42px -116px",
+        "tag": "Portfolio build · بلا عميل وهمي، بلا تقييم غير موثّق",
+        "footnote": "bynexora.co"
+      },
+      "caption": {
+        "hook": "NACRE — مشروع تجريبي متكامل لموقع عيادة أسنان، مبني بنظام حجز فعلي ولوحة إدارة حقيقية.",
+        "body": "قاعدة بيانات، منطق مواعيد، وتجربة استخدام كاملة — بدون ادعاء وجود عميل حقيقي أو تقييمات مصطنعة.\n\nA real database. Real scheduling logic. A working clinic dashboard.",
+        "cta": "DM “SITE” for a free 10-minute audit.",
+        "hashtags": [
+          "#nexora",
+          "#webdesign",
+          "#portfolio",
+          "#bookingsystem",
+          "#uxdesign",
+          "#landingpage"
+        ]
+      },
+      "tags": [
+        "#transparency",
+        "#webdesign",
+        "#portfolio"
+      ],
+      "topic": "transparency"
     }
   ]
 }

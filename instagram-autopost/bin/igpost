@@ -6,7 +6,7 @@
   render --brand B [--date D] render every slot for a day, publish nothing
   run    [--brand B] [--slot S] [--date D] [--live]
                               run due slots (or one named slot). Dry run unless --live
-  due                         run whatever is due right now, both accounts
+  due    [--brand B]          run whatever is due right now (default: all configured brands)
   history --brand B [-n N]    recent ledger entries
   verify                      read-only Instagram identity + quota check
 
@@ -116,8 +116,9 @@ def cmd_due(args):
     if not due:
         print("nothing due (now %s)" % now.strftime("%Y-%m-%d %H:%M %Z"))
         return
+    brands = [args.brand] if args.brand else list(BRANDS)
     for entry in due:
-        for brand in BRANDS:
+        for brand in brands:
             runner.run_slot(ROOT, brand, entry["date"], entry["slot"],
                             env_path=args.env, dry_run=(not args.live))
 
@@ -173,7 +174,9 @@ def main():
     p.add_argument("--slot"); p.add_argument("--date")
     p.add_argument("--live", action="store_true", help="actually publish")
     p.set_defaults(func=cmd_run)
-    p = sub.add_parser("due"); p.add_argument("--live", action="store_true"); p.set_defaults(func=cmd_due)
+    p = sub.add_parser("due"); p.add_argument("--live", action="store_true")
+    p.add_argument("--brand", choices=BRANDS, help="restrict to one brand (default: all configured brands)")
+    p.set_defaults(func=cmd_due)
     p = sub.add_parser("history"); p.add_argument("--brand", required=True, choices=BRANDS)
     p.add_argument("-n", "--number", type=int, default=20); p.set_defaults(func=cmd_history)
 

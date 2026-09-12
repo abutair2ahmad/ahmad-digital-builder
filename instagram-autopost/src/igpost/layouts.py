@@ -141,6 +141,35 @@ def offer(brand, idea):
     ) % (_kicker(idea), _e(img["headline"]), sub, cta, _footer(brand, idea))
 
 
+def project(brand, idea):
+    """A real product screenshot inside a browser-chrome frame.
+
+    The one layout that shows an actual picture rather than typography (see the
+    ".project__frame" comment in base.css for why the other seven don't). The
+    screenshot path is idea-supplied and always relative to assets/screenshots/
+    — never a URL — so nothing is fetched from the network at render time.
+    """
+    img = idea["image"]
+    sub = '<p class="sub" data-fit>%s</p>' % _e(img["sub"]) if img.get("sub") else ""
+    tag = '<p class="project__tag" data-fit>%s</p>' % _e(img["tag"]) if img.get("tag") else ""
+    shot_url = "../../../assets/screenshots/%s" % img["screenshot"]
+    focus = img.get("screenshot_focus", "center top")
+    # Default crop is "cover" (whole frame, no zoom). An idea may instead give an
+    # explicit CSS background-size (e.g. "2200px auto") to zoom into one detail of
+    # a larger screenshot, the way the original grid's dashboard/booking posts did.
+    size = img.get("screenshot_size")
+    size_rule = "background-size:%s; " % _e(size) if size else ""
+    return (
+        '<div class="stage">%s<h1 class="headline headline--sm" data-fit>%s</h1>%s'
+        '<div class="project__frame">'
+        '<div class="project__bar"><span class="project__dot"></span><span class="project__dot"></span>'
+        '<span class="project__dot"></span><span class="project__url">%s</span></div>'
+        '<div class="project__shot" style="background-image:url(\'%s\'); %sbackground-position:%s;"></div>'
+        '</div>%s%s</div>'
+    ) % (_kicker(idea), _e(img["headline"]), sub,
+         _e(img.get("chrome_url", "")), shot_url, size_rule, _e(focus), tag, _footer(brand, idea))
+
+
 LAYOUTS = {
     "statement": statement,
     "tips": tips,
@@ -149,6 +178,7 @@ LAYOUTS = {
     "faq": faq,
     "showcase": showcase,
     "offer": offer,
+    "project": project,
 }
 
 

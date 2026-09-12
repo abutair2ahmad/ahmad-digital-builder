@@ -1,0 +1,233 @@
+#!/usr/bin/env python3
+"""Command line for the animated product Story pipeline — development phase.
+
+  catalog --brand B                 real, active, photographed products for a
+                                     brand, or the explicit reason there are none
+  plan    --brand B                 which product the rotation would pick next,
+                                     without rendering or recording anything
+    test    --brand B [--product-id]  render + encode one Story end to end,
+                                     entirely locally: no upload to the real R2
+                                     bucket, no publish to Instagram. Prints the
+                                     exact Graph API request a live run would send.
+    publish --brand B --media-type T --video FILE [--caption TEXT]
+                                                                    publish an existing public-hosted video as a
+                                                                    Reel or Story, with ledger protection
+
+The publish command is live only when IG_PUBLISH_ENABLED=true. It never retries
+an ambiguous publish and records the container before the publish call.
+"""
+
+import argparse
+import hashlib
+import json
+import os
+import sys
+import urllib.request
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, "src"))
+
+from igpost import imagehost, publisher, shopify_products, story_history, story_render, video  # noqa: E402
+from igpost.accounts import load_account                                                          # noqa: E402
+from igpost.envfile import read_env                                                                # noqa: E402
+
+DEFAULT_ENV = os.path.join(os.path.dirname(ROOT), ".env")
+DEFAULT_FPS = 12
+DEFAULT_SECONDS = 4.5
+BRANDS = ("movewell", "bynexora")
+
+
+def _brand_cfg(brand):
+    path = os.path.join(ROOT, "config", "brands", "movewell.json" if brand == "movewell" else "nexora.json")
+    with open(path, "r", encoding="utf-8") as handle:
+        return json.load(handle)
+
+
+def _download(url, dest, timeout=30):
+    request = urllib.request.Request(url, headers={"User-Agent": "igstory/1.0"})
+    with urllib.request.urlopen(request, timeout=timeout) as response:
+        body = response.read()
+    os.makedirs(os.path.dirname(dest), exist_ok=True)
+    with open(dest, "wb") as handle:
+        handle.write(body)
+    return dest
+
+
+def cmd_catalog(args):
+    env = read_env(args.env)
+    products, reason, source = shopify_products.fetch_products(env, args.brand, state_dir=os.path.join(ROOT, "state"))
+    if reason:
+        print("%s: NO PRODUCT CATALOG — %s" % (args.brand, reason))
+        return
+    print("%s: %d real, active, photographed products (source: %s)" % (args.brand, len(products), source))
+    for p in products:
+        print("  %-14s %-60s %s %s" % (p["sku"] or "(no sku)", p["title"][:60], p["price"], p["currency"]))
+
+
+def cmd_plan(args):
+    env = read_env(args.env)
+    products, reason, source = shopify_products.fetch_products(env, args.brand, state_dir=os.path.join(ROOT, "state"))
+    if reason:
+        print("%s: cannot plan a Story — %s" % (args.brand, reason))
+        return
+    product, why = story_history.choose_product(products, os.path.join(ROOT, "state"), args.brand)
+    print("%s: next product -> %s (%s; catalog source: %s)" % (args.brand, product["title"], why, source))
+
+
+def cmd_test(args):
+    env = read_env(args.env)
+    state_dir = os.path.join(ROOT, "state")
+    products, reason, source = shopify_products.fetch_products(env, args.brand, state_dir=state_dir)
+    if reason:
+        print("%s: SKIPPED — %s" % (args.brand, reason))
+        return
+    print("catalog source: %s" % source)
+    if args.product_id:
+        matches = [p for p in products if p["id"] == args.product_id or p["sku"] == args.product_id]
+        if not matches:
+            print("no product with id/sku %r in %s's catalog" % (args.product_id, args.brand))
+            return
+        product, why = matches[0], "explicit --product-id override"
+    else:
+        product, why = story_history.choose_product(products, state_dir, args.brand)
+    print("product: %s (%s, %s %s) — %s"
+          % (product["title"], product["sku"], product["price"], product["currency"], why))
+
+    brand_cfg = _brand_cfg(args.brand)
+    css_path = os.path.join(ROOT, "templates", "story.css")
+
+    work_dir = os.path.join(ROOT, "out", args.brand, "stories-test", product["sku"] or "product")
+    frame_dir = os.path.join(work_dir, "frames")
+    asset_path = os.path.join(work_dir, "product.jpg")
+    mp4_path = os.path.join(work_dir, "story.mp4")
+
+    print("downloading the real product photo from the brand's own catalog ...")
+    _download(product["image_url"], asset_path)
+
+    print("rendering frames (%s fps x %ss) ..." % (args.fps, args.seconds))
+    count = story_render.render_frames(
+        brand_cfg, product, css_path, frame_dir, os.path.abspath(asset_path),
+        fps=args.fps, duration_seconds=args.seconds,
+    )
+    print("  %d frames rendered to %s" % (count, frame_dir))
+
+    print("encoding MP4 with ffmpeg ...")
+    video.encode(frame_dir, args.fps, mp4_path)
+    info = video.probe(mp4_path)
+    print("  %s -> %dx%d, %.2fs, codec=%s, audio=%s"
+          % (mp4_path, info["width"], info["height"], info["duration"], info["codec_name"], info["has_audio"]))
+    ok_dims = (info["width"], info["height"]) == (video.STORY_WIDTH, video.STORY_HEIGHT)
+    print("  1080x1920 check: %s" % ("PASS" if ok_dims else "FAIL"))
+
+    print("uploading to R2 in TEST mode (local backend standing in for the real bucket) ...")
+    test_env = dict(env, IMAGE_HOST="local",
+                     IMAGE_LOCAL_DIR=os.path.join(ROOT, "hosted-images-test"),
+                     IMAGE_PUBLIC_BASE_URL="https://example-test.local/hosted-images-test")
+    key = "%s/stories/%s.mp4" % (args.brand, product["sku"] or "product")
+    url, backend = imagehost.upload(test_env, key, mp4_path, content_type="video/mp4")
+    print("  uploaded via %s backend -> %s" % (backend, url))
+
+    account = load_account(args.brand, args.env)
+    if account is None:
+        print("no %s Instagram credentials configured; request-shape preview skipped" % args.brand)
+    else:
+        request = publisher.describe_story_container_request(account, args.brand, url)
+        print("exact Graph API request a live run would send (built, never sent):")
+        print(json.dumps(request, indent=2, ensure_ascii=False))
+
+    if args.record:
+        story_history.append(state_dir, args.brand, {
+            "status": story_history.RENDERED, "product_id": product["id"],
+            "sku": product["sku"], "title": product["title"],
+        })
+        print("recorded as 'rendered' in the story ledger (test run — nothing published)")
+    else:
+        print("not recorded in the story ledger (pass --record to test rotation across runs)")
+
+    print("\nNo network call to Instagram was made. Nothing was published.")
+
+
+def cmd_publish(args):
+    env = read_env(args.env)
+    if env.get("IG_PUBLISH_ENABLED", "").strip().lower() not in ("1", "true", "yes", "on"):
+        print("blocked: IG_PUBLISH_ENABLED is not true")
+        return
+    if not os.path.isfile(args.video):
+        print("blocked: video file does not exist: %s" % args.video)
+        return
+    account = load_account(args.brand, args.env)
+    if account is None:
+        print("blocked: %s Instagram credentials are not configured" % args.brand)
+        return
+    media_type = args.media_type.upper()
+    if media_type not in ("STORIES", "REELS"):
+        print("blocked: media type must be STORIES or REELS")
+        return
+    state_dir = os.path.join(ROOT, "state")
+    digest = hashlib.sha256(open(args.video, "rb").read()).hexdigest()[:12]
+    key = "%s:%s:%s" % (args.brand, media_type.lower(), digest)
+    if story_history.is_published(state_dir, args.brand, key):
+        print("already published: %s" % key)
+        return
+    graph_host = env.get("INSTAGRAM_GRAPH_HOST") or publisher.DEFAULT_HOST
+    try:
+        url, backend = imagehost.upload(
+            env, "%s/%s/%s.mp4" % (args.brand, media_type.lower(), digest),
+            args.video, content_type="video/mp4")
+        container = story_history.open_container(state_dir, args.brand, key)
+        if container is None:
+            container = publisher.create_video_container(
+                account, args.brand, media_type, url, caption=args.caption, host=graph_host)
+            story_history.append(state_dir, args.brand, {
+                "status": "container", "key": key, "brand": args.brand,
+                "media_type": media_type, "container_id": container,
+                "video": os.path.basename(args.video), "backend": backend,
+            })
+        publisher.wait_until_ready(account, container, host=graph_host)
+        media_id = publisher.publish_video_container(account, args.brand, container, host=graph_host)
+        story_history.append(state_dir, args.brand, {
+            "status": story_history.PUBLISHED, "key": key, "brand": args.brand,
+            "media_type": media_type, "container_id": container, "media_id": media_id,
+            "video": os.path.basename(args.video),
+        })
+        print("published: %s media_id=%s" % (key, media_id))
+    except (imagehost.ImageHostError, publisher.PublishError) as exc:
+        story_history.append(state_dir, args.brand, {
+            "status": story_history.FAILED, "key": key, "brand": args.brand,
+            "media_type": media_type, "reason": str(exc),
+        })
+        print("failed: %s" % exc)
+
+
+def main():
+    parser = argparse.ArgumentParser(prog="igstory", description=__doc__,
+                                     formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("--env", default=DEFAULT_ENV)
+    sub = parser.add_subparsers(dest="command", required=True)
+
+    p = sub.add_parser("catalog"); p.add_argument("--brand", required=True, choices=BRANDS)
+    p.set_defaults(func=cmd_catalog)
+
+    p = sub.add_parser("plan"); p.add_argument("--brand", required=True, choices=BRANDS)
+    p.set_defaults(func=cmd_plan)
+
+    p = sub.add_parser("test"); p.add_argument("--brand", required=True, choices=BRANDS)
+    p.add_argument("--product-id")
+    p.add_argument("--fps", type=int, default=DEFAULT_FPS)
+    p.add_argument("--seconds", type=float, default=DEFAULT_SECONDS)
+    p.add_argument("--record", action="store_true",
+                   help="record this test render in the story ledger (affects future rotation)")
+    p.set_defaults(func=cmd_test)
+
+    p = sub.add_parser("publish"); p.add_argument("--brand", required=True, choices=BRANDS)
+    p.add_argument("--media-type", required=True, choices=("STORIES", "REELS", "stories", "reels"))
+    p.add_argument("--video", required=True, help="local MP4 file")
+    p.add_argument("--caption", default="", help="Reel caption; ignored for Stories")
+    p.set_defaults(func=cmd_publish)
+
+    args = parser.parse_args()
+    args.func(args)
+
+
+if __name__ == "__main__":
+    main()

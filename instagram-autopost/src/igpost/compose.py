@@ -99,11 +99,18 @@ def compose(brand, idea, post_key, content_meta=None):
     if disclaimer and brand.get("language") == "he":
         blocks.append(disclaimer.strip())
 
-    tags = build_hashtags(brand, idea, post_key)
+    # An idea may pin its own final hashtag list (caption.hashtags) instead of the
+    # auto-built, pool-padded set — used when a post's tags were hand-approved.
+    tags = caption.get("hashtags") or build_hashtags(brand, idea, post_key)
     if tags:
         blocks.append(" ".join(tags))
 
     text = "\n\n".join(blocks)
+
+    if brand.get("language") == "ar":
+        arabic_chars = sum("\u0600" <= char <= "\u06ff" for char in text)
+        if arabic_chars < 12:
+            raise ClaimViolation("Arabic-language account has no Arabic caption content")
 
     violations = claim_guard(brand, text)
     if violations:
