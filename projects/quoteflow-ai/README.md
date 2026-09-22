@@ -51,6 +51,44 @@ Nothing above the data/auth/storage providers knows which mode is active.
 5. In Authentication settings, either disable email confirmation or keep it —
    the sign-up screen handles both.
 
+## Deploying to Vercel
+
+The live deployment builds from this repository with **Root Directory**
+`projects/quoteflow-ai`. Set these environment variables on the project
+(Production, Preview and Development):
+
+| Variable | Value |
+| --- | --- |
+| `NEXT_PUBLIC_APP_URL` | the production URL — quote links and PDFs embed it |
+| `NEXT_PUBLIC_SUPABASE_URL` | `https://<ref>.supabase.co` — the **project** URL, not `/rest/v1` |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | anon public key |
+| `SUPABASE_SERVICE_ROLE_KEY` | service role key (encrypted; server-side only) |
+| `DATABASE_URL` | **pooler** connection string (see below) |
+| `SUPABASE_STORAGE_BUCKET` | `uploads` |
+| `ANTHROPIC_API_KEY` | optional — without it the guided assistant is used |
+
+Two things that will bite you otherwise:
+
+- **Use the pooler connection string.** The direct host (`db.<ref>.supabase.co`)
+  resolves over IPv6 only, so it fails from IPv4-only networks and is the wrong
+  choice for serverless anyway. Use
+  `postgresql://postgres.<ref>:<password>@aws-0-<region>.pooler.supabase.com:5432/postgres`.
+- **Vercel Authentication (SSO protection)** is on by default for some teams and
+  makes every deployment URL ask visitors to log into Vercel. Turn it off for a
+  public site: Project → Settings → Deployment Protection.
+
+Then, once per environment:
+
+```bash
+npm run db:migrate     # schema + RLS
+npm run storage:setup  # private bucket, verified with an upload probe
+npm run db:seed        # optional demo company
+npm run verify:prod    # end-to-end production check, including live RLS isolation
+```
+
+`verify:prod` creates two real users, proves one workspace cannot read or write
+the other's data across eight tables, and deletes everything it created.
+
 ## Scripts
 
 | Script | What it does |
@@ -60,6 +98,8 @@ Nothing above the data/auth/storage providers knows which mode is active.
 | `npm run test` | pricing engine and guided-assistant tests (`node:test`) |
 | `npm run db:migrate` | apply `supabase/migrations/*.sql` |
 | `npm run db:seed` | seed the demo company |
+| `npm run storage:setup` | create/verify the private Storage bucket |
+| `npm run verify:prod` | production readiness + live workspace-isolation check |
 
 ## Routes
 
