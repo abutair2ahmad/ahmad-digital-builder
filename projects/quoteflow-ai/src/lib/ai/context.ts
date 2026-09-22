@@ -6,10 +6,9 @@ import type { Workspace } from '@/lib/types';
 import type { AgentContext } from './schema';
 
 export async function buildAgentContext(tx: Queryable, workspace: Workspace): Promise<AgentContext> {
-  const [services, rules] = await Promise.all([
-    listServices(tx, workspace.id, { activeOnly: true }),
-    listRules(tx, workspace.id, { activeOnly: true }),
-  ]);
+  // Sequential: `tx` is a single connection, so its queries cannot overlap.
+  const services = await listServices(tx, workspace.id, { activeOnly: true });
+  const rules = await listRules(tx, workspace.id, { activeOnly: true });
   return {
     company: { name: workspace.name, business_type: workspace.business_type, service_area: workspace.service_area },
     services: services.map((s) => ({

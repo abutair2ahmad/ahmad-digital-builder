@@ -70,8 +70,8 @@ async function seedCatalogue(tx: Queryable, workspaceId: string): Promise<{ serv
   const drywall = await svc('Drywall repair', 'Patching holes and cracks, skim coat and sanding, ready for paint.', 'fixed', null);
   const cabinets = await svc('Kitchen cabinet refinishing', 'Sanding and respraying existing cabinet doors and frames.', 'fixed', null, false);
 
-  const rule = (input: Parameters<typeof createRule>[2]) => createRule(tx, workspaceId, input);
-  const rules = await Promise.all([
+  const rule = (input: Parameters<typeof createRule>[2]) => input;
+  const ruleInputs: Parameters<typeof createRule>[2][] = [
     // The examples from the brief, verbatim.
     rule({ service_id: painting.id, name: 'Painting per m²', rule_type: 'per_unit', amount: 35, per_unit: true, condition_key: null, condition_value: null, active: true }),
     rule({ service_id: painting.id, name: 'Premium paint', rule_type: 'percentage', amount: 20, per_unit: false, condition_key: 'option', condition_value: 'premium_paint', active: true }),
@@ -89,7 +89,9 @@ async function seedCatalogue(tx: Queryable, workspaceId: string): Promise<{ serv
     rule({ service_id: null, name: 'Urgent job', rule_type: 'percentage', amount: 15, per_unit: false, condition_key: 'urgency', condition_value: 'urgent', active: true }),
     rule({ service_id: null, name: 'Jerusalem fee', rule_type: 'location_surcharge', amount: 250, per_unit: false, condition_key: 'location', condition_value: 'Jerusalem', active: true }),
     rule({ service_id: null, name: 'Weekend work', rule_type: 'percentage', amount: 10, per_unit: false, condition_key: 'option', condition_value: 'weekend', active: false }),
-  ]);
+  ];
+  const rules: PricingRule[] = [];
+  for (const input of ruleInputs) rules.push(await createRule(tx, workspaceId, input));
   return { services: [painting, exterior, tiling, drywall, cabinets], rules };
 }
 

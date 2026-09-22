@@ -36,7 +36,9 @@ export default async function LeadPage({ params }: PageProps<'/dashboard/leads/[
   const data = await runAsMember(async (tx, ctx) => {
     const lead = await getLead(tx, ctx.workspace.id, id);
     if (!lead) return null;
-    const [files, quotes, rules] = await Promise.all([listFilesForLead(tx, ctx.workspace.id, lead.id), listQuotesForLead(tx, ctx.workspace.id, lead.id), listRules(tx, ctx.workspace.id)]);
+    const files = await listFilesForLead(tx, ctx.workspace.id, lead.id);
+    const quotes = await listQuotesForLead(tx, ctx.workspace.id, lead.id);
+    const rules = await listRules(tx, ctx.workspace.id);
     return { lead, files, quotes, rules, workspace: ctx.workspace };
   });
   if (!data) notFound();

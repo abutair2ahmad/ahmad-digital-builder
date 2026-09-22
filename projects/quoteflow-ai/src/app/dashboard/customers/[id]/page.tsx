@@ -19,7 +19,8 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
   const data = await runAsMember(async (tx, ctx) => {
     const customer = await getCustomer(tx, ctx.workspace.id, id);
     if (!customer) return null;
-    const [leads, quotes] = await Promise.all([listLeadsForCustomer(tx, ctx.workspace.id, id), listQuotesForCustomer(tx, ctx.workspace.id, id)]);
+    const leads = await listLeadsForCustomer(tx, ctx.workspace.id, id);
+    const quotes = await listQuotesForCustomer(tx, ctx.workspace.id, id);
     return { customer, leads, quotes, currency: ctx.workspace.currency };
   });
   if (!data) notFound();

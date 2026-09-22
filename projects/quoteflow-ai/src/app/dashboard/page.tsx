@@ -17,12 +17,10 @@ export default async function DashboardPage({ searchParams }: PageProps<'/dashbo
   const { welcome } = await searchParams;
   const data = await runAsMember(async (tx, ctx) => {
     await expireOverdueQuotes(tx, ctx.workspace.id);
-    const [stats, leads, activities, byStatus] = await Promise.all([
-      dashboardStats(tx, ctx.workspace.id),
-      listLeads(tx, ctx.workspace.id, {}, 6),
-      recentActivities(tx, ctx.workspace.id, 8),
-      leadsByStatus(tx, ctx.workspace.id),
-    ]);
+    const stats = await dashboardStats(tx, ctx.workspace.id);
+    const leads = await listLeads(tx, ctx.workspace.id, {}, 6);
+    const activities = await recentActivities(tx, ctx.workspace.id, 8);
+    const byStatus = await leadsByStatus(tx, ctx.workspace.id);
     return { stats, leads, activities, byStatus, workspace: ctx.workspace };
   });
   const { stats, leads, activities, workspace } = data;

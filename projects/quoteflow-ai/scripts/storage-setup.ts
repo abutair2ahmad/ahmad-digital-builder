@@ -33,8 +33,13 @@ async function main() {
   }
 
   // Round-trip a tiny object so we know the service role can read and write.
-  const probe = `__healthcheck/${Date.now()}.txt`;
-  const up = await admin.storage.from(bucket).upload(probe, new Blob(['ok']), { contentType: 'text/plain' });
+  // Uses a real PNG because the bucket restricts MIME types to what the app accepts.
+  const PIXEL = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=',
+    'base64',
+  );
+  const probe = `__healthcheck/${Date.now()}.png`;
+  const up = await admin.storage.from(bucket).upload(probe, PIXEL, { contentType: 'image/png' });
   if (up.error) throw new Error(`Upload probe failed: ${up.error.message}`);
   const down = await admin.storage.from(bucket).download(probe);
   if (down.error) throw new Error(`Download probe failed: ${down.error.message}`);
