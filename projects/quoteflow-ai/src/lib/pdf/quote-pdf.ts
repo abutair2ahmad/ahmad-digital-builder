@@ -19,6 +19,12 @@ function money(amount: number, currency: string): string {
   return `${currency} ${Number(amount).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+/** `premium_paint` → `Premium paint`, for option keys shown to a customer. */
+function humanise(value: string): string {
+  const text = value.replace(/[_-]+/g, ' ').trim();
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 function hexToRgb(hex: string): [number, number, number] {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);
   if (!m) return [37, 99, 235];
@@ -103,7 +109,7 @@ export function renderQuotePdf({ quote, workspace, settings, logo, publicUrl }: 
       const facts = [
         inp.quantity && inp.unit ? `${inp.quantity} ${inp.unit}` : null,
         inp.urgency === 'urgent' ? 'Urgent' : 'Standard timing',
-        inp.options?.length ? `Extras: ${inp.options.join(', ')}` : null,
+        inp.options?.length ? `Extras: ${inp.options.map(humanise).join(', ')}` : null,
       ].filter(Boolean);
       doc.font('Helvetica').fontSize(9).fillColor(MUTED).text(facts.join('   ·   '), PAGE.margin, y);
       y = doc.y + 4;
