@@ -51,6 +51,30 @@ Nothing above the data/auth/storage providers knows which mode is active.
 5. In Authentication settings, either disable email confirmation or keep it —
    the sign-up screen handles both.
 
+## Languages
+
+The product ships in **English and Arabic**, with full right-to-left support.
+
+| | |
+| --- | --- |
+| URLs | English is unprefixed (`/dashboard`), Arabic lives under `/ar` (`/ar/dashboard`). Existing links — including the quote URLs already printed on customers' PDFs — keep working. |
+| Choosing | `proxy.ts` negotiates a first-time visitor's language from `Accept-Language`, redirects them once, and remembers the switcher's choice in a cookie. |
+| Switcher | In the dashboard header, on the public quote page, and in Settings. It stays on the current page. |
+| Direction | One set of styles serves both directions: the UI uses CSS logical properties (`ms-`, `pe-`, `start-`, `text-end`) rather than a stylesheet flip. |
+| Assistant | Asks and summarises in the page's language. The guided flow parses Arabic input — Arabic-Indic digits, urgency and negation, and forgiving letter matching. With `ANTHROPIC_API_KEY` set, Claude replies in the customer's language. |
+| PDF | Lays out right-to-left with Noto Naskh Arabic embedded (OFL, `src/lib/pdf/fonts`). |
+| Company content | Service names, page copy and customer names stay in whatever language the company typed them. Only the product speaks Arabic. |
+
+Translations live in `src/lib/i18n/dictionaries`. English is the source of
+truth and Arabic is typed against it, so a missing key fails the build instead
+of silently falling back at runtime. To add a locale, add it to `LOCALES` in
+`src/lib/i18n/config.ts` and provide a dictionary that satisfies `Dictionary`.
+
+One thing worth knowing: **pricing rules match on the text a company saved**.
+A `Jerusalem` location surcharge will not fire for a customer who types
+`القدس` — add an Arabic rule alongside it when you serve Arabic-speaking
+customers.
+
 ## Deploying to Vercel
 
 The live deployment builds from this repository with **Root Directory**
@@ -104,7 +128,8 @@ the other's data across eight tables, and deletes everything it created.
 ## Routes
 
 **Public** — `/`, `/login`, `/signup`, `/q/[slug]` (customer quote page),
-`/quote/[token]` (customer's quote: view → accept/decline, PDF).
+`/quote/[token]` (customer's quote: view → accept/decline, PDF). Every route
+also answers under `/ar`.
 
 **App** (signed in) — `/onboarding`, `/dashboard`, `/dashboard/leads`,
 `/dashboard/leads/[id]`, `/dashboard/customers`, `/dashboard/customers/[id]`,
@@ -135,7 +160,8 @@ src/lib/storage        local + Supabase Storage providers
 src/lib/pricing        engine (+ tests) and rules repository
 src/lib/ai             agent contract, Claude implementation, guided fallback
 src/lib/{leads,quotes,customers,services,files,workspace}  repositories
-src/lib/pdf            pdfkit proposal renderer
+src/lib/i18n           locales, dictionaries (en is the source of truth), server + client access
+src/lib/pdf            pdfkit proposal renderer, bidirectional, with an embedded Arabic face
 src/lib/seed           demo company
 src/app                routes, server actions, route handlers
 src/components         shadcn/ui primitives, app, marketing and public widgets
