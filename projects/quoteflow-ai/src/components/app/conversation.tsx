@@ -1,9 +1,13 @@
+'use client';
+
 import { Bot, User } from 'lucide-react';
 import type { ConversationTurn } from '@/lib/types';
+import { useI18n } from '@/lib/i18n/client';
 import { cn } from '@/lib/utils';
 
 export function ConversationTranscript({ turns }: { turns: ConversationTurn[] }) {
-  if (!turns.length) return <p className="text-sm text-muted-foreground">No conversation recorded.</p>;
+  const { dict: d } = useI18n();
+  if (!turns.length) return <p className="text-sm text-muted-foreground">{d.leads.noConversation}</p>;
   return (
     <ol className="space-y-3">
       {turns.map((t, i) => (
@@ -11,7 +15,7 @@ export function ConversationTranscript({ turns }: { turns: ConversationTurn[] })
           <span className={cn('mt-0.5 flex size-6 shrink-0 items-center justify-center rounded-full', t.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-secondary text-muted-foreground')}>
             {t.role === 'user' ? <User className="size-3.5" /> : <Bot className="size-3.5" />}
           </span>
-          <p className={cn('max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm', t.role === 'user' ? 'rounded-tr-sm bg-primary text-primary-foreground' : 'rounded-tl-sm bg-secondary')}>{t.content}</p>
+          <p className={cn('max-w-[85%] whitespace-pre-wrap rounded-2xl px-3.5 py-2 text-sm', t.role === 'user' ? 'rounded-se-sm bg-primary text-primary-foreground' : 'rounded-ss-sm bg-secondary')}>{t.content}</p>
         </li>
       ))}
     </ol>

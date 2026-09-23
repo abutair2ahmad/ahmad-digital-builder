@@ -3,6 +3,8 @@
 import { redirect } from 'next/navigation';
 import { getAuth } from '@/lib/auth';
 import { getDb } from '@/lib/db';
+import { localePath } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { fieldErrorsOf, loginSchema, signupSchema, type FormState } from '@/lib/validation';
 
 function safeNext(value: FormDataEntryValue | null): string | null {
@@ -11,20 +13,22 @@ function safeNext(value: FormDataEntryValue | null): string | null {
 }
 
 export async function signUpAction(_prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = signupSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { error: 'Please fix the highlighted fields.', fieldErrors: fieldErrorsOf(parsed.error) };
+  const { dict: d, locale } = await getI18n();
+  const parsed = signupSchema(d).safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: d.common.required, fieldErrors: fieldErrorsOf(parsed.error) };
   const auth = await getAuth();
   const result = await auth.signUp(parsed.data);
   if (!result.ok) return { error: result.error };
   if (result.needsEmailConfirmation) {
     return { ok: true, error: undefined, fieldErrors: undefined, stamp: -1 };
   }
-  redirect('/onboarding');
+  redirect(localePath('/onboarding', locale));
 }
 
 export async function signInAction(_prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = loginSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { error: 'Please fix the highlighted fields.', fieldErrors: fieldErrorsOf(parsed.error) };
+  const { dict: d, locale } = await getI18n();
+  const parsed = loginSchema(d).safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: d.common.required, fieldErrors: fieldErrorsOf(parsed.error) };
   const auth = await getAuth();
   const result = await auth.signIn(parsed.data);
   if (!result.ok) return { error: result.error };
@@ -35,11 +39,12 @@ export async function signInAction(_prev: FormState, formData: FormData): Promis
   const membership = result.user
     ? await db.asUser(result.user.id, (tx) => tx.one(`select workspace_id from public.workspace_members where user_id = $1 limit 1`, [result.user!.id]))
     : null;
-  redirect(membership ? '/dashboard' : '/onboarding');
+  redirect(localePath(membership ? '/dashboard' : '/onboarding', locale));
 }
 
 export async function signOutAction(): Promise<void> {
+  const { locale } = await getI18n();
   const auth = await getAuth();
   await auth.signOut();
-  redirect('/login');
+  redirect(localePath('/login', locale));
 }

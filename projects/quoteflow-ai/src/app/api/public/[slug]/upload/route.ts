@@ -4,6 +4,7 @@ import { createFileRecord } from '@/lib/files/repo';
 import { requirePublicWorkspace } from '@/lib/public/workspace';
 import { clientKey, rateLimit } from '@/lib/rate-limit';
 import { ALLOWED_UPLOAD_TYPES, getStorage, MAX_UPLOAD_BYTES } from '@/lib/storage';
+import { getI18n } from '@/lib/i18n/server';
 
 /**
  * Customers upload before the lead exists. The record is created with a null
@@ -11,17 +12,18 @@ import { ALLOWED_UPLOAD_TYPES, getStorage, MAX_UPLOAD_BYTES } from '@/lib/storag
  */
 export async function POST(req: Request, { params }: RouteContext<'/api/public/[slug]/upload'>) {
   const { slug } = await params;
+  const { dict: d } = await getI18n();
   const limited = rateLimit(clientKey(req, 'upload'), 20, 60_000);
-  if (!limited.ok) return NextResponse.json({ error: 'Too many uploads — please wait a moment.' }, { status: 429 });
+  if (!limited.ok) return NextResponse.json({ error: d.files.tooManyUploads }, { status: 429 });
   const pw = await requirePublicWorkspace(slug);
   if (pw instanceof NextResponse) return pw;
 
   const form = await req.formData().catch(() => null);
   const file = form?.get('file');
-  if (!(file instanceof File) || file.size === 0) return NextResponse.json({ error: 'Choose a file to upload.' }, { status: 400 });
+  if (!(file instanceof File) || file.size === 0) return NextResponse.json({ error: d.files.chooseFile }, { status: 400 });
   const kind = ALLOWED_UPLOAD_TYPES[file.type];
-  if (!kind) return NextResponse.json({ error: 'Only JPG, PNG, WebP, GIF images and PDF documents are accepted.' }, { status: 415 });
-  if (file.size > MAX_UPLOAD_BYTES) return NextResponse.json({ error: 'Files must be under 10 MB.' }, { status: 413 });
+  if (!kind) return NextResponse.json({ error: d.files.onlyTypes }, { status: 415 });
+  if (file.size > MAX_UPLOAD_BYTES) return NextResponse.json({ error: d.files.tooLarge }, { status: 413 });
   const requestedKind = form?.get('kind');
   const finalKind = requestedKind === 'reference' && kind === 'photo' ? 'reference' : kind;
 

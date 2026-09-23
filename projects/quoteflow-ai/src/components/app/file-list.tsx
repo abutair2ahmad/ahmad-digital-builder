@@ -1,5 +1,8 @@
+'use client';
+
 import { FileText, ImageIcon } from 'lucide-react';
 import type { UploadedFile } from '@/lib/types';
+import { useI18n } from '@/lib/i18n/client';
 
 function formatBytes(n: number): string {
   if (n < 1024) return `${n} B`;
@@ -8,7 +11,8 @@ function formatBytes(n: number): string {
 }
 
 export function FileList({ files }: { files: UploadedFile[] }) {
-  if (!files.length) return <p className="text-sm text-muted-foreground">No files attached.</p>;
+  const { dict: d } = useI18n();
+  if (!files.length) return <p className="text-sm text-muted-foreground">{d.leads.noFiles}</p>;
   return (
     <ul className="grid gap-2">
       {files.map((f) => {
@@ -27,8 +31,8 @@ export function FileList({ files }: { files: UploadedFile[] }) {
               <div className="min-w-0">
                 <p className="truncate text-sm font-medium">{f.file_name}</p>
                 <p className="text-xs text-muted-foreground">
-                  {isImage ? <ImageIcon className="mr-1 inline size-3" /> : null}
-                  {f.kind} · {formatBytes(f.size_bytes)} · {f.uploaded_by}
+                  {isImage ? <ImageIcon className="me-1 inline size-3" /> : null}
+                  {d.files[f.kind]} · {formatBytes(f.size_bytes)} · {f.uploaded_by === 'customer' ? d.files.uploadedByCustomer : d.files.uploadedByMember}
                 </p>
               </div>
             </a>

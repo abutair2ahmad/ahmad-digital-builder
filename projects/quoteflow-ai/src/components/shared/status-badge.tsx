@@ -1,5 +1,7 @@
+'use client';
+
 import { Badge } from '@/components/ui/badge';
-import { LEAD_STATUS_LABEL, QUOTE_STATUS_LABEL } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/client';
 import type { LeadStatus, QuoteStatus } from '@/lib/types';
 import { cn } from '@/lib/utils';
 
@@ -18,17 +20,19 @@ const tone: Record<string, string> = {
 };
 
 export function LeadStatusBadge({ status, className }: { status: LeadStatus; className?: string }) {
+  const { dict } = useI18n();
   return (
     <Badge variant="outline" className={cn('font-medium', tone[status], className)}>
-      {LEAD_STATUS_LABEL[status]}
+      {dict.status.lead[status]}
     </Badge>
   );
 }
 
 export function QuoteStatusBadge({ status, className }: { status: QuoteStatus; className?: string }) {
+  const { dict } = useI18n();
   return (
     <Badge variant="outline" className={cn('font-medium', tone[status], className)}>
-      {QUOTE_STATUS_LABEL[status]}
+      {dict.status.quote[status]}
     </Badge>
   );
 }

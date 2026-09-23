@@ -6,7 +6,8 @@ import { touchCustomer } from '@/lib/customers/repo';
 import { updateLeadStatus } from '@/lib/leads/repo';
 import { getQuote, updateQuoteDetails, updateQuoteStatus } from '@/lib/quotes/repo';
 import type { QuoteStatus } from '@/lib/types';
-import { QUOTE_STATUS_LABEL } from '@/lib/format';
+import { fill } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { fieldErrorsOf, quoteDetailsSchema, quoteStatusSchema, type FormState } from '@/lib/validation';
 import { runAsMember } from '@/lib/workspace/context';
 
@@ -21,15 +22,18 @@ const ALLOWED: Record<QuoteStatus, QuoteStatus[]> = {
 };
 
 export async function setQuoteStatusAction(id: string, status: string): Promise<{ ok: boolean; error?: string }> {
+  const { dict: d } = await getI18n();
   const parsed = quoteStatusSchema.safeParse(status);
-  if (!parsed.success) return { ok: false, error: 'Unknown status.' };
+  if (!parsed.success) return { ok: false, error: d.quotes.unknownStatus };
   const next = parsed.data as QuoteStatus;
   const result = await runAsMember(async (tx, ctx) => {
     const quote = await getQuote(tx, ctx.workspace.id, id);
-    if (!quote) return { error: 'Quote not found.' };
-    if (!ALLOWED[quote.status].includes(next)) return { error: `A ${QUOTE_STATUS_LABEL[quote.status].toLowerCase()} quote cannot be marked ${QUOTE_STATUS_LABEL[next].toLowerCase()}.` };
+    if (!quote) return { error: d.quotes.notFound };
+    if (!ALLOWED[quote.status].includes(next)) {
+      return { error: fill(d.quotes.illegalTransition, { from: d.status.quote[quote.status], to: d.status.quote[next] }) };
+    }
     const updated = await updateQuoteStatus(tx, ctx.workspace.id, id, next);
-    if (!updated) return { error: 'Quote not found.' };
+    if (!updated) return { error: d.quotes.notFound };
     // Keep the lead's pipeline stage in step with the quote.
     if (quote.lead_id) {
       const leadStatus = next === 'sent' ? 'quote_sent' : next === 'accepted' ? 'won' : next === 'rejected' ? 'lost' : null;
@@ -41,7 +45,11 @@ export async function setQuoteStatusAction(id: string, status: string): Promise<
       type: `quote.${next}`,
       entityType: 'quote',
       entityId: id,
-      message: `Quote ${quote.quote_number} for ${quote.customer_name ?? 'customer'} marked ${QUOTE_STATUS_LABEL[next]}`,
+      message: fill(d.activity.quoteStatus, {
+        number: quote.quote_number,
+        name: quote.customer_name ?? d.activity.customerFallback,
+        status: d.status.quote[next],
+      }),
     });
     return { error: undefined };
   });
@@ -54,10 +62,11 @@ export async function setQuoteStatusAction(id: string, status: string): Promise<
 }
 
 export async function updateQuoteDetailsAction(id: string, _prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = quoteDetailsSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { error: 'Please fix the highlighted fields.', fieldErrors: fieldErrorsOf(parsed.error) };
+  const { dict: d } = await getI18n();
+  const parsed = quoteDetailsSchema().safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: d.common.required, fieldErrors: fieldErrorsOf(parsed.error) };
   const updated = await runAsMember((tx, ctx) => updateQuoteDetails(tx, ctx.workspace.id, id, parsed.data));
-  if (!updated) return { error: 'Quote not found.' };
+  if (!updated) return { error: d.quotes.notFound };
   revalidatePath(`/dashboard/quotes/${id}`);
   return { ok: true, stamp: Date.now() };
 }

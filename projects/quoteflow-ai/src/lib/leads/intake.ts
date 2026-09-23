@@ -10,6 +10,8 @@ import { createQuote } from '@/lib/quotes/repo';
 import { getService } from '@/lib/services/repo';
 import type { CompanySettings, ConversationTurn, Lead, Quote, Workspace } from '@/lib/types';
 import { createLead } from './repo';
+import { fill } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 
 export interface IntakeInput {
   collected: Collected;
@@ -36,8 +38,9 @@ export async function intakeLead(
   settings: CompanySettings,
   input: IntakeInput,
 ): Promise<IntakeResult> {
+  const { dict: d } = await getI18n();
   const service = input.collected.service_id ? await getService(tx, workspace.id, input.collected.service_id) : null;
-  if (!service || !service.active) throw new Error('Please choose one of the listed services.');
+  if (!service || !service.active) throw new Error(d.validation.chooseListedService);
 
   const rules = await listRules(tx, workspace.id, { activeOnly: true });
   const quantity = service.pricing_type === 'per_unit' ? (input.collected.quantity ?? 0) : 1;
@@ -95,7 +98,11 @@ export async function intakeLead(
     type: 'lead.created',
     entityType: 'lead',
     entityId: lead.id,
-    message: `New lead from ${input.contact.name} — ${service.name}${input.collected.location ? ` in ${input.collected.location}` : ''}`,
+    message: fill(d.activity.leadCreated, {
+      name: input.contact.name,
+      service: service.name,
+      location: input.collected.location ? fill(d.activity.leadLocation, { location: input.collected.location }) : '',
+    }),
   });
 
   return { lead, quote, pricing };

@@ -14,19 +14,27 @@ import { ALLOWED_UPLOAD_TYPES, getStorage, MAX_UPLOAD_BYTES } from '@/lib/storag
 import type { LeadStatus } from '@/lib/types';
 import { fieldErrorsOf, leadDetailsSchema, leadStatusSchema, type FormState } from '@/lib/validation';
 import { runAsMember } from '@/lib/workspace/context';
-import { LEAD_STATUS_LABEL } from '@/lib/format';
+import { fill, localePath } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 
 export async function setLeadStatusAction(id: string, status: string): Promise<{ ok: boolean; error?: string }> {
+  const { dict: d } = await getI18n();
   const parsed = leadStatusSchema.safeParse(status);
-  if (!parsed.success) return { ok: false, error: 'Unknown status.' };
+  if (!parsed.success) return { ok: false, error: d.quotes.unknownStatus };
   const result = await runAsMember(async (tx, ctx) => {
     const lead = await updateLeadStatus(tx, ctx.workspace.id, id, parsed.data as LeadStatus);
     if (!lead) return null;
-    await logActivity(tx, { workspaceId: ctx.workspace.id, type: 'lead.status', entityType: 'lead', entityId: id, message: `${lead.customer_name} marked ${LEAD_STATUS_LABEL[lead.status]}` });
+    await logActivity(tx, {
+      workspaceId: ctx.workspace.id,
+      type: 'lead.status',
+      entityType: 'lead',
+      entityId: id,
+      message: fill(d.activity.leadStatus, { name: lead.customer_name, status: d.status.lead[lead.status] }),
+    });
     if (lead.customer_id) await touchCustomer(tx, ctx.workspace.id, lead.customer_id);
     return lead;
   });
-  if (!result) return { ok: false, error: 'Lead not found.' };
+  if (!result) return { ok: false, error: d.leads.notFound };
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/leads');
   revalidatePath(`/dashboard/leads/${id}`);
@@ -34,10 +42,11 @@ export async function setLeadStatusAction(id: string, status: string): Promise<{
 }
 
 export async function updateLeadDetailsAction(id: string, _prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = leadDetailsSchema.safeParse(Object.fromEntries(formData));
-  if (!parsed.success) return { error: 'Please fix the highlighted fields.', fieldErrors: fieldErrorsOf(parsed.error) };
+  const { dict: d } = await getI18n();
+  const parsed = leadDetailsSchema(d).safeParse(Object.fromEntries(formData));
+  if (!parsed.success) return { error: d.common.required, fieldErrors: fieldErrorsOf(parsed.error) };
   const updated = await runAsMember((tx, ctx) => updateLeadDetails(tx, ctx.workspace.id, id, parsed.data));
-  if (!updated) return { error: 'Lead not found.' };
+  if (!updated) return { error: d.leads.notFound };
   revalidatePath(`/dashboard/leads/${id}`);
   revalidatePath('/dashboard/leads');
   return { ok: true, stamp: Date.now() };
@@ -48,13 +57,14 @@ export async function updateLeadDetailsAction(id: string, _prev: FormState, form
  * *current* rules — so a business can tweak a rule and re-quote.
  */
 export async function createQuoteFromLeadAction(leadId: string): Promise<{ ok: boolean; error?: string; quoteId?: string }> {
+  const { dict: d, locale } = await getI18n();
   let quoteId: string | null = null;
   let error: string | undefined;
   await runAsMember(async (tx, ctx) => {
     const lead = await getLead(tx, ctx.workspace.id, leadId);
-    if (!lead) return void (error = 'Lead not found.');
+    if (!lead) return void (error = d.leads.notFound);
     const service = lead.service_id ? await getService(tx, ctx.workspace.id, lead.service_id) : null;
-    if (!service) return void (error = 'This lead has no service. Edit the lead first.');
+    if (!service) return void (error = d.leads.noServiceOnLead);
     const rules = await listRules(tx, ctx.workspace.id, { activeOnly: true });
     const pricing = calculatePrice(
       { service, quantity: service.pricing_type === 'per_unit' ? lead.quantity ?? 0 : 1, location: lead.location, urgency: lead.urgency, options: lead.options },
@@ -74,22 +84,29 @@ export async function createQuoteFromLeadAction(leadId: string): Promise<{ ok: b
       pricing,
     });
     await tx.query(`update public.leads set estimated_total = $3, updated_at = now() where workspace_id = $1 and id = $2`, [ctx.workspace.id, lead.id, pricing.total]);
-    await logActivity(tx, { workspaceId: ctx.workspace.id, type: 'quote.created', entityType: 'quote', entityId: quote.id, message: `Quote ${quote.quote_number} drafted for ${lead.customer_name}` });
+    await logActivity(tx, {
+      workspaceId: ctx.workspace.id,
+      type: 'quote.created',
+      entityType: 'quote',
+      entityId: quote.id,
+      message: fill(d.activity.quoteDrafted, { number: quote.quote_number, name: lead.customer_name }),
+    });
     quoteId = quote.id;
   });
-  if (error || !quoteId) return { ok: false, error: error ?? 'Could not create quote.' };
+  if (error || !quoteId) return { ok: false, error: error ?? d.leads.couldNotCreateQuote };
   revalidatePath('/dashboard');
   revalidatePath('/dashboard/quotes');
   revalidatePath(`/dashboard/leads/${leadId}`);
-  redirect(`/dashboard/quotes/${quoteId}`);
+  redirect(localePath(`/dashboard/quotes/${quoteId}`, locale));
 }
 
 export async function uploadLeadFileAction(leadId: string, _prev: FormState, formData: FormData): Promise<FormState> {
+  const { dict: d } = await getI18n();
   const file = formData.get('file');
-  if (!(file instanceof File) || file.size === 0) return { error: 'Choose a file to upload.' };
+  if (!(file instanceof File) || file.size === 0) return { error: d.files.chooseFile };
   const kind = ALLOWED_UPLOAD_TYPES[file.type];
-  if (!kind) return { error: 'Only JPG, PNG, WebP, GIF images and PDF documents are accepted.' };
-  if (file.size > MAX_UPLOAD_BYTES) return { error: 'Files must be under 10 MB.' };
+  if (!kind) return { error: d.files.onlyTypes };
+  if (file.size > MAX_UPLOAD_BYTES) return { error: d.files.tooLarge };
   const ok = await runAsMember(async (tx, ctx) => {
     const lead = await getLead(tx, ctx.workspace.id, leadId);
     if (!lead) return false;
@@ -98,7 +115,7 @@ export async function uploadLeadFileAction(leadId: string, _prev: FormState, for
     await createFileRecord(tx, ctx.workspace.id, { lead_id: lead.id, storage_path: storagePath, file_name: file.name, mime_type: file.type, size_bytes: file.size, kind, uploaded_by: 'member' });
     return true;
   });
-  if (!ok) return { error: 'Lead not found.' };
+  if (!ok) return { error: d.leads.notFound };
   revalidatePath(`/dashboard/leads/${leadId}`);
   return { ok: true, stamp: Date.now() };
 }

@@ -6,13 +6,16 @@ import { createRule, deleteRule, setRuleActive, updateRule, type RuleInput } fro
 import type { ConditionKey, RuleType } from '@/lib/types';
 import { fieldErrorsOf, ruleSchema, type FormState } from '@/lib/validation';
 import { runAsMember } from '@/lib/workspace/context';
+import { fill } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
+import type { Dictionary } from '@/lib/i18n';
 
-function parse(formData: FormData): { ok: true; data: RuleInput } | { ok: false; state: FormState } {
+function parse(formData: FormData, d: Dictionary): { ok: true; data: RuleInput } | { ok: false; state: FormState } {
   const type = String(formData.get('rule_type') ?? '');
   // Rule types with an implied condition get it filled in so the form stays simple.
   const conditionKey =
     type === 'location_surcharge' ? 'location' : type === 'addon' ? 'option' : String(formData.get('condition_key') ?? 'none');
-  const parsed = ruleSchema.safeParse({
+  const parsed = ruleSchema(d).safeParse({
     service_id: formData.get('service_id') ?? 'all',
     name: formData.get('name'),
     rule_type: type,
@@ -22,29 +25,36 @@ function parse(formData: FormData): { ok: true; data: RuleInput } | { ok: false;
     condition_value: formData.get('condition_value'),
     active: formData.get('active') !== 'false',
   });
-  if (!parsed.success) return { ok: false, state: { error: 'Please fix the highlighted fields.', fieldErrors: fieldErrorsOf(parsed.error) } };
-  const d = parsed.data;
+  if (!parsed.success) return { ok: false, state: { error: d.common.required, fieldErrors: fieldErrorsOf(parsed.error) } };
+  const v = parsed.data;
   return {
     ok: true,
     data: {
-      service_id: d.service_id,
-      name: d.name,
-      rule_type: d.rule_type as RuleType,
-      amount: d.amount,
-      per_unit: d.rule_type === 'addon' ? d.per_unit : false,
-      condition_key: (d.condition_key as ConditionKey | null) ?? null,
-      condition_value: d.condition_key === 'urgency' && d.condition_value ? d.condition_value.toLowerCase() : d.condition_value,
-      active: d.active,
+      service_id: v.service_id,
+      name: v.name,
+      rule_type: v.rule_type as RuleType,
+      amount: v.amount,
+      per_unit: v.rule_type === 'addon' ? v.per_unit : false,
+      condition_key: (v.condition_key as ConditionKey | null) ?? null,
+      condition_value: v.condition_key === 'urgency' && v.condition_value ? v.condition_value.toLowerCase() : v.condition_value,
+      active: v.active,
     },
   };
 }
 
 export async function createRuleAction(_prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = parse(formData);
+  const { dict: d } = await getI18n();
+  const parsed = parse(formData, d);
   if (!parsed.ok) return parsed.state;
   await runAsMember(async (tx, ctx) => {
     const r = await createRule(tx, ctx.workspace.id, parsed.data);
-    await logActivity(tx, { workspaceId: ctx.workspace.id, type: 'rule.created', entityType: 'pricing_rule', entityId: r.id, message: `Pricing rule "${r.name}" added` });
+    await logActivity(tx, {
+      workspaceId: ctx.workspace.id,
+      type: 'rule.created',
+      entityType: 'pricing_rule',
+      entityId: r.id,
+      message: fill(d.activity.ruleCreated, { name: r.name }),
+    });
   });
   revalidatePath('/dashboard/pricing');
   revalidatePath('/dashboard/services');
@@ -52,10 +62,11 @@ export async function createRuleAction(_prev: FormState, formData: FormData): Pr
 }
 
 export async function updateRuleAction(id: string, _prev: FormState, formData: FormData): Promise<FormState> {
-  const parsed = parse(formData);
+  const { dict: d } = await getI18n();
+  const parsed = parse(formData, d);
   if (!parsed.ok) return parsed.state;
   const updated = await runAsMember((tx, ctx) => updateRule(tx, ctx.workspace.id, id, parsed.data));
-  if (!updated) return { error: 'Rule not found.' };
+  if (!updated) return { error: d.pricing.notFoundRule };
   revalidatePath('/dashboard/pricing');
   revalidatePath('/dashboard/services');
   return { ok: true, stamp: Date.now() };

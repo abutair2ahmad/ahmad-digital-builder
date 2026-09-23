@@ -50,5 +50,5 @@
     "tsx": "^4.23.15",
     "typescript": "^5"
   },
-  "description": "QuoteFlow AI \u2014 AI lead qualification, deterministic pricing rules, quotes with PDF proposals and a lightweight CRM for service businesses."
+  "description": "QuoteFlow AI — AI lead qualification, deterministic pricing rules, quotes with PDF proposals and a lightweight CRM for service businesses."
 }

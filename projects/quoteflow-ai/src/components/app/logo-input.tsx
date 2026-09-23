@@ -3,8 +3,10 @@
 import { useState } from 'react';
 import { ImagePlus, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useI18n } from '@/lib/i18n/client';
 
 export function LogoInput({ name, currentUrl }: { name: string; currentUrl?: string | null }) {
+  const { dict: d } = useI18n();
   const [preview, setPreview] = useState<string | null>(null);
   const [key, setKey] = useState(0);
   const shown = preview ?? currentUrl ?? null;
@@ -25,14 +27,14 @@ export function LogoInput({ name, currentUrl }: { name: string; currentUrl?: str
           name={name}
           type="file"
           accept="image/png,image/jpeg,image/webp,image/svg+xml"
-          className="block w-full text-sm text-muted-foreground file:mr-3 file:rounded-md file:border file:bg-background file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-foreground hover:file:bg-secondary"
+          className="block w-full text-sm text-muted-foreground file:me-3 file:rounded-md file:border file:bg-background file:px-3 file:py-1.5 file:text-sm file:font-medium file:text-foreground hover:file:bg-secondary"
           onChange={(e) => {
             const f = e.target.files?.[0];
             setPreview(f ? URL.createObjectURL(f) : null);
           }}
         />
         {preview ? (
-          <Button type="button" variant="ghost" size="icon" aria-label="Clear" onClick={() => { setPreview(null); setKey((k) => k + 1); }}>
+          <Button type="button" variant="ghost" size="icon" aria-label={d.common.clear} onClick={() => { setPreview(null); setKey((k) => k + 1); }}>
             <X />
           </Button>
         ) : null}

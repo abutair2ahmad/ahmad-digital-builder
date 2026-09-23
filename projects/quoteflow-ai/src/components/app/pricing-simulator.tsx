@@ -7,6 +7,8 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { formatMoney } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/client';
+import { fill } from '@/lib/i18n';
 import { availableOptions, calculatePrice } from '@/lib/pricing/engine';
 import type { PricingRule, Service } from '@/lib/types';
 
@@ -15,6 +17,7 @@ import type { PricingRule, Service } from '@/lib/types';
  * exactly what a customer would be quoted, as they edit rules.
  */
 export function PricingSimulator({ services, rules, currency }: { services: Service[]; rules: PricingRule[]; currency: string }) {
+  const { dict: d, locale } = useI18n();
   const active = services.filter((s) => s.active);
   const [serviceId, setServiceId] = useState(active[0]?.id ?? '');
   const [quantity, setQuantity] = useState('50');
@@ -38,13 +41,13 @@ export function PricingSimulator({ services, rules, currency }: { services: Serv
     <section className="rounded-xl border bg-card">
       <div className="flex items-center gap-2 border-b px-5 py-3.5">
         <Calculator className="size-4 text-muted-foreground" />
-        <h2 className="text-sm font-semibold">Simulator</h2>
-        <span className="ml-auto text-xs text-muted-foreground">Same engine the public page uses</span>
+        <h2 className="text-sm font-semibold">{d.pricing.simulator}</h2>
+        <span className="ms-auto text-xs text-muted-foreground">{d.pricing.simulatorHint}</span>
       </div>
       <div className="grid gap-5 p-5">
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <Label>Service</Label>
+            <Label>{d.leads.service}</Label>
             <Select value={serviceId} onValueChange={(v) => { setServiceId(v); setOptions([]); }}>
               <SelectTrigger className="w-full">
                 <SelectValue />
@@ -60,23 +63,23 @@ export function PricingSimulator({ services, rules, currency }: { services: Serv
           </div>
           {service?.pricing_type === 'per_unit' ? (
             <div className="space-y-1.5">
-              <Label htmlFor="sim-qty">Quantity ({service.unit ?? 'units'})</Label>
+              <Label htmlFor="sim-qty">{fill(d.pricing.quantityWithUnit, { unit: service.unit ?? d.agent.units })}</Label>
               <Input id="sim-qty" type="number" min={0} value={quantity} onChange={(e) => setQuantity(e.target.value)} />
             </div>
           ) : null}
           <div className="space-y-1.5">
-            <Label htmlFor="sim-location">Location</Label>
-            <Input id="sim-location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder="Jerusalem" />
+            <Label htmlFor="sim-location">{d.leads.location}</Label>
+            <Input id="sim-location" value={location} onChange={(e) => setLocation(e.target.value)} placeholder={d.common.locationExample} />
           </div>
           <div className="flex items-center justify-between rounded-lg border px-3 py-2.5">
             <Label htmlFor="sim-urgent" className="font-normal">
-              Urgent job
+              {d.pricing.urgentJob}
             </Label>
             <Switch id="sim-urgent" checked={urgent} onCheckedChange={setUrgent} />
           </div>
           {opts.length ? (
             <div className="space-y-2">
-              <Label>Optional extras</Label>
+              <Label>{d.pricing.optionalExtras}</Label>
               <div className="flex flex-wrap gap-2">
                 {opts.map((o) => {
                   const on = options.includes(o.value);
@@ -106,7 +109,7 @@ export function PricingSimulator({ services, rules, currency }: { services: Serv
                       <p>{l.label}</p>
                       {l.description ? <p className="text-xs text-muted-foreground">{l.description}</p> : null}
                     </div>
-                    <span className="shrink-0 tabular">{formatMoney(l.amount, currency)}</span>
+                    <span className="shrink-0 tabular">{formatMoney(l.amount, currency, locale)}</span>
                   </li>
                 ))}
               </ul>
@@ -117,16 +120,16 @@ export function PricingSimulator({ services, rules, currency }: { services: Serv
               ))}
               <div className="mt-4 space-y-1 border-t pt-3 text-sm">
                 <div className="flex justify-between gap-3 text-muted-foreground">
-                  <span>Subtotal</span>
-                  <span className="tabular">{formatMoney(result.subtotal, currency)}</span>
+                  <span>{d.quotes.subtotal}</span>
+                  <span className="tabular">{formatMoney(result.subtotal, currency, locale)}</span>
                 </div>
                 <div className="flex justify-between gap-3 text-muted-foreground">
-                  <span>Modifiers</span>
-                  <span className="tabular">{formatMoney(result.modifiers_total, currency)}</span>
+                  <span>{d.pricing.modifiersLabel}</span>
+                  <span className="tabular">{formatMoney(result.modifiers_total, currency, locale)}</span>
                 </div>
                 <div className="flex justify-between gap-3 text-base font-semibold">
-                  <span>Estimate</span>
-                  <span className="tabular">{formatMoney(result.total, currency)}</span>
+                  <span>{d.pricing.estimateLabel}</span>
+                  <span className="tabular">{formatMoney(result.total, currency, locale)}</span>
                 </div>
               </div>
             </>

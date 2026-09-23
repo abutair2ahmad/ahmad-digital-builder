@@ -1,21 +1,31 @@
 import type { Metadata } from 'next';
 import { PageHeader } from '@/components/shared/page-header';
 import { config } from '@/lib/config';
+import { fill } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { requireWorkspace } from '@/lib/workspace/context';
-import { BusinessForm, PublicPageForm, QuoteSettingsForm } from './settings-forms';
+import { BusinessForm, LanguageSection, PublicPageForm, QuoteSettingsForm } from './settings-forms';
 
-export const metadata: Metadata = { title: 'Settings' };
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getI18n();
+  return { title: dict.settings.title };
+}
 
 export default async function SettingsPage() {
   const ctx = await requireWorkspace();
+  const { dict: d } = await getI18n();
   return (
     <>
-      <PageHeader title="Settings" description="Company details, your public quote page and quote defaults." />
+      <PageHeader title={d.settings.title} description={d.settings.subtitle} />
       <BusinessForm workspace={ctx.workspace} />
+      <LanguageSection />
       <PublicPageForm workspace={ctx.workspace} settings={ctx.settings} appUrl={config.appUrl} />
       <QuoteSettingsForm settings={ctx.settings} />
       <p className="text-xs text-muted-foreground">
-        Running in <span className="font-medium">{config.mode === 'supabase' ? 'Supabase' : 'local demo'}</span> mode · AI assistant: <span className="font-medium">{config.anthropic.apiKey ? `Claude (${config.anthropic.model})` : 'guided flow (no ANTHROPIC_API_KEY set)'}</span>
+        {fill(d.settings.runningIn, { mode: config.mode === 'supabase' ? d.settings.modeSupabase : d.settings.modeLocal })} · {d.settings.aiAssistant}:{' '}
+        <span className="font-medium">
+          {config.anthropic.apiKey ? fill(d.settings.aiClaude, { model: config.anthropic.model }) : d.settings.aiGuided}
+        </span>
       </p>
     </>
   );

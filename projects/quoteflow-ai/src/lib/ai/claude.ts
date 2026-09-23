@@ -3,6 +3,7 @@ import Anthropic from '@anthropic-ai/sdk';
 import { zodOutputFormat } from '@anthropic-ai/sdk/helpers/zod';
 import { config } from '@/lib/config';
 import type { ConversationTurn } from '@/lib/types';
+import { LOCALE_META, type Locale } from '@/lib/i18n';
 import { AgentTurnSchema, missingFields, type AgentContext, type AgentTurn, type Collected } from './schema';
 
 let client: Anthropic | null = null;
@@ -27,7 +28,9 @@ How to work:
 - The customer never needs an account. Do not ask for name, phone or email — a form collects those after you finish.
 - When everything required is collected, set is_complete to true, write a 1–3 sentence factual summary of the project (no prices), and reply with a short confirmation telling the customer to check the summary and add their contact details.
 
-Always return the full merged "collected" object. Keep option values exactly as the catalogue's option values.`;
+Always return the full merged "collected" object. Keep option values exactly as the catalogue's option values.
+
+Language: reply in the language named in the state block, unless the customer clearly writes in another language — then follow the customer. Keep the company's own service names and option values exactly as the catalogue spells them, whatever language you reply in. The summary you write must be in the same language as your reply.`;
 
 function catalogueMessage(ctx: AgentContext): string {
   const services = ctx.services.map((s) => {
@@ -51,7 +54,7 @@ function catalogueMessage(ctx: AgentContext): string {
     .join('\n');
 }
 
-export async function claudeTurn(ctx: AgentContext, history: ConversationTurn[], collected: Collected): Promise<AgentTurn> {
+export async function claudeTurn(ctx: AgentContext, history: ConversationTurn[], collected: Collected, locale: Locale): Promise<AgentTurn> {
   const messages: Anthropic.MessageParam[] = [
     {
       role: 'user',
@@ -67,7 +70,13 @@ export async function claudeTurn(ctx: AgentContext, history: ConversationTurn[],
     ...history.map<Anthropic.MessageParam>((m) => ({ role: m.role, content: m.content })),
     {
       role: 'user',
-      content: `[State — not written by the customer]\nCollected so far: ${JSON.stringify(collected)}\nStill missing: ${missingFields(ctx, collected).join(', ') || 'nothing required'}\nRespond to the customer's latest message above.`,
+      content: [
+        '[State — not written by the customer]',
+        `Reply language: ${LOCALE_META[locale].label}`,
+        `Collected so far: ${JSON.stringify(collected)}`,
+        `Still missing: ${missingFields(ctx, collected).join(', ') || 'nothing required'}`,
+        "Respond to the customer's latest message above.",
+      ].join('\n'),
     },
   ];
 

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { createHmac, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
 import { cookies } from 'next/headers';
 import { config } from '@/lib/config';
+import { getI18n } from '@/lib/i18n/server';
 import { getDb } from '@/lib/db';
 import type { AuthProvider, AuthUser } from './types';
 
@@ -79,7 +80,7 @@ export const localAuth: AuthProvider = {
   async signUp({ email, password, fullName }) {
     const db = await getDb();
     const existing = await db.admin.one(`select id from auth.users where lower(email) = lower($1)`, [email]);
-    if (existing) return { ok: false, error: 'An account with this email already exists.' };
+    if (existing) return { ok: false, error: (await getI18n()).dict.auth.emailTaken };
     const user = await db.admin.one<AuthUser>(
       `insert into auth.users (email, encrypted_password, raw_user_meta_data)
        values (lower($1), $2, $3) returning id, email`,
@@ -96,7 +97,7 @@ export const localAuth: AuthProvider = {
       [email],
     );
     if (!row || !verifyPassword(password, row.encrypted_password)) {
-      return { ok: false, error: 'Incorrect email or password.' };
+      return { ok: false, error: (await getI18n()).dict.auth.incorrectCredentials };
     }
     await createSession(row.id);
     return { ok: true, user: { id: row.id, email: row.email } };

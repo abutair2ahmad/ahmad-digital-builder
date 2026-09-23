@@ -8,13 +8,19 @@ import { Button } from '@/components/ui/button';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import { listRules } from '@/lib/pricing/repo';
 import { listServices } from '@/lib/services/repo';
+import { fill, localePath } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { runAsMember } from '@/lib/workspace/context';
 import { ServiceDialog } from './service-dialog';
 import { ServiceActiveSwitch, ServiceRowActions } from './service-row-actions';
 
-export const metadata: Metadata = { title: 'Services' };
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getI18n();
+  return { title: dict.services.title };
+}
 
 export default async function ServicesPage() {
+  const { dict: d, locale } = await getI18n();
   const { services, rules } = await runAsMember(async (tx, ctx) => ({
     services: await listServices(tx, ctx.workspace.id),
     rules: await listRules(tx, ctx.workspace.id),
@@ -25,13 +31,13 @@ export default async function ServicesPage() {
   return (
     <>
       <PageHeader
-        title="Services"
-        description="What your company offers. Each service gets its own pricing rules."
+        title={d.services.title}
+        description={d.services.subtitle}
         actions={
           <ServiceDialog
             trigger={
               <Button>
-                <Plus /> New service
+                <Plus /> {d.services.newService}
               </Button>
             }
           />
@@ -43,11 +49,11 @@ export default async function ServicesPage() {
             <Table>
               <TableHeader>
                 <TableRow>
-                  <TableHead>Service</TableHead>
-                  <TableHead>Pricing</TableHead>
-                  <TableHead>Rules</TableHead>
-                  <TableHead>Active</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
+                  <TableHead>{d.leads.service}</TableHead>
+                  <TableHead>{d.services.pricingColumn}</TableHead>
+                  <TableHead>{d.services.rulesColumn}</TableHead>
+                  <TableHead>{d.common.active}</TableHead>
+                  <TableHead className="text-end">{d.common.actions}</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
@@ -58,13 +64,15 @@ export default async function ServicesPage() {
                       {s.description ? <p className="line-clamp-1 max-w-md text-xs text-muted-foreground">{s.description}</p> : null}
                     </TableCell>
                     <TableCell>
-                      <Badge variant="secondary">{s.pricing_type === 'per_unit' ? `Per ${s.unit ?? 'unit'}` : 'Fixed price'}</Badge>
+                      <Badge variant="secondary">
+                        {s.pricing_type === 'per_unit' ? fill(d.services.perUnitLabel, { unit: s.unit ?? d.services.unit }) : d.services.fixedPrice}
+                      </Badge>
                     </TableCell>
                     <TableCell>
-                      <Link href={`/dashboard/pricing?service=${s.id}`} className="text-sm underline-offset-4 hover:underline">
-                        {ruleCount(s.id)} rule{ruleCount(s.id) === 1 ? '' : 's'}
+                      <Link href={localePath(`/dashboard/pricing?service=${s.id}`, locale)} className="text-sm underline-offset-4 hover:underline">
+                        {fill(d.services.ruleCount, { n: ruleCount(s.id) })}
                       </Link>
-                      {!hasBase(s.id) ? <p className="text-xs text-warning">No base price yet</p> : null}
+                      {!hasBase(s.id) ? <p className="text-xs text-warning">{d.services.noBasePrice}</p> : null}
                     </TableCell>
                     <TableCell>
                       <ServiceActiveSwitch service={s} />
@@ -81,13 +89,13 @@ export default async function ServicesPage() {
       ) : (
         <EmptyState
           icon={<Wrench className="size-5" />}
-          title="No services yet"
-          description="Add the first thing your company sells — e.g. Interior painting, priced per m²."
+          title={d.services.empty}
+          description={d.services.emptyBody}
           action={
             <ServiceDialog
               trigger={
                 <Button>
-                  <Plus /> New service
+                  <Plus /> {d.services.newService}
                 </Button>
               }
             />

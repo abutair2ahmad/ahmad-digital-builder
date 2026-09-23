@@ -7,20 +7,23 @@ import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Switch } from '@/components/ui/switch';
 import type { Service } from '@/lib/types';
+import { useI18n } from '@/lib/i18n/client';
+import { fill } from '@/lib/i18n';
 import { deleteServiceAction, toggleServiceAction } from './actions';
 import { ServiceDialog } from './service-dialog';
 
 export function ServiceActiveSwitch({ service }: { service: Service }) {
+  const { dict: d } = useI18n();
   const [pending, start] = useTransition();
   return (
     <Switch
       checked={service.active}
       disabled={pending}
-      aria-label={`${service.name} active`}
+      aria-label={`${service.name} — ${d.common.active}`}
       onCheckedChange={(v) =>
         start(async () => {
           await toggleServiceAction(service.id, v);
-          toast.success(v ? 'Service enabled' : 'Service disabled');
+          toast.success(v ? d.services.enabled : d.services.disabled);
         })
       }
     />
@@ -28,6 +31,7 @@ export function ServiceActiveSwitch({ service }: { service: Service }) {
 }
 
 export function ServiceRowActions({ service, ruleCount }: { service: Service; ruleCount: number }) {
+  const { dict: d } = useI18n();
   const [pending, start] = useTransition();
   return (
     <div className="flex items-center justify-end gap-1">
@@ -35,13 +39,13 @@ export function ServiceRowActions({ service, ruleCount }: { service: Service; ru
         service={service}
         trigger={
           <Button variant="ghost" size="sm">
-            <Pencil /> Edit
+            <Pencil /> {d.common.edit}
           </Button>
         }
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="ghost" size="icon" aria-label="More">
+          <Button variant="ghost" size="icon" aria-label={d.common.actions}>
             <MoreHorizontal />
           </Button>
         </DropdownMenuTrigger>
@@ -50,16 +54,18 @@ export function ServiceRowActions({ service, ruleCount }: { service: Service; ru
             variant="destructive"
             disabled={pending}
             onSelect={() => {
-              const msg = ruleCount ? `Delete "${service.name}" and its ${ruleCount} pricing rule${ruleCount === 1 ? '' : 's'}? Existing leads and quotes keep their history.` : `Delete "${service.name}"?`;
+              const msg = ruleCount
+                ? fill(d.services.confirmDeleteWithRules, { name: service.name, n: ruleCount })
+                : fill(d.services.confirmDelete, { name: service.name });
               if (!window.confirm(msg)) return;
               start(async () => {
                 const r = await deleteServiceAction(service.id);
-                if (r.ok) toast.success('Service deleted');
-                else toast.error(r.error ?? 'Could not delete');
+                if (r.ok) toast.success(d.services.deleted);
+                else toast.error(r.error ?? d.services.couldNotDelete);
               });
             }}
           >
-            <Trash2 /> Delete
+            <Trash2 /> {d.common.delete}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

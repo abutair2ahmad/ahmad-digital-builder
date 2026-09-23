@@ -5,8 +5,10 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { initials } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/client';
 
 export function UserMenu({ email, name, signOut }: { email: string; name: string | null; signOut: () => Promise<void> }) {
+  const { dict } = useI18n();
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -20,12 +22,12 @@ export function UserMenu({ email, name, signOut }: { email: string; name: string
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="font-normal">
-          <p className="text-sm font-medium">{name ?? 'Signed in'}</p>
+          <p className="text-sm font-medium">{name ?? dict.common.signedIn}</p>
           <p className="truncate text-xs text-muted-foreground">{email}</p>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => void signOut()}>
-          <LogOut /> Sign out
+          <LogOut /> {dict.common.signOut}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { createServerClient } from '@supabase/ssr';
 import { createClient } from '@supabase/supabase-js';
 import { config } from '@/lib/config';
+import { getI18n } from '@/lib/i18n/server';
 import type { AuthProvider } from './types';
 
 /**
@@ -53,7 +54,7 @@ export const supabaseAuth: AuthProvider = {
   async signIn({ email, password }) {
     const supabase = await supabaseServerClient();
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-    if (error) return { ok: false, error: 'Incorrect email or password.' };
+    if (error) return { ok: false, error: (await getI18n()).dict.auth.incorrectCredentials };
     return { ok: true, user: { id: data.user.id, email: data.user.email ?? email } };
   },
 

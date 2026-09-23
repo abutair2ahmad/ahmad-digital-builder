@@ -7,30 +7,41 @@ import { PricingSimulator } from '@/components/app/pricing-simulator';
 import { Button } from '@/components/ui/button';
 import { listRules } from '@/lib/pricing/repo';
 import { listServices } from '@/lib/services/repo';
+import { fill, localePath } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { runAsMember } from '@/lib/workspace/context';
 import { RuleDialog } from './rule-dialog';
 import { RuleRow } from './rule-row';
 
-export const metadata: Metadata = { title: 'Pricing rules' };
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getI18n();
+  return { title: dict.pricing.title };
+}
 
 export default async function PricingPage({ searchParams }: PageProps<'/dashboard/pricing'>) {
   const { service: focus } = await searchParams;
+  const { dict: d, locale } = await getI18n();
   const { services, rules, currency } = await runAsMember(async (tx, ctx) => ({
     services: await listServices(tx, ctx.workspace.id),
     rules: await listRules(tx, ctx.workspace.id),
     currency: ctx.workspace.currency,
   }));
   const groups = [
-    { id: null as string | null, name: 'All services', description: 'Workspace-wide rules apply to every service.', rules: rules.filter((r) => r.service_id === null) },
-    ...services.map((s) => ({ id: s.id as string | null, name: s.name, description: s.pricing_type === 'per_unit' ? `Priced per ${s.unit ?? 'unit'}` : 'Fixed price', rules: rules.filter((r) => r.service_id === s.id) })),
+    { id: null as string | null, name: d.pricing.allServices, description: d.pricing.allServicesHint, rules: rules.filter((r) => r.service_id === null) },
+    ...services.map((s) => ({
+      id: s.id as string | null,
+      name: s.name,
+      description: s.pricing_type === 'per_unit' ? fill(d.pricing.pricedPerUnit, { unit: s.unit ?? d.services.unit }) : d.services.fixedPrice,
+      rules: rules.filter((r) => r.service_id === s.id),
+    })),
   ];
   const focused = typeof focus === 'string' ? focus : null;
 
   return (
     <>
       <PageHeader
-        title="Pricing rules"
-        description="Deterministic rules the engine applies in order: base → add-ons → percentage modifiers → location surcharges → minimum."
+        title={d.pricing.title}
+        description={d.pricing.subtitle}
         actions={
           services.length ? (
             <RuleDialog
@@ -39,19 +50,19 @@ export default async function PricingPage({ searchParams }: PageProps<'/dashboar
               defaultServiceId={focused}
               trigger={
                 <Button>
-                  <Plus /> New rule
+                  <Plus /> {d.pricing.newRule}
                 </Button>
               }
             />
           ) : (
             <Button asChild>
-              <Link href="/dashboard/services">Add a service first</Link>
+              <Link href={localePath('/dashboard/services', locale)}>{d.pricing.addServiceFirst}</Link>
             </Button>
           )
         }
       />
       {!services.length ? (
-        <EmptyState icon={<Calculator className="size-5" />} title="No services to price yet" description="Create a service, then come back to add its base price and modifiers." />
+        <EmptyState icon={<Calculator className="size-5" />} title={d.pricing.noServicesTitle} description={d.pricing.noServicesBody} />
       ) : (
         <div className="grid gap-6 xl:grid-cols-5">
           <div className="space-y-4 xl:col-span-3">
@@ -68,7 +79,7 @@ export default async function PricingPage({ searchParams }: PageProps<'/dashboar
                     defaultServiceId={g.id ?? 'all'}
                     trigger={
                       <Button variant="ghost" size="sm">
-                        <Plus /> Add
+                        <Plus /> {d.pricing.add}
                       </Button>
                     }
                   />
@@ -80,7 +91,7 @@ export default async function PricingPage({ searchParams }: PageProps<'/dashboar
                     ))}
                   </ul>
                 ) : (
-                  <p className="px-4 py-4 text-sm text-muted-foreground">{g.id ? 'No rules yet — add a base price to make this service quotable.' : 'No workspace-wide rules.'}</p>
+                  <p className="px-4 py-4 text-sm text-muted-foreground">{g.id ? d.pricing.noRulesForService : d.pricing.noWorkspaceRules}</p>
                 )}
               </section>
             ))}

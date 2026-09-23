@@ -158,6 +158,17 @@
     @apply font-sans;
     -webkit-text-size-adjust: 100%;
   }
+  /* Arabic gets a face with real Arabic coverage; Latin inside Arabic text
+     still falls back to Geist, so brand names and numbers stay consistent. */
+  html[lang='ar'] {
+    --font-sans: var(--font-noto-arabic), var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  }
+  html[lang='ar'] h1,
+  html[lang='ar'] h2,
+  html[lang='ar'] h3,
+  html[lang='ar'] h4 {
+    letter-spacing: 0;
+  }
   body {
     font-feature-settings: 'cv11', 'ss01', 'tnum';
   }

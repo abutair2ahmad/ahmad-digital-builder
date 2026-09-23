@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getFile } from '@/lib/files/repo';
 import { getStorage } from '@/lib/storage';
 import { getWorkspaceContext } from '@/lib/workspace/context';
+import { getI18n } from '@/lib/i18n/server';
 import { getDb } from '@/lib/db';
 
 /**
@@ -11,17 +12,18 @@ import { getDb } from '@/lib/db';
  */
 export async function GET(_req: Request, { params }: RouteContext<'/api/files/[id]'>) {
   const { id } = await params;
+  const { dict: d } = await getI18n();
   const ctx = await getWorkspaceContext();
-  if (!ctx?.workspace) return NextResponse.json({ error: 'Authentication required' }, { status: 401 });
+  if (!ctx?.workspace) return NextResponse.json({ error: d.validation.authRequired }, { status: 401 });
   const db = await getDb();
   const workspaceId = ctx.workspace.id;
   const file = await db.asUser(ctx.user.id, (tx) => getFile(tx, workspaceId, id));
-  if (!file) return NextResponse.json({ error: 'Not found' }, { status: 404 });
+  if (!file) return NextResponse.json({ error: d.common.notFound }, { status: 404 });
   const storage = await getStorage();
   const signed = await storage.signedUrl(file.storage_path);
   if (signed) return NextResponse.redirect(signed, { status: 302 });
   const blob = await storage.get(file.storage_path);
-  if (!blob) return NextResponse.json({ error: 'File missing from storage' }, { status: 404 });
+  if (!blob) return NextResponse.json({ error: d.common.notFound }, { status: 404 });
   return new NextResponse(new Uint8Array(blob.bytes), {
     headers: {
       'Content-Type': file.mime_type,

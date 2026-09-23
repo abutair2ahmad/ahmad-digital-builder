@@ -8,25 +8,18 @@ import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Field, FormError, SubmitButton, useFormAction } from '@/components/shared/form';
-import { RULE_TYPE_LABEL } from '@/lib/format';
+import { useI18n } from '@/lib/i18n/client';
+import { fill } from '@/lib/i18n';
 import { RULE_TYPES, type PricingRule, type RuleType, type Service } from '@/lib/types';
 import { createRuleAction, updateRuleAction } from './actions';
 
-const HELP: Record<RuleType, string> = {
-  fixed: 'A flat base price for the service, e.g. 450 for a drywall repair.',
-  per_unit: 'Base price multiplied by the quantity the customer gives, e.g. 35 per m².',
-  percentage: 'Adds (or subtracts) a percentage of the subtotal when the condition matches, e.g. +20% for premium paint.',
-  minimum: 'Lifts the total to this amount if the calculated price is lower, e.g. minimum job 800.',
-  location_surcharge: 'A flat amount added when the customer\'s location contains this text, e.g. +250 for "Jerusalem".',
-  addon: 'An optional extra the customer can choose, priced flat or per unit, e.g. scaffolding +900.',
-};
-
 export function RuleDialog({ rule, services, defaultServiceId, currency, trigger }: { rule?: PricingRule; services: Service[]; defaultServiceId?: string | null; currency: string; trigger: ReactNode }) {
+  const { dict: d } = useI18n();
   const [open, setOpen] = useState(false);
   const action = rule ? updateRuleAction.bind(null, rule.id) : createRuleAction;
   const [state, formAction] = useFormAction(action, () => {
     setOpen(false);
-    toast.success(rule ? 'Rule updated' : 'Rule created');
+    toast.success(rule ? d.pricing.updated : d.pricing.created);
   });
   const [ruleType, setRuleType] = useState<RuleType>(rule?.rule_type ?? 'per_unit');
   const [serviceId, setServiceId] = useState<string>(rule ? rule.service_id ?? 'all' : defaultServiceId ?? services[0]?.id ?? 'all');
@@ -45,18 +38,18 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
       <DialogContent className="sm:max-w-lg">
         <form action={formAction} className="space-y-5">
           <DialogHeader>
-            <DialogTitle>{rule ? 'Edit pricing rule' : 'New pricing rule'}</DialogTitle>
-            <DialogDescription>Rules are the only source of prices. The assistant never invents a number.</DialogDescription>
+            <DialogTitle>{rule ? d.pricing.editRule : d.pricing.newRule}</DialogTitle>
+            <DialogDescription>{d.pricing.dialogDescription}</DialogDescription>
           </DialogHeader>
           <FormError error={state.error} />
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label="Applies to" htmlFor="rule-service">
+            <Field label={d.pricing.appliesTo} htmlFor="rule-service">
               <Select value={serviceId} onValueChange={setServiceId}>
                 <SelectTrigger id="rule-service" className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">All services</SelectItem>
+                  <SelectItem value="all">{d.pricing.allServices}</SelectItem>
                   {services.map((s) => (
                     <SelectItem key={s.id} value={s.id}>
                       {s.name}
@@ -66,7 +59,7 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
               </Select>
               <input type="hidden" name="service_id" value={serviceId} />
             </Field>
-            <Field label="Rule type" htmlFor="rule-type">
+            <Field label={d.pricing.ruleType} htmlFor="rule-type">
               <Select value={ruleType} onValueChange={(v) => setRuleType(v as RuleType)}>
                 <SelectTrigger id="rule-type" className="w-full">
                   <SelectValue />
@@ -74,7 +67,7 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
                 <SelectContent>
                   {RULE_TYPES.map((t) => (
                     <SelectItem key={t} value={t}>
-                      {RULE_TYPE_LABEL[t]}
+                      {d.ruleType[t]}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -82,33 +75,33 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
               <input type="hidden" name="rule_type" value={ruleType} />
             </Field>
           </div>
-          <p className="rounded-lg bg-secondary px-3 py-2 text-xs text-muted-foreground">{HELP[ruleType]}</p>
-          <Field label="Name" htmlFor="rule-name" error={state.fieldErrors?.name} hint={ruleType === 'addon' ? 'Shown to customers as the option label.' : 'Appears on the quote breakdown.'}>
+          <p className="rounded-lg bg-secondary px-3 py-2 text-xs text-muted-foreground">{d.pricing.help[ruleType]}</p>
+          <Field label={d.pricing.name} htmlFor="rule-name" error={state.fieldErrors?.name} hint={ruleType === 'addon' ? d.pricing.nameHintAddon : d.pricing.nameHint}>
             <Input id="rule-name" name="name" defaultValue={rule?.name ?? ''} required placeholder={ruleType === 'per_unit' ? 'Painting per m²' : ruleType === 'addon' ? 'Scaffolding' : 'Urgent job'} />
           </Field>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Field label={isPercent ? 'Percentage' : `Amount (${currency})`} htmlFor="rule-amount" error={state.fieldErrors?.amount}>
+            <Field label={isPercent ? d.pricing.percentage : fill(d.pricing.amountIn, { currency })} htmlFor="rule-amount" error={state.fieldErrors?.amount}>
               <div className="relative">
-                <Input id="rule-amount" name="amount" type="number" step="0.01" defaultValue={rule?.amount ?? ''} required className={isPercent ? 'pr-8' : ''} />
-                {isPercent ? <span className="pointer-events-none absolute inset-y-0 right-3 flex items-center text-sm text-muted-foreground">%</span> : null}
+                <Input id="rule-amount" name="amount" type="number" step="0.01" defaultValue={rule?.amount ?? ''} required className={isPercent ? 'pe-8' : ''} />
+                {isPercent ? <span className="pointer-events-none absolute inset-y-0 end-3 flex items-center text-sm text-muted-foreground">%</span> : null}
               </div>
             </Field>
             {ruleType === 'addon' ? (
               <div className="flex items-center justify-between rounded-lg border px-3 py-2.5">
                 <div>
-                  <p className="text-sm font-medium">Per unit</p>
-                  <p className="text-xs text-muted-foreground">Multiply by quantity</p>
+                  <p className="text-sm font-medium">{d.pricing.perUnitLabel}</p>
+                  <p className="text-xs text-muted-foreground">{d.pricing.perUnitHint}</p>
                 </div>
-                <Switch checked={perUnit} onCheckedChange={setPerUnit} aria-label="Per unit" />
+                <Switch checked={perUnit} onCheckedChange={setPerUnit} aria-label={d.pricing.perUnitLabel} />
                 <input type="hidden" name="per_unit" value={perUnit ? 'true' : 'false'} />
               </div>
             ) : null}
           </div>
           {showCondition ? (
             <div className="grid gap-4 sm:grid-cols-2">
-              <Field label="Condition" htmlFor="rule-condition">
+              <Field label={d.pricing.condition} htmlFor="rule-condition">
                 {impliedCondition ? (
-                  <Input value={impliedCondition === 'location' ? 'Location contains' : 'Option selected'} disabled />
+                  <Input value={impliedCondition === 'location' ? d.pricing.locationContains : d.pricing.optionSelected} disabled />
                 ) : (
                   <>
                     <Select value={conditionKey} onValueChange={setConditionKey}>
@@ -116,10 +109,10 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="none">Always</SelectItem>
-                        <SelectItem value="urgency">Urgency is</SelectItem>
-                        <SelectItem value="option">Option selected</SelectItem>
-                        <SelectItem value="location">Location contains</SelectItem>
+                        <SelectItem value="none">{d.pricing.conditionAlways}</SelectItem>
+                        <SelectItem value="urgency">{d.pricing.conditionUrgency}</SelectItem>
+                        <SelectItem value="option">{d.pricing.conditionOption}</SelectItem>
+                        <SelectItem value="location">{d.pricing.conditionLocation}</SelectItem>
                       </SelectContent>
                     </Select>
                     <input type="hidden" name="condition_key" value={conditionKey} />
@@ -128,10 +121,10 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
               </Field>
               {effectiveCondition !== 'none' ? (
                 <Field
-                  label={effectiveCondition === 'urgency' ? 'Urgency value' : effectiveCondition === 'location' ? 'Location text' : 'Option key'}
+                  label={effectiveCondition === 'urgency' ? d.pricing.urgencyValue : effectiveCondition === 'location' ? d.pricing.locationText : d.pricing.optionKey}
                   htmlFor="rule-condition-value"
                   error={state.fieldErrors?.condition_value}
-                  hint={effectiveCondition === 'option' ? 'A short key like premium_paint.' : effectiveCondition === 'urgency' ? 'standard or urgent' : 'Case-insensitive match.'}
+                  hint={effectiveCondition === 'option' ? d.pricing.optionKeyHint : effectiveCondition === 'urgency' ? d.pricing.urgencyHint : d.pricing.locationHint}
                 >
                   {effectiveCondition === 'urgency' ? (
                     <Select name="condition_value" defaultValue={rule?.condition_value ?? 'urgent'}>
@@ -139,8 +132,8 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="urgent">Urgent</SelectItem>
-                        <SelectItem value="standard">Standard</SelectItem>
+                        <SelectItem value="urgent">{d.status.urgency.urgent}</SelectItem>
+                        <SelectItem value="standard">{d.status.urgency.standard}</SelectItem>
                       </SelectContent>
                     </Select>
                   ) : (
@@ -152,17 +145,17 @@ export function RuleDialog({ rule, services, defaultServiceId, currency, trigger
           ) : null}
           <div className="flex items-center justify-between rounded-lg border px-3 py-2.5">
             <div>
-              <p className="text-sm font-medium">Active</p>
-              <p className="text-xs text-muted-foreground">Inactive rules are ignored by the engine.</p>
+              <p className="text-sm font-medium">{d.common.active}</p>
+              <p className="text-xs text-muted-foreground">{d.pricing.activeHint}</p>
             </div>
-            <Switch checked={active} onCheckedChange={setActive} aria-label="Active" />
+            <Switch checked={active} onCheckedChange={setActive} aria-label={d.common.active} />
             <input type="hidden" name="active" value={active ? 'true' : 'false'} />
           </div>
           <DialogFooter>
             <Button type="button" variant="outline" onClick={() => setOpen(false)}>
-              Cancel
+              {d.common.cancel}
             </Button>
-            <SubmitButton pendingText="Saving…">{rule ? 'Save changes' : 'Create rule'}</SubmitButton>
+            <SubmitButton pendingText={d.common.saving}>{rule ? d.common.saveChanges : d.pricing.createRule}</SubmitButton>
           </DialogFooter>
         </form>
       </DialogContent>

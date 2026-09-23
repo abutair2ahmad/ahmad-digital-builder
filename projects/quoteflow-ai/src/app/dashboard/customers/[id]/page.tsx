@@ -7,15 +7,21 @@ import { StatCard } from '@/components/app/stat-card';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { getCustomer } from '@/lib/customers/repo';
 import { formatDate, formatMoney, initials, timeAgo } from '@/lib/format';
+import { fill, localePath } from '@/lib/i18n';
+import { getI18n } from '@/lib/i18n/server';
 import { listLeadsForCustomer } from '@/lib/leads/repo';
 import { listQuotesForCustomer } from '@/lib/quotes/repo';
 import { runAsMember } from '@/lib/workspace/context';
 import { CustomerForm } from './customer-form';
 
-export const metadata: Metadata = { title: 'Customer' };
+export async function generateMetadata(): Promise<Metadata> {
+  const { dict } = await getI18n();
+  return { title: dict.customers.title };
+}
 
 export default async function CustomerPage({ params }: PageProps<'/dashboard/customers/[id]'>) {
   const { id } = await params;
+  const { dict: d, locale } = await getI18n();
   const data = await runAsMember(async (tx, ctx) => {
     const customer = await getCustomer(tx, ctx.workspace.id, id);
     if (!customer) return null;
@@ -32,8 +38,8 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
   return (
     <>
       <div>
-        <Link href="/dashboard/customers" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-          <ArrowLeft className="size-3.5" /> Customers
+        <Link href={localePath('/dashboard/customers', locale)} className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+          <ArrowLeft className="size-3.5 rtl:rotate-180" /> {d.customers.title}
         </Link>
       </div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
@@ -54,7 +60,9 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
                   <Mail className="size-3.5" /> {customer.email}
                 </a>
               ) : null}
-              <span>Last activity {timeAgo(customer.last_activity_at)}</span>
+              <span>
+                {d.customers.lastActivity}: {timeAgo(customer.last_activity_at, d, locale)}
+              </span>
             </div>
           </div>
         </div>
@@ -62,34 +70,38 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
       </div>
 
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard label="Projects" value={String(projects.length)} hint={`${leads.length} lead${leads.length === 1 ? '' : 's'} in total`} />
-        <StatCard label="Quotes" value={String(quotes.length)} hint={`${quotes.filter((q) => q.status === 'accepted').length} accepted`} />
-        <StatCard label="Won" value={formatMoney(won, currency)} hint="Accepted quote value" />
+        <StatCard label={d.customers.projects} value={String(projects.length)} hint={fill(d.customers.projectsHint, { n: leads.length })} />
+        <StatCard
+          label={d.customers.quotesCount}
+          value={String(quotes.length)}
+          hint={fill(d.customers.quotesHint, { n: quotes.filter((q) => q.status === 'accepted').length })}
+        />
+        <StatCard label={d.customers.won} value={formatMoney(won, currency, locale)} hint={d.customers.wonHint} />
       </div>
 
       {customer.notes ? (
         <section className="rounded-xl border bg-card p-5">
-          <h2 className="mb-1 text-sm font-semibold">Notes</h2>
+          <h2 className="mb-1 text-sm font-semibold">{d.customers.notes}</h2>
           <p className="whitespace-pre-wrap text-sm">{customer.notes}</p>
         </section>
       ) : null}
 
       <div className="grid gap-6 lg:grid-cols-2">
         <section className="rounded-xl border bg-card">
-          <h2 className="border-b px-5 py-3.5 text-sm font-semibold">Lead history</h2>
+          <h2 className="border-b px-5 py-3.5 text-sm font-semibold">{d.customers.leadHistory}</h2>
           {leads.length ? (
             <ul className="divide-y">
               {leads.map((l) => (
                 <li key={l.id}>
-                  <Link href={`/dashboard/leads/${l.id}`} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-accent/60">
+                  <Link href={localePath(`/dashboard/leads/${l.id}`, locale)} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-accent/60">
                     <div className="min-w-0">
-                      <p className="truncate text-sm font-medium">{l.service_name ?? 'Lead'}</p>
+                      <p className="truncate text-sm font-medium">{l.service_name ?? d.leads.title}</p>
                       <p className="truncate text-xs text-muted-foreground">
-                        {l.location ?? '—'} · {formatDate(l.created_at)}
+                        {l.location ?? d.common.dash} · {formatDate(l.created_at, locale)}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm tabular">{l.estimated_total != null ? formatMoney(l.estimated_total, l.currency) : '—'}</span>
+                      <span className="text-sm tabular">{l.estimated_total != null ? formatMoney(l.estimated_total, l.currency, locale) : d.common.dash}</span>
                       <LeadStatusBadge status={l.status} />
                     </div>
                   </Link>
@@ -97,24 +109,24 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
               ))}
             </ul>
           ) : (
-            <p className="px-5 py-6 text-sm text-muted-foreground">No leads.</p>
+            <p className="px-5 py-6 text-sm text-muted-foreground">{d.customers.noLeads}</p>
           )}
         </section>
         <section className="rounded-xl border bg-card">
-          <h2 className="border-b px-5 py-3.5 text-sm font-semibold">Quote history</h2>
+          <h2 className="border-b px-5 py-3.5 text-sm font-semibold">{d.customers.quoteHistory}</h2>
           {quotes.length ? (
             <ul className="divide-y">
               {quotes.map((q) => (
                 <li key={q.id}>
-                  <Link href={`/dashboard/quotes/${q.id}`} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-accent/60">
+                  <Link href={localePath(`/dashboard/quotes/${q.id}`, locale)} className="flex items-center justify-between gap-3 px-5 py-3 hover:bg-accent/60">
                     <div className="min-w-0">
                       <p className="truncate text-sm font-medium">
-                        {q.quote_number} · {q.service_name ?? '—'}
+                        {q.quote_number} · {q.service_name ?? d.common.dash}
                       </p>
-                      <p className="truncate text-xs text-muted-foreground">{formatDate(q.created_at)}</p>
+                      <p className="truncate text-xs text-muted-foreground">{formatDate(q.created_at, locale)}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      <span className="text-sm tabular">{formatMoney(q.total, q.currency)}</span>
+                      <span className="text-sm tabular">{formatMoney(q.total, q.currency, locale)}</span>
                       <QuoteStatusBadge status={q.status} />
                     </div>
                   </Link>
@@ -122,7 +134,7 @@ export default async function CustomerPage({ params }: PageProps<'/dashboard/cus
               ))}
             </ul>
           ) : (
-            <p className="px-5 py-6 text-sm text-muted-foreground">No quotes.</p>
+            <p className="px-5 py-6 text-sm text-muted-foreground">{d.customers.noQuotes}</p>
           )}
         </section>
       </div>
