@@ -96,6 +96,14 @@ class ProductRotation(unittest.TestCase):
         self.assertEqual(second["id"], first["id"])
         self.assertIn("round-robin index 0 of 1", why)
 
+    def test_publish_records_without_a_product_id_do_not_break_the_pick(self):
+        # bin/igstory publish writes {status, key, media_type, ...} with no product_id.
+        story_history.append(self.tmp, "movewell", {
+            "status": story_history.PUBLISHED, "key": "movewell:stories:abc", "media_type": "STORIES",
+        })
+        product, _ = story_history.choose_product(self.products, self.tmp, "movewell")
+        self.assertEqual(product["id"], "p1")
+
     def test_movewell_and_bynexora_ledgers_never_share_state(self):
         story_history.append(self.tmp, "movewell", {"status": story_history.PUBLISHED, "product_id": "p0"})
         product, why = story_history.choose_product(self.products, self.tmp, "bynexora")

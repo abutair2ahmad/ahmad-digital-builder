@@ -90,7 +90,8 @@ def choose_product(products, state_dir, brand):
     index = len(published) % len(products)
     product = products[index]
 
-    last_id = published[-1]["product_id"] if published else None
+    # Publish records (bin/igstory publish) carry no product_id, only render records do.
+    last_id = published[-1].get("product_id") if published else None
     if last_id is not None and product["id"] == last_id and len(products) > 1:
         index = (index + 1) % len(products)
         product = products[index]
