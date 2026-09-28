@@ -47,6 +47,8 @@ jobs:
           cat > .env <<'ENVEOF'
           INSTAGRAM_MOVEWELL_IG_ID=${{ secrets.INSTAGRAM_MOVEWELL_IG_ID }}
           INSTAGRAM_MOVEWELL_TOKEN=${{ secrets.INSTAGRAM_MOVEWELL_TOKEN }}
+          INSTAGRAM_BYNEXORA_IG_ID=${{ secrets.INSTAGRAM_BYNEXORA_IG_ID }}
+          INSTAGRAM_BYNEXORA_TOKEN=${{ secrets.INSTAGRAM_BYNEXORA_TOKEN }}
           INSTAGRAM_GRAPH_HOST=${{ secrets.INSTAGRAM_GRAPH_HOST }}
           IG_PUBLISH_ENABLED=true
           IMAGE_HOST=r2
@@ -75,6 +77,28 @@ jobs:
           cd instagram-autopost
           ./bin/igstory --env ../.env publish --brand movewell --media-type REELS --video "$VIDEO" --caption "MoveWell"
           ./bin/igstory --env ../.env publish --brand movewell --media-type STORIES --video "$VIDEO"
+
+      # Nexora runs even if the MoveWell steps failed: the two accounts are independent.
+      - name: Render today's Nexora reel
+        id: nexora
+        if: ${{ !cancelled() && steps.trigger.outputs.run == 'true' }}
+        run: |
+          set -o pipefail
+          cd instagram-autopost
+          ./bin/igstory reel --brand bynexora | tee reel.out
+          grep -E '^(VIDEO|CAPTION_FILE|REEL_KEY)=' reel.out >> "$GITHUB_OUTPUT"
+
+      - name: Publish Nexora Reel and Story
+        if: ${{ !cancelled() && steps.nexora.outcome == 'success' && (github.event_name == 'schedule' || inputs.live == true) }}
+        run: |
+          cd instagram-autopost
+          ./bin/igstory --env ../.env publish --brand bynexora --media-type REELS \
+            --video "${{ steps.nexora.outputs.VIDEO }}" \
+            --caption-file "${{ steps.nexora.outputs.CAPTION_FILE }}" \
+            --key "${{ steps.nexora.outputs.REEL_KEY }}"
+          ./bin/igstory --env ../.env publish --brand bynexora --media-type STORIES \
+            --video "${{ steps.nexora.outputs.VIDEO }}" \
+            --key "${{ steps.nexora.outputs.REEL_KEY }}"
 
       - name: Remove credentials
         if: always()

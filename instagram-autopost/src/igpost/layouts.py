@@ -184,6 +184,10 @@ LAYOUTS = {
 
 def build(brand, idea):
     layout = idea.get("layout")
-    if layout not in LAYOUTS:
+    table = LAYOUTS
+    if brand.get("theme") == "copper":
+        from . import layouts_copper
+        table = layouts_copper.LAYOUTS
+    if layout not in table:
         raise KeyError("unknown layout %r for idea %r" % (layout, idea.get("id")))
-    return LAYOUTS[layout](brand, idea)
+    return table[layout](brand, idea)

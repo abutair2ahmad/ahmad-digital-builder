@@ -94,7 +94,18 @@ def build_html(brand_cfg, product, css_path, seek_seconds, image_path):
     ) % (brand_cfg.get("language", "en"), brand_cfg.get("direction", "ltr"), variables, css, body)
 
 
-def _capture(binary, html_path, png_path, timeout):
+def _capture(binary, html_path, png_path, timeout, attempts=3):
+    # Headless Chrome occasionally hangs on a single launch; one stuck frame out of
+    # ~160 should not sink the whole video, so a timed-out frame is tried again.
+    for attempt in range(1, attempts + 1):
+        try:
+            return _capture_once(binary, html_path, png_path, timeout)
+        except RenderError:
+            if attempt == attempts:
+                raise
+
+
+def _capture_once(binary, html_path, png_path, timeout):
     command = [
         binary, "--headless=new", "--disable-gpu", "--no-first-run",
         "--no-default-browser-check", "--hide-scrollbars",

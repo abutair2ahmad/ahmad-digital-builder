@@ -102,6 +102,11 @@ def build_html(brand, idea, css_path):
     """Assemble the standalone HTML stage for one post."""
     with open(css_path, "r", encoding="utf-8") as handle:
         css = handle.read()
+    # A brand theme layers its own stylesheet over base.css (see theme-copper.css).
+    if brand.get("theme"):
+        theme_path = os.path.join(os.path.dirname(css_path), "theme-%s.css" % brand["theme"])
+        with open(theme_path, "r", encoding="utf-8") as handle:
+            css += "\n" + handle.read()
     palette, type_cfg, shape = brand["palette"], brand["type"], brand["shape"]
     variables = "\n".join([
         "--bg: %s;" % palette["bg"],

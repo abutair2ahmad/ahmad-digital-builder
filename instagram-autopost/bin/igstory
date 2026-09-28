@@ -147,6 +147,55 @@ def cmd_test(args):
     print("\nNo network call to Instagram was made. Nothing was published.")
 
 
+def cmd_reel(args):
+    """Render today's Nexora Reel/Story from an approved feed idea (copper theme)."""
+    from datetime import date
+    from igpost import compose, reel_copper
+
+    brand_cfg = _brand_cfg(args.brand)
+    if brand_cfg.get("theme") != "copper":
+        print("%s: reels are built from the copper theme only" % args.brand)
+        return 1
+    with open(os.path.join(ROOT, "content", "nexora.json"), "r", encoding="utf-8") as handle:
+        content = json.load(handle)
+    on_date = date.fromisoformat(args.date) if args.date else date.today()
+    if args.idea:
+        matches = [i for i in content["ideas"] if i["id"] == args.idea]
+        if not matches:
+            print("no idea %r in the Nexora content bank" % args.idea)
+            return 1
+        idea = matches[0]
+    else:
+        idea = reel_copper.choose_idea(content["ideas"], on_date)
+    print("idea: %s (%s) for %s" % (idea["id"], idea["layout"], on_date.isoformat()))
+
+    work_dir = os.path.join(ROOT, "out", args.brand, "reels", "%s-%s" % (on_date.isoformat(), idea["id"]))
+    frame_dir = os.path.join(work_dir, "frames")
+    mp4_path = os.path.join(work_dir, "reel.mp4")
+    css_path = os.path.join(ROOT, "templates", "reel-copper.css")
+    count = reel_copper.render_frames(brand_cfg, idea, css_path, frame_dir, fps=args.fps,
+                                      duration_seconds=args.seconds)
+    print("  %d frames rendered" % count)
+    video.encode(frame_dir, args.fps, mp4_path)
+    info = video.probe(mp4_path)
+    if (info["width"], info["height"]) != (video.STORY_WIDTH, video.STORY_HEIGHT):
+        print("FAIL: video is %sx%s, expected 1080x1920" % (info["width"], info["height"]))
+        return 1
+    print("  %s -> %dx%d, %.2fs" % (mp4_path, info["width"], info["height"], info["duration"]))
+
+    caption = compose.compose(brand_cfg, idea, "%s:reel:%s" % (args.brand, on_date.isoformat()), content)
+    caption_path = os.path.join(work_dir, "caption.txt")
+    with open(caption_path, "w", encoding="utf-8") as handle:
+        handle.write(caption["text"])
+    print("  caption (%d chars) -> %s" % (caption["length"], caption_path))
+
+    # Machine-readable lines for the workflow to pick up.
+    print("VIDEO=%s" % mp4_path)
+    print("CAPTION_FILE=%s" % caption_path)
+    print("REEL_KEY=reel-%s-%s" % (on_date.isoformat(), idea["id"]))
+    return 0
+
+
 def cmd_publish(args):
     env = read_env(args.env)
     if env.get("IG_PUBLISH_ENABLED", "").strip().lower() not in ("1", "true", "yes", "on"):
@@ -165,7 +214,13 @@ def cmd_publish(args):
         return
     state_dir = os.path.join(ROOT, "state")
     digest = hashlib.sha256(open(args.video, "rb").read()).hexdigest()[:12]
-    key = "%s:%s:%s" % (args.brand, media_type.lower(), digest)
+    # A rendered reel is byte-identical whenever its idea comes round again, so a
+    # caller that rotates ideas passes its own key (date + idea) instead of the digest.
+    key = "%s:%s:%s" % (args.brand, media_type.lower(), args.key or digest)
+    caption = args.caption
+    if args.caption_file:
+        with open(args.caption_file, "r", encoding="utf-8") as handle:
+            caption = handle.read()
     if story_history.is_published(state_dir, args.brand, key):
         print("already published: %s" % key)
         return
@@ -177,7 +232,7 @@ def cmd_publish(args):
         container = story_history.open_container(state_dir, args.brand, key)
         if container is None:
             container = publisher.create_video_container(
-                account, args.brand, media_type, url, caption=args.caption, host=graph_host)
+                account, args.brand, media_type, url, caption=caption, host=graph_host)
             story_history.append(state_dir, args.brand, {
                 "status": "container", "key": key, "brand": args.brand,
                 "media_type": media_type, "container_id": container,
@@ -223,10 +278,19 @@ def main():
     p.add_argument("--media-type", required=True, choices=("STORIES", "REELS", "stories", "reels"))
     p.add_argument("--video", required=True, help="local MP4 file")
     p.add_argument("--caption", default="", help="Reel caption; ignored for Stories")
+    p.add_argument("--caption-file", help="read the Reel caption from this UTF-8 file")
+    p.add_argument("--key", help="ledger key instead of the video digest (e.g. reel-<date>-<idea>)")
     p.set_defaults(func=cmd_publish)
 
+    p = sub.add_parser("reel"); p.add_argument("--brand", required=True, choices=("bynexora",))
+    p.add_argument("--idea", help="render this idea id instead of today's rotation pick")
+    p.add_argument("--date", help="YYYY-MM-DD for the rotation pick (default: today)")
+    p.add_argument("--fps", type=int, default=20)
+    p.add_argument("--seconds", type=float, default=8.0)
+    p.set_defaults(func=cmd_reel)
+
     args = parser.parse_args()
-    args.func(args)
+    sys.exit(args.func(args) or 0)
 
 
 if __name__ == "__main__":

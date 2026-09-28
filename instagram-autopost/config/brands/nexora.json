@@ -1,4 +1,4 @@
-	{
+{
   "brand": "bynexora",
   "display_name": "Nexora",
   "handle": "@bynexora.co",
@@ -7,14 +7,14 @@
   "site": "bynexora.co",
   "voice": "Confident, senior digital studio. Speaks through real, shipped work — ORIVA, NACRE — not abstract promises about design trends. Direct about what's a live client project versus a portfolio build; never invents a client or a result.",
   "palette": {
-    "bg": "#0E1211",
-    "surface": "#161B19",
-    "ink": "#ECEAE3",
-    "muted": "#A0A9A4",
-    "accent": "#7FCBAC",
-    "accent_ink": "#0E1211",
-    "accent_soft": "#182521",
-    "line": "#262D2A"
+    "bg": "#030202",
+    "surface": "#14100D",
+    "ink": "#F6F3F0",
+    "muted": "#A39A93",
+    "accent": "#B57E5A",
+    "accent_ink": "#FFF7F1",
+    "accent_soft": "#2A1F18",
+    "line": "#3A2C22"
   },
   "type": {
     "family": "\"IBM Plex Sans Arabic\", -apple-system, system-ui, \"Segoe UI\", sans-serif",
@@ -49,7 +49,10 @@
       "#صفحة_هبوط",
       "#أتمتة_الأعمال",
       "#هوية_بصرية",
-      "#تحسين_التحويل"
+      "#تحسين_التحويل",
+      "#تطبيقات_ويب",
+      "#لوحات_تحكم",
+      "#مواقع_الشركات"
     ],
     "market": [
       "#أصحاب_المشاريع",
@@ -70,5 +73,10 @@
     ],
     "note": "No invented social proof, client counts, awards or certifications."
   },
-  "mark": "grid"
+  "theme": "copper",
+  "cta_buttons": [
+    "راسلنا الآن",
+    "ابدأ مشروعك الآن",
+    "اطلب استشارة مجانية"
+  ]
 }
