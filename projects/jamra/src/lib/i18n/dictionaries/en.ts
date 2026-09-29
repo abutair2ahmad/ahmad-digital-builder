@@ -200,7 +200,7 @@ const en: Dictionary = {
     calcNote: 'A plain calculation from the numbers you enter — not a promise and not a statistic.',
     calcOrders: 'Delivery orders per month',
     calcAvg: 'Average order (₪)',
-    calcRate: 'Commission rate (%)',
+    calcRate: 'What the delivery app takes per order (%)',
     calcResult: 'Monthly commission at these numbers',
     calcYear: 'Per year: {amount}',
   },
