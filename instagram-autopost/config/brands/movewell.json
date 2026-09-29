@@ -18,7 +18,7 @@
     "line": "#D6DED9"
   },
   "type": {
-    "family": "\"SF Hebrew\", \"Arial Hebrew\", \"Noto Sans Hebrew\", -apple-system, system-ui, Arial, sans-serif",
+    "family": "Heebo, \"Noto Sans Hebrew\", \"Arial Hebrew\", -apple-system, system-ui, Arial, sans-serif",
     "display_weight": 700,
     "body_weight": 400,
     "tracking": "-0.015em"
