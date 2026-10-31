@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#05060A">
+<title>كَوْن · KAWN</title>
+<meta name="description" content="كَوْن: حياتك على شكل مجرّة ثلاثية الأبعاد. كل نجمة أسبوع من عمرك، وكل دورة حول المركز سنة. علّق ذكرياتك وأحلامك على نجومها.">
+<meta property="og:title" content="كَوْن · KAWN">
+<meta property="og:description" content="حياتك مجرّة. كل نجمة أسبوع من عمرك.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%2305060A'/%3E%3Ccircle cx='16' cy='16' r='4' fill='%23F2B866'/%3E%3Ccircle cx='16' cy='16' r='9' fill='none' stroke='%23F2B866' stroke-opacity='.5'/%3E%3Ccircle cx='16' cy='16' r='13' fill='none' stroke='%23B4D2FF' stroke-opacity='.35'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&amp;family=Reem+Kufi:wght@500;600;700&amp;display=swap">
+</head>
+<body>
+
+<canvas id="sky" tabindex="0" data-i18n-aria="canvasLabel"></canvas>
+<div class="overlay is-hidden" id="overlay" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="brand">
+    <span class="brand__mark" data-i18n="brand">كَوْن</span>
+    <span class="brand__tag" data-i18n="tagline">حياتك مجرّة</span>
+    <button class="badge" id="demo-badge" type="button" hidden>
+      <span data-i18n="demoBadge">مجرّة تجريبية</span>
+      <span class="badge__cta" data-i18n="makeMine">كوّن مجرّتك</span>
+    </button>
+  </div>
+  <nav class="bar__actions" aria-label="KAWN">
+    <button class="pill" id="btn-memories" type="button" aria-expanded="false" aria-controls="drawer">
+      <span data-i18n="memories">ذكرياتي</span><span class="pill__count" id="mem-count">0</span>
+    </button>
+    <button class="pill" id="btn-poster" type="button" data-i18n="poster">بوستر</button>
+    <button class="pill" id="btn-profile" type="button" data-i18n="profile">بياناتي</button>
+    <button class="pill pill--quiet" id="btn-lang" type="button" data-i18n="langSwitch" data-i18n-aria="langAria">EN</button>
+  </nav>
+</header>
+
+<aside class="stats panel" id="stats" aria-labelledby="stats-h">
+  <button class="badge badge--stats" id="demo-badge-2" type="button" hidden>
+    <span data-i18n="demoBadge">مجرّة تجريبية</span>
+    <span class="badge__cta" data-i18n="makeMine">كوّن مجرّتك</span>
+  </button>
+  <h2 class="label" id="stats-h" data-i18n="statsTitle">حياتك بالأرقام</h2>
+  <p class="stats__big"><span id="st-lit">0</span></p>
+  <p class="stats__cap" data-i18n="litCaption">الأسابيع التي أضاءت حتى الآن</p>
+  <div class="meter" aria-hidden="true"><span id="st-meter"></span></div>
+  <p class="stats__of" id="st-of"></p>
+  <button class="link" id="st-toggle" type="button" aria-expanded="true" aria-controls="facts"></button>
+  <div class="stats__more" id="facts-wrap">
+    <dl class="facts" id="facts"></dl>
+    <details class="legend">
+      <summary data-i18n="legendTitle">كيف أقرأ مجرّتي؟</summary>
+      <p data-i18n="legendBody"></p>
+    </details>
+  </div>
+</aside>
+
+<section class="card panel" id="card" aria-labelledby="card-h" hidden>
+  <header class="card__head">
+    <p class="label" id="card-eyebrow"></p>
+    <button class="icon-btn" id="card-close" type="button" data-i18n-aria="close">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>
+    </button>
+  </header>
+  <h2 class="card__title" id="card-h" tabindex="-1"></h2>
+  <p class="state" id="card-state"></p>
+  <dl class="card__meta">
+    <div><dt data-i18n="ageLabel">عمرك فيه</dt><dd id="card-age"></dd></div>
+    <div id="card-hijri-row"><dt data-i18n="hijriLabel">بالهجري</dt><dd id="card-hijri"></dd></div>
+  </dl>
+
+  <form class="mem" id="mem-form" novalidate>
+    <h3 class="mem__h" id="mem-h"></h3>
+    <label class="sr-only" for="mem-title" data-i18n="titleLabel">العنوان</label>
+    <input class="input" id="mem-title" name="title" maxlength="60" autocomplete="off" required>
+    <label class="sr-only" for="mem-note" data-i18n="noteLabel">تفاصيل</label>
+    <textarea class="input" id="mem-note" name="note" rows="2" maxlength="280" data-i18n-ph="phNote"></textarea>
+    <fieldset class="kinds" id="kinds">
+      <legend class="label" data-i18n="kindLabel">نوعها</legend>
+    </fieldset>
+    <div class="row">
+      <button class="btn btn--solid" id="mem-save" type="submit"></button>
+      <button class="btn btn--ghost btn--warn" id="mem-del" type="button" data-i18n="remove">احذف</button>
+    </div>
+  </form>
+
+  <nav class="card__nav">
+    <button class="link" id="card-prev" type="button"><span aria-hidden="true" class="arrow arrow--back"></span><span data-i18n="prev">الأسبوع السابق</span></button>
+    <button class="link" id="card-next" type="button"><span data-i18n="next">الأسبوع التالي</span><span aria-hidden="true" class="arrow"></span></button>
+  </nav>
+</section>
+
+<aside class="drawer panel" id="drawer" aria-labelledby="drawer-h" hidden>
+  <header class="card__head">
+    <h2 class="drawer__h" id="drawer-h" data-i18n="drawerTitle">كوكبة ذكرياتك</h2>
+    <button class="icon-btn" id="drawer-close" type="button" data-i18n-aria="close">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>
+    </button>
+  </header>
+  <div id="drawer-body"></div>
+</aside>
+
+<footer class="timeline" id="timeline">
+  <div class="timeline__top">
+    <p class="readout" id="readout"></p>
+    <div class="timeline__tools">
+      <button class="pill pill--small" id="btn-now" type="button" data-i18n="now">الآن</button>
+      <button class="pill pill--small" id="btn-home" type="button" data-i18n="overview">المجرّة كاملة</button>
+    </div>
+  </div>
+  <div class="track">
+    <div class="track__inner" aria-hidden="true">
+      <div class="track__rail"></div>
+      <div class="track__lived" id="track-lived"></div>
+      <div id="track-ticks"></div>
+      <div id="track-dots"></div>
+      <span class="track__now" id="track-now"></span>
+    </div>
+    <input id="scrub" type="range" min="0" max="4695" step="1" value="0" data-i18n-aria="scrubLabel">
+  </div>
+</footer>
+
+<p class="hint" id="hint" data-i18n="hint"></p>
+<p class="toast panel" id="toast" role="status" aria-live="polite"></p>
+
+<div class="modal modal--onboard" id="onboard" role="dialog" aria-modal="true" aria-labelledby="ob-h" hidden>
+  <div class="onboard">
+    <h1 class="onboard__title" id="ob-h"><span id="ob-t1">حياتك</span> <em id="ob-t2">مجرّة.</em></h1>
+    <p class="onboard__lead" id="ob-lead"></p>
+    <form class="onboard__form" id="ob-form" novalidate>
+      <div class="field">
+        <label for="ob-birth" id="ob-birth-l"></label>
+        <input class="input" id="ob-birth" type="date" min="1920-01-01" required>
+      </div>
+      <div class="field">
+        <label for="ob-name" id="ob-name-l"></label>
+        <input class="input" id="ob-name" type="text" maxlength="30" autocomplete="given-name">
+      </div>
+      <fieldset class="field">
+        <legend id="ob-span-l"></legend>
+        <div class="seg" id="ob-span"></div>
+      </fieldset>
+      <p class="err" id="ob-err" role="alert"></p>
+      <div class="row">
+        <button class="btn btn--solid btn--big" id="ob-submit" type="submit"></button>
+        <button class="btn btn--ghost btn--big" id="ob-explore" type="button"></button>
+      </div>
+      <p class="fine" id="ob-privacy"></p>
+      <button class="link link--warn" id="ob-wipe" type="button" hidden></button>
+    </form>
+  </div>
+</div>
+
+<div class="modal modal--center" id="poster" role="dialog" aria-modal="true" aria-labelledby="poster-h" hidden>
+  <div class="poster panel">
+    <header class="card__head">
+      <h2 class="drawer__h" id="poster-h" data-i18n="posterModalTitle">بوستر مجرّتك</h2>
+      <button class="icon-btn" id="poster-close" type="button" data-i18n-aria="close">
+        <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M3 3l10 10M13 3L3 13"/></svg>
+      </button>
+    </header>
+    <div class="poster__frame">
+      <img id="poster-img" alt="">
+      <p class="poster__busy" id="poster-busy" data-i18n="posterBusy"></p>
+    </div>
+    <p class="fine" data-i18n="posterNote"></p>
+    <a class="btn btn--solid" id="poster-dl" href="#" download="kawn-galaxy.png" data-i18n="download">نزّل الصورة</a>
+  </div>
+</div>
+
+<div class="nogl" id="nogl" hidden><p data-i18n="noGl"></p></div>
+
+<script type="module" src="/src/main.ts"></script>
+</body>
+</html>
