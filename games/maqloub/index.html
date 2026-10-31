@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>مقلوب: ألغاز جاذبية مع الشباب</title>
+<link rel="stylesheet" href="../../fonts.css">
+<style>
+  :root { --bg:#0d1022; --panel:rgba(16,20,44,.82); --line:rgba(255,255,255,.14); --txt:#eef1ff; --mut:#a9b0d6; --acc:#ffb547; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:var(--bg); color:var(--txt);
+    font-family:'IBM Plex Sans Arabic', system-ui, sans-serif; }
+  #game { position:fixed; inset:0; }
+  #game canvas { display:block; }
+  .hidden { display:none !important; }
+
+  #menu { position:fixed; inset:0; display:grid; place-items:center; z-index:10;
+    background:radial-gradient(1200px 600px at 70% 20%, #2a2f6b 0%, transparent 60%), radial-gradient(900px 500px at 10% 90%, #4a1f4f 0%, transparent 60%), var(--bg); }
+  .card { width:min(440px, 92vw); background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:28px; backdrop-filter:blur(8px); }
+  h1 { margin:0; font-size:52px; letter-spacing:1px; display:flex; align-items:center; gap:12px; }
+  h1 .flip { display:inline-block; transform:rotate(180deg); color:var(--acc); }
+  .sub { color:var(--mut); margin:6px 0 22px; line-height:1.7; }
+  label { display:block; font-size:14px; color:var(--mut); margin:14px 0 6px; }
+  input { width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:rgba(0,0,0,.3); color:var(--txt); font:inherit; font-size:17px; outline:none; }
+  input:focus { border-color:var(--acc); }
+  #codeIn { text-transform:uppercase; letter-spacing:6px; text-align:center; direction:ltr; }
+  button { font:inherit; cursor:pointer; border:0; border-radius:10px; padding:12px 16px; font-size:16px; font-weight:600; }
+  .btn { width:100%; margin-top:10px; background:var(--acc); color:#1b1300; }
+  .btn.alt { background:#4b5bd8; color:#fff; }
+  .btn.ghost { background:transparent; color:var(--mut); border:1px solid var(--line); }
+  .row { display:flex; gap:8px; } .row > * { flex:1; }
+  .sep { display:flex; align-items:center; gap:10px; color:var(--mut); font-size:13px; margin:18px 0 4px; }
+  .sep::before, .sep::after { content:''; flex:1; height:1px; background:var(--line); }
+  #menuMsg { min-height:22px; margin-top:12px; color:#ff8f8f; font-size:14px; }
+
+  #hud { position:fixed; inset:0; pointer-events:none; z-index:5; }
+  #lvl { position:absolute; top:14px; left:50%; transform:translateX(-50%); text-align:center;
+    background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:8px 18px; max-width:min(680px, 92vw); }
+  #lvlName { font-weight:700; font-size:18px; }
+  #lvlHint { color:var(--mut); font-size:14px; margin-top:3px; line-height:1.6; }
+  #room { position:absolute; top:14px; right:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px 14px; pointer-events:auto; min-width:170px; }
+  #room .code { font-size:24px; font-weight:700; letter-spacing:5px; direction:ltr; text-align:center; color:var(--acc); }
+  #room button { width:100%; margin-top:6px; padding:7px; font-size:13px; background:#4b5bd8; color:#fff; }
+  #players { margin-top:8px; font-size:14px; }
+  #players div { display:flex; align-items:center; gap:8px; padding:2px 0; }
+  #players i { width:12px; height:12px; border-radius:3px; display:inline-block; }
+  #keys { position:absolute; bottom:14px; right:14px; background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px 14px; font-size:13px; color:var(--mut); line-height:1.9; }
+  #keys b { color:var(--txt); display:inline-block; min-width:64px; direction:ltr; text-align:left; }
+  #cross { position:absolute; top:50%; left:50%; width:8px; height:8px; margin:-4px; border-radius:50%; background:#fff; box-shadow:0 0 0 2px rgba(0,0,0,.4); opacity:.75; }
+  #cross.ok { background:var(--acc); width:12px; height:12px; margin:-6px; }
+  #toast { position:absolute; bottom:90px; left:50%; transform:translateX(-50%); background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:10px 18px; font-size:16px; transition:opacity .3s; opacity:0; }
+  #banner { position:absolute; top:40%; left:50%; transform:translate(-50%,-50%); font-size:44px; font-weight:700; text-shadow:0 4px 24px rgba(0,0,0,.6); text-align:center; transition:opacity .4s; opacity:0; }
+  #banner small { display:block; font-size:20px; color:var(--mut); font-weight:500; }
+  #lockTip { position:absolute; bottom:24px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.55); padding:8px 16px; border-radius:10px; font-size:15px; }
+  #exitBar { position:absolute; top:52%; left:50%; width:160px; height:6px; margin-left:-80px; border-radius:3px; background:rgba(255,255,255,.15); overflow:hidden; opacity:0; transition:opacity .2s; }
+  #exitBar div { height:100%; width:0; background:#69db7c; }
+  @media (max-width:700px) { #keys { display:none; } }
+</style>
+</head>
+<body>
+<div id="game"></div>
+
+<div id="menu">
+  <div class="card">
+    <h1>مقلو<span class="flip">ب</span></h1>
+    <div class="sub">ألغاز جاذبية ثلاثية الأبعاد. امشِ على الحيطان، اقلب السقف أرض، وتعاونوا لتفتحوا الأبواب. من 1 إلى 4 لاعبين.</div>
+    <label for="nameIn">اسمك</label>
+    <input id="nameIn" maxlength="14" placeholder="مثلاً: أحمد">
+    <button class="btn" id="hostBtn">أنشئ غرفة وادعِ الشباب</button>
+    <div class="sep">أو ادخل غرفة صاحبك</div>
+    <div class="row">
+      <input id="codeIn" maxlength="4" placeholder="الكود">
+      <button class="btn alt" id="joinBtn" style="margin-top:0">ادخل</button>
+    </div>
+    <button class="btn ghost" id="soloBtn">جرّب لحالك</button>
+    <div id="menuMsg"></div>
+  </div>
+</div>
+
+<div id="hud" class="hidden">
+  <div id="lvl"><div id="lvlName"></div><div id="lvlHint"></div></div>
+  <div id="room">
+    <div id="roomBox">
+      <div style="font-size:12px;color:var(--mut);text-align:center">كود الغرفة</div>
+      <div class="code" id="roomCode">----</div>
+      <button id="copyBtn">انسخ رابط الدعوة</button>
+    </div>
+    <div id="players"></div>
+  </div>
+  <div id="keys">
+    <div><b>W A S D</b> مشي</div>
+    <div><b>Mouse</b> تلفّت</div>
+    <div><b>Space</b> نطّ</div>
+    <div><b>G / R-Click</b> اقلب الجاذبية</div>
+    <div><b>F / L-Click</b> السطح اللي بتصوّب عليه بصير أرضك</div>
+    <div><b>R</b> ارجع للبداية</div>
+  </div>
+  <div id="cross"></div>
+  <div id="exitBar"><div></div></div>
+  <div id="lockTip">اكبس على الشاشة لتتحكم بالماوس</div>
+  <div id="toast"></div>
+  <div id="banner"></div>
+</div>
+
+<script src="vendor/peerjs.min.js"></script>
+<script type="module" src="game.js"></script>
+</body>
+</html>
